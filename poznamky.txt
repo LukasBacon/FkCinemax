@@ -1,0 +1,12 @@
+PRIPRAVKA - teraz funguje tak, ze 3 kola sa hraju v jeden den. V subore zapasyPrinter.php vo funkciach 
+			vypisPosledneZapasy($skupiny) a vypisNasledujuceZapasy($skupiny) je podmienka, ktora zabezpeci,
+			aby sa kolo 1,2,3 = kolo 1, kolo 4,5,6 = 2
+
+/*TODO*/
+CO TREBA SPRAVIT KED SA PRIDA NOVA SKUPINA (Seniori, Pripravka...)
+
+CO TREBA SPRAVIT KED PRESTUPIME DO INEJ LILGY
+
+CO TREBA SPRAVIT PO SEZONE??
+
+CO TREBA SPRAVIT PO ROKU 

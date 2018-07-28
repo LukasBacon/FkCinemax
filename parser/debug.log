@@ -1,0 +1,6 @@
+[0225/184833.615:ERROR:file_io_win.cc(179)] CreateFile C:\Program Files (x86)\settings.dat: Prístup je odmietnutý. (0x5)
+[0225/184833.617:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: Presmerovanie bolo skonèené. (0x6D)
+[0225/184833.619:ERROR:file_io_win.cc(179)] CreateFile C:\Program Files (x86)\settings.dat: Prístup je odmietnutý. (0x5)
+[0302/155957.064:ERROR:file_io_win.cc(179)] CreateFile C:\Program Files (x86)\settings.dat: Prístup je odmietnutý. (0x5)
+[0302/155957.066:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: Presmerovanie bolo skonèené. (0x6D)
+[0302/155957.069:ERROR:file_io_win.cc(179)] CreateFile C:\Program Files (x86)\settings.dat: Prístup je odmietnutý. (0x5)
