@@ -19,7 +19,7 @@ EOF;
 function vratPoslednyZapas($skupina){
 	$db = napoj_db();
   $sql =<<<EOF
-    SELECT z.datum, z.rok, z.domaci, z.hostia, z.skoreD, z.skoreH, z.kolo, z.skupina, l.nazov 
+    SELECT z.datum, z.rok, z.domaci, z.hostia, z.skoreD, z.skoreH, z.kolo, z.skupina, l.nazov, z.poznamka 
     FROM Zapasy as z JOIN Ligy as l ON z.rok = l.rok AND z.skupina = l. skupina
 		WHERE datetime(z.datum) < datetime('now') AND z.skupina = "$skupina" AND 
 			(hostia LIKE '%FK CINEMAX Doľany%' OR domaci LIKE '%FK CINEMAX Doľany%')
@@ -39,14 +39,15 @@ function vypisNasledujuceZapasy(array $skupiny){
 			return;
 		}
 		/*kvoli tomu ze 3 kola v pripravke sa hraju v jeden den - kolo 1,2,3 = kolo 1*/
-		if($skupina === 'Pripravka'){
+		/*if($skupina === 'Pripravka'){
 			$kolo = floor(($zapas['kolo'] -1) / 3) + 1;
 		}
 		else{
 			$kolo = $zapas['kolo'];
-		}
+		}*/
+    $kolo = $zapas['kolo'];
 		echo '<li class="list-group-item">';
-	  echo '<p class="card-text">'.$zapas["nazov"].' '.$zapas["rok"].'<br> Kolo '.$kolo.'<br>'.$zapas["datum"].'<br>'.$zapas["domaci"].':'.$zapas["hostia"].'</p>';
+	  echo '<p class="card-text"><strong>'.$zapas["nazov"].' '.$zapas["rok"].'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' : '.$zapas["hostia"].'</p>';
 	  echo '</li>';
 	}
 }
@@ -58,14 +59,15 @@ function vypisPosledneZapasy(array $skupiny){
 			return;
 		}
 		/*kvoli tomu ze 3 kola v pripravke sa hraju v jeden den - kolo 1,2,3 = kolo 1*/
-		if($skupina === 'Pripravka'){
+		/*if($skupina === 'Pripravka'){
 			$kolo = floor(($zapas['kolo'] -1) / 3) + 1;
 		}
 		else{
 			$kolo = $zapas['kolo'];
-		}
+		}*/
+    $kolo = $zapas['kolo'];
 		echo '<li class="list-group-item">';
-	  echo '<p class="card-text">'.$zapas["nazov"].' '.$zapas["rok"].'<br> Kolo '.$kolo.'<br>'.$zapas["datum"].'<br>'.$zapas["domaci"].' '.$zapas["skoreD"].':'.$zapas["skoreH"].' '.$zapas["hostia"].'</p>';
+	  echo '<p class="card-text"><strong>'.$zapas["nazov"].' '.$zapas["rok"].'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' <strong>'.$zapas["skoreD"].':'.$zapas["skoreH"].' </strong>'.$zapas["hostia"].'<br><small>'.$zapas['poznamka'].'</small></p>';
 	  echo '</li>';
 	}
 }
@@ -100,7 +102,7 @@ function vypisKolo($kolo, $skupina, $rok){
   echo '</div>';
   $zapasy = vratZapasyKola($skupina, $rok, $kolo);
   foreach ($zapasy as $zapas) {
-  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], $zapas['datum']);
+  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']));
   }	
 }
 
@@ -119,9 +121,14 @@ EOF;
 }
 
 function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum){
+  if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
+  echo '<div class="row bg-warning">';
+  }
+  else{
   echo '<div class="row">';
+  }
   echo '<div class="col-sm-1"></div>';
-  echo '<div class="col-sm-2 border-bottom font-weight-bold">'.$datum.'</div>';
+  echo '<div class="col-sm-2 border-bottom font-weight-bold bg-warning-pale">'.$datum.'</div>';
   echo '<div class="col-sm-3 text-right border-bottom">'.$domaci.'</div>';
   echo '<div class="col-sm-2 text-center border-bottom">'.$skoreD.':'.$skoreH.'</div>';
   echo '<div class="col-sm-3 border-bottom">'.$hostia.'</div>';

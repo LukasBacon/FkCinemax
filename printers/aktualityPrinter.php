@@ -14,7 +14,7 @@ EOF;
           echo '<p class="card-text">'.$row['text'].'</p>';
           echo '<input type="hidden" name="akt_id" value="'.$row['id'].'">';
         echo '</div>';
-        echo '<div class="card-footer">'.vypis_datum($row['datum']).'</div>';
+        echo '<div class="card-footer">'.vypisDatum($row['datum']).'</div>';
       echo '</div>';
     } 
     $db->close();
@@ -38,7 +38,7 @@ EOF;
       echo '<form novalidate method="post">';
       echo '<input type="submit" name="vymaz_akt" class="btn btn-admin" value="Vymaž" style="margin-right:10px;">';
       echo '<input type="submit" name="uprav_akt" class="btn btn-admin" value="Uprav" style="margin-right:10px;">';
-      echo vypis_datum($row['datum']);
+      echo vypisDatum($row['datum']);
       echo '</form>';
       echo '</div>';
       echo '</div>';
