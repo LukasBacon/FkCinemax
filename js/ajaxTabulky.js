@@ -31,7 +31,13 @@ $(document).ready(function(){
 	function loadTable(table, fields, data) {
 	    var rows = '';
 	    $.each(JSON.parse(data), function(index, item) {
-	        var row = '<tr>';
+	    	var row;
+	    	if(item['klub'].includes("FK CINEMAX Doľany")){
+  				row =  "<tr class='table-warning'>";
+			}
+			else{
+			  	row = "<tr>";
+			}
 	        $.each(fields, function(index, field) {
 	            row += '<td>' + item[field+''] + '</td>';
 	        });
