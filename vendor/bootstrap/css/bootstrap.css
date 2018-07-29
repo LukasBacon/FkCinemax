@@ -6186,6 +6186,10 @@ button.bg-info:focus {
   background-color: #ffc107 !important;
 }
 
+.bg-warning-pale{
+  background-color: #ffeeba !important;
+}
+
 a.bg-warning:hover, a.bg-warning:focus,
 button.bg-warning:hover,
 button.bg-warning:focus {

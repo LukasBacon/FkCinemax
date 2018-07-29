@@ -39,7 +39,7 @@ dbLoader::over();
 
     <!-- Page Content -->
     <div class="container">
-      <h1 class="my-4">Vitajte na stránke FK CINEMAX!</h1>
+      <br>
 
       <!-- row -->
       <div class="row">
@@ -50,6 +50,9 @@ dbLoader::over();
             <div class="card-body">
               <ul class="list-group list-group-flush">
                 <?php vypisPosledneZapasy(array('Seniori', 'Pripravka')); ?>
+                <li class="list-group-item">
+                  <a class="btn btn-success" href="z_pripravka.php">Zápasy prípravky</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -57,7 +60,10 @@ dbLoader::over();
             <h5 class="card-header-match">Nasledujúci zápas</h5>
             <div class="card-body">
               <ul class="list-group list-group-flush">
-                <?php vypisNasledujuceZapasy(array('Seniori', 'Pripravka')); ?>
+                <?php vypisNasledujuceZapasy(array('Seniori')); ?>
+                <li class="list-group-item">
+                  <a class="btn btn-primary" href="z_pripravka.php">Zápasy prípravky</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -70,6 +76,7 @@ dbLoader::over();
               <img style="padding-top: 1px; margin-left: 5px;"  src="fotky/futbalnet.png" height="30px">
             </a>
           </div>
+          <br>
         </div>
         <!-- /.Zapasy -->
 

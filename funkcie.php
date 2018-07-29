@@ -82,11 +82,17 @@ function paticka(){ ?>
 <?php
 }
 
-function vypis_datum($date){
+function vypisDatum($date){
   $rok = substr($date, 0, 4);
   $mesiac = substr($date, 5, 2);
   $den = substr($date, 8, 2);
   return $den.'.'.$mesiac.'.'.$rok;
+}
+
+function vypisDatumACas($datetime){
+  $datum = vypisDatum($datetime);
+  $cas = substr($datetime, 11);
+  return $datum . ' ' . $cas;
 }
 
 function vypis_hracov($skupina){
@@ -236,7 +242,7 @@ EOF;
 
 
               </div>
-              <div class="card-footer"><?php echo vypis_datum($row['datum_disk']); ?></div>
+              <div class="card-footer"><?php echo vypisDatum($row['datum_disk']); ?></div>
             </div>
       <?php
   }
