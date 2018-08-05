@@ -1,11 +1,55 @@
 var POCET_POLOZIEK_NA_STRANU = 3;
+var aktualnaStrana = 1;
+var pocetStran = 10000000;
 
 $(document).ready(function(){
 	updatePaginationNavigation();
-	vypisNthStranu(1);
-
+	vypisNthStranu(aktualnaStrana, false);
 });
 
+// pridanie akttuality ----------------------------------------------------- 
+function pridajAktualitu(){
+	nadpis = $("#pridaj-nadpis");
+	text = $("#pridaj-text");
+	infoDiv = $("#info-div");
+	nadpisText = nadpis.val();
+	textText = text.val();
+	if (nadpisText.length == 0 || textText.length == 0){
+		infoDiv.html("Jedno z polí je prázdne.");
+		return;
+	}
+	$.ajax({
+		url:"servlets/pridajAktualituServlet.php",
+		type:"post",
+		data:{"nadpis":nadpisText, "text":textText},
+		success: function(data){
+			nadpis.val("");
+			text.val("");
+			infoDiv.html("Aktualita pridaná.");
+		}
+	});	
+	updatePaginationNavigation();
+	vypisNthStranu(aktualnaStrana, false);
+}
+
+// vymazanie aktuality ------------------------------------------------------
+function vymazAktualitu(id){
+	if (!confirm('Naozaj chcete vymazať aktualitu?')){
+		return;
+	}
+	$.ajax({
+		url:"servlets/vymazAktualituServlet.php",
+		type:"post",
+		data:{"id":id},
+		success: function(data){
+			updatePaginationNavigation();
+			vypisNthStranu(aktualnaStrana, false);
+		}
+	});	
+}
+
+
+// paginaton ---------------------------------------------------------------
 function updatePaginationNavigation(){
 	var paginationNavigation = $(".pagination");
 	var paginationNavigationText = "";
@@ -15,27 +59,20 @@ function updatePaginationNavigation(){
 		type:"post",
 		data:{"pocetPoloziekNaStranu":POCET_POLOZIEK_NA_STRANU},
 		success: function(data){
-			var pocetStran = data;
-			paginationNavigationText += '<li class="page-item">';	
-      		paginationNavigationText += '<a class="page-link" href="#" aria-label="Previous">'
-        	paginationNavigationText += '<span aria-hidden="true">&laquo;</span>'
-        	paginationNavigationText += '<span class="sr-only">Previous</span></a></li>'
-     			
+			pocetStran = data;
 			for (var strana = 1; strana <= pocetStran; strana++) {
-				paginationNavigationText += '<li class="page-item">';
-			    paginationNavigationText += '<a class="page-link" href="javascript:vypisNthStranu('+ strana +'); scrollToAktuality();">' + strana +'</a>';
+				paginationNavigationText += '<li class="page-item" id="pagination-nav-page-' + strana + '">';
+			    paginationNavigationText += '<a class="page-link" href="javascript:vypisNthStranu('+ strana +', true);">' + strana +'</a>';
 			    paginationNavigationText += '</li>'; 
 			}
-			paginationNavigationText += '<li class="page-item">';	
-      		paginationNavigationText += '<a class="page-link" href="#" aria-label="Next">'
-        	paginationNavigationText += '<span aria-hidden="true">&raquo;</span>'
-        	paginationNavigationText += '<span class="sr-only">Next</span></a></li>'
 			paginationNavigation.html(paginationNavigationText);
 		}
 	});		
 }
 
-function vypisNthStranu(cisloStrany){
+function vypisNthStranu(cisloStrany, scroll){
+	aktualnaStrana = cisloStrany;
+	highlightActualPage(aktualnaStrana);
 	$.ajax({
 		url:"servlets/aktualityGetNthStranuServlet.php",
 		type:"post",
@@ -62,10 +99,19 @@ function vypisNthStranu(cisloStrany){
 			});
 		}
 	});
+	if (scroll === true){
+		scrollToAktuality();
+	}
+}
+
+function highlightActualPage(aktualnaStrana){
+	$(".page-item").removeClass("active");
+	$("#pagination-nav-page-" + aktualnaStrana).addClass("active");
 }
 
 function vypisAktualityAdmin(data){
 	var aktualityText = "";
+	console.log(data);
 	$.each(JSON.parse(data), function(index, aktualita){
 		aktualityText +=  '<div class="card">';
 	    aktualityText +=  '<h5 class="card-header">'+aktualita['nadpis']+'</h5>';
@@ -74,11 +120,9 @@ function vypisAktualityAdmin(data){
 	    aktualityText +=  '<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '<div class="card-footer">';
-	    aktualityText +=  '<form novalidate method="post">';
-	    aktualityText +=  '<input type="submit" name="vymaz_akt" class="btn btn-admin" value="Vymaž" style="margin-right:10px;">';
-	    aktualityText +=  '<input type="submit" name="uprav_akt" class="btn btn-admin" value="Uprav" style="margin-right:10px;">';
+	    aktualityText +=  '<a class="btn btn-admin" style="margin-right:10px;" href="javascript:vymazAktualitu('+aktualita['id']+');">Vymaž</a>';
+	    aktualityText +=  '<a class="btn btn-admin" style="margin-right:10px;" href="javascript:upravAktualitu('+aktualita['id']+');">Uprav</a>';
 	    aktualityText +=  aktualita['datum'];
-	    aktualityText +=  '</form>';
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '</div>';
 	});
@@ -95,9 +139,7 @@ function vypisAktualityUser(data){
 	    aktualityText +=  '<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '<div class="card-footer">';
-	    aktualityText +=  '<form novalidate method="post">';
 	    aktualityText +=  aktualita['datum'];
-	    aktualityText +=  '</form>';
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '</div>';
 	});
@@ -107,6 +149,5 @@ function vypisAktualityUser(data){
 function scrollToAktuality(){
 	$('html, body').animate({scrollTop: ($("#aktuality-section").offset().top) -= 110},500);
 }
-
 
 
