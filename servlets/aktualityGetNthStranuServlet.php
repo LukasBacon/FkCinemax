@@ -23,6 +23,7 @@ while ($row = $ret->fetchArray(SQLITE3_ASSOC)){
 	$pole[] = $row;
 }
 $db->close();
+
 echo json_encode($pole);
 
 ?>
