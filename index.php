@@ -81,7 +81,7 @@ dbLoader::over();
         <!-- /.Zapasy -->
 
         <!-- Aktuality -->
-        <div class="col-lg-7">
+        <div class="col-lg-7" id="aktuality-section">
           <!-- admin - pridaj aktualitu a vypis-->
           <?php 
           if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){ ?>
@@ -109,17 +109,16 @@ dbLoader::over();
               </div>
 
             </div>
-            <?php vypis_aktuality_admin(); 
+            <?php
           }
-          //pouzivatel - vypis aktualit
-          else{
-            vypis_aktuality();
-            
-          } 
-          //aktualityPagination();
           ?>
-          <div id="pagination-container"></div>
-        </div>
+          <!-- aktuality -->   
+          <div class="aktualityPage">';
+          </div>  
+
+          <!-- pagination navigation --> 
+          <ul class="pagination justify-content-center">
+          </ul>
         <!-- /.Aktuality -->
       </div>
       <!-- /.row -->
@@ -128,6 +127,8 @@ dbLoader::over();
 <?php paticka();?>>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/aktuality.js"></script>
+    <script type="text/javascript" src="js/jquerysession.js"></script>
   </body>
 
 </html>
