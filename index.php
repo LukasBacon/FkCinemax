@@ -1,6 +1,5 @@
 <?php
 include('funkcie.php');
-include('printers/aktualityPrinter.php');
 include('printers/zapasyPrinter.php');
 include('dbLoader.php');
 session_start();
@@ -81,45 +80,42 @@ dbLoader::over();
         <!-- /.Zapasy -->
 
         <!-- Aktuality -->
-        <div class="col-lg-7">
+        <div class="col-lg-7" id="aktuality-section">
           <!-- admin - pridaj aktualitu a vypis-->
           <?php 
           if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){ ?>
             <div class="card">
               <h5 class="card-header-admin">Pridaj aktualitu</h5>
               <div class="card-body">
-                <form novalidate method="post">
                   <div class="control-group form-group">
                     <div class="controls">
                       <label>Nadpis</label>
-                      <input type="text" class="form-control" id="nadpis" required data-validation-required-message="Zadaj nadpis aktuality.">
+                      <input type="text" class="form-control" id="pridaj-nadpis" required data-validation-required-message="Zadaj nadpis aktuality.">
                       <p class="help-block"></p>
                     </div>
                   </div>
                   <div class="control-group form-group">
                     <div class="controls">
                       <label>Text:</label>
-                      <textarea rows="4" cols="100" class="form-control" id="text" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none"></textarea>
+                      <textarea rows="4" cols="100" class="form-control" id="pridaj-text" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none"></textarea>
                     </div>
                   </div>
-                  <div id="success"></div>
+                  <div id="info-div"></div>
                   <!-- For success/fail messages -->
-                    <button type="submit" class="btn btn-admin">Pridaj</button>
-                </form>
+                  <a  class="btn btn-admin" id="pridaj-button" href="javascript:pridajAktualitu();">Pridaj</a>
               </div>
 
             </div>
-            <?php vypis_aktuality_admin(); 
+            <?php
           }
-          //pouzivatel - vypis aktualit
-          else{
-            vypis_aktuality();
-            
-          } 
-          //aktualityPagination();
           ?>
-          <div id="pagination-container"></div>
-        </div>
+          <!-- aktuality -->   
+          <div class="aktualityPage">
+          </div>  
+
+          <!-- pagination navigation --> 
+          <ul class="pagination justify-content-center">
+          </ul>
         <!-- /.Aktuality -->
       </div>
       <!-- /.row -->
@@ -128,6 +124,7 @@ dbLoader::over();
 <?php paticka();?>>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/aktuality.js"></script>
   </body>
 
 </html>
