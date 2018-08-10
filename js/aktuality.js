@@ -3,8 +3,9 @@ var aktualnaStrana = 1;
 var pocetStran = 10000000;
 
 $(document).ready(function(){
+	var aktualnaStrana = 1;
 	updatePaginationNavigation();
-	vypisNthStranu(aktualnaStrana, false);
+	vypisNthStranu(1, false);
 });
 
 // pridanie akttuality ----------------------------------------------------- 
@@ -68,23 +69,30 @@ function updatePaginationNavigation(){
 		data:{"pocetPoloziekNaStranu":POCET_POLOZIEK_NA_STRANU},
 		success: function(data){
 			pocetStran = data;
+			paginationNavigationText += '<li class="page-item pagination-prev"><a class="page-link" href="javascript:vypisPrevStranu();">&laquo;</a></li>';
 			for (var strana = 1; strana <= pocetStran; strana++) {
 				paginationNavigationText += '<li class="page-item" id="pagination-nav-page-' + strana + '">';
 			    paginationNavigationText += '<a class="page-link" href="javascript:vypisNthStranu('+ strana +', true);">' + strana +'</a>';
 			    paginationNavigationText += '</li>'; 
 			}
+			paginationNavigationText += '<li class="page-item pagination-next"><a class="page-link" href="javascript:vypisNextStranu();">&raquo;</a></li>';
 			paginationNavigation.html(paginationNavigationText);
+			highlightActualPage(aktualnaStrana);
+			$(".pagination").rPage();
 		}
-	});		
+	});	
 }
 
 function vypisNthStranu(cisloStrany, scroll){
+	if (cisloStrany < 1 || cisloStrany > pocetStran){
+		return;
+	}
+	$(".pagination").rPage();
 	aktualnaStrana = cisloStrany;
-	highlightActualPage(aktualnaStrana);
 	$.ajax({
 		url:"servlets/aktualityGetNthStranuServlet.php",
 		type:"post",
-		data:{"cisloStrany":cisloStrany, "pocetPoloziekNaStranu":POCET_POLOZIEK_NA_STRANU},
+		data:{"cisloStrany":aktualnaStrana, "pocetPoloziekNaStranu":POCET_POLOZIEK_NA_STRANU},
 		success: function(data){
 			var strana = data;
 			var aktuality = $(".aktualityPage");
@@ -105,11 +113,20 @@ function vypisNthStranu(cisloStrany, scroll){
 					aktuality.html(aktualityText);
 				}
 			});
+			updatePaginationNavigation();
 		}
 	});
 	if (scroll === true){
 		scrollToAktuality();
 	}
+}
+
+function vypisPrevStranu(){
+	vypisNthStranu(aktualnaStrana-1, true);
+}
+
+function vypisNextStranu(){
+	vypisNthStranu(aktualnaStrana+1, true);
 }
 
 function highlightActualPage(aktualnaStrana){
