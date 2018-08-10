@@ -15,7 +15,12 @@ hlavicka();
                 <a href="foto.php">Fotogaléria</a>
             </li>
             <li class="breadcrumb-item active">
-                Album
+                <?php
+                    if (isset($_GET['nazov'])) {
+                        $nazov = $_GET['nazov'];
+                        echo $nazov;
+                    }
+                ?>
             </li>
         </ol>
 
@@ -25,7 +30,6 @@ hlavicka();
                     $id = $_GET['id'];
                     printPhotosOfAlbumWithId($id);
                 }
-                printPhotosOfAlbumWithId(1);
             ?>
         </div>
     </div>
