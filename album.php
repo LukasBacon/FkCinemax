@@ -12,7 +12,7 @@ hlavicka();
                 <a href="index.html">Domov</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="foto.php">Fotogaléria</a>
+                <a href="fotogaleria.php">Fotogaléria</a>
             </li>
             <li class="breadcrumb-item active">
                 <?php

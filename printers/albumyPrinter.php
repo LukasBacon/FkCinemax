@@ -14,14 +14,14 @@ EOF;
   		echo "<div style='' class='row'>";
   	}
 		echo '<div class="col-sm-4">';
-			echo '<a style= "color:black;" href = "album.php?id='.$row['id'].'&'.$row['nazov'].'">';
-				echo '<div style="border:solid black 1px;" class="card mb-4">';
-		    	echo '<div class="card-header">';
-		    		echo '<p>'.$row['nazov'].'</p>';
-		    	echo '</div>';
+			echo '<a style= "color:black;" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'">';
+				echo '<div style="border:solid grey 1px;" class="card mb-4">';
 					echo '<div style="" class="card-body">';
-		    		echo '<img class="card-img-top img-thumbnail background-size:cover;" style="" 
+		    		echo '<img class="card-img-top img-thumbnail" border="0" style="border:0;" 
 		    		src="'.$row['url'].'">'; 
+		    	echo '</div>';
+		    	echo '<div class="card-footer" style="text-align:left;">';
+		    		echo '<p>'.$row['nazov'].'</p>';
 		    	echo '</div>';
 		    echo '</div>';
 	    echo '</a>';
