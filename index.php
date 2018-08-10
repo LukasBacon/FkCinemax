@@ -125,6 +125,7 @@ dbLoader::over();
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="js/aktuality.js"></script>
+    <script type="text/javascript" src="js/responsive-paginate.js"></script>
   </body>
 
 </html>
