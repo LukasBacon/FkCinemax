@@ -55,7 +55,7 @@ function hlavicka(){  ?>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="foto.php">Fotogaléria</a>
+              <a class="nav-link" href="fotogaleria.php">Fotogaléria</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="forum.php">Fórum</a>
