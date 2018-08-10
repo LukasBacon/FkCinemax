@@ -15,13 +15,13 @@ dbLoader::over();
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-          <div class="carousel-item active" style="background-image: url('fotky/main1.jpg')">
+          <div class="carousel-item active" style="background-image: url('fotky/Vitaz ligy/main1.jpg')">
             <div class="carousel-caption d-none d-md-block"></div>
           </div>
-          <div class="carousel-item" style="background-image: url('fotky/main4.jpg')">
+          <div class="carousel-item" style="background-image: url('fotky/Vitaz ligy/main4.jpg')">
             <div class="carousel-caption d-none d-md-block"></div>
           </div>
-          <div class="carousel-item" style="background-image: url('fotky/main2.jpg')">
+          <div class="carousel-item" style="background-image: url('fotky/Vitaz ligy/main2.jpg')">
             <div class="carousel-caption d-none d-md-block"></div>
           </div>
         </div>

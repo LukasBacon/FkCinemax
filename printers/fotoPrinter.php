@@ -10,13 +10,25 @@ EOF;
 		$pole[] = $row;
 	}
 	$db->close();
-	printRow($pole);
+	printPhotos($pole);
 }
 
-function printRow($fotky){
+function printPhotos($fotky){
+	$pocet = 0;
 	foreach ($fotky as $fotka) {
 		$url = $fotka['url'];
-		echo '<a href="'.$url.'" class="img-thumbnail"><img src="'.$url.'" /></a>';
+		if($pocet % 4 == 0){
+			echo '<div class="row">';
+		}
+		echo '<div class="col-sm-3">';
+			echo '<a href="'.$url.'">';
+			echo '<img src="'.$url.'" class="img-thumbnail"/>';
+			echo '</a>';
+    echo '</div>';
+		if($pocet % 4 == 3){
+			echo '</div>';
+		}
+		$pocet += 1;
 	}
 }
 
