@@ -10,11 +10,11 @@ $(document).ready(function(){
 
 // pridanie akttuality ----------------------------------------------------- 
 function pridajAktualitu(){
-	nadpis = $("#pridaj-nadpis");
-	text = $("#pridaj-text");
-	infoDiv = $("#info-div");
-	nadpisText = nadpis.val();
-	textText = text.val();
+	var nadpis = $("#pridaj-nadpis");
+	var text = $("#pridaj-text");
+	var infoDiv = $("#info-div");
+	var nadpisText = nadpis.val();
+	var textText = text.val();
 	if (nadpisText.length == 0 || textText.length == 0){
 		infoDiv.html("Jedno z polí je prázdne.");
 		return;
@@ -29,8 +29,7 @@ function pridajAktualitu(){
 			infoDiv.html("Aktualita pridaná.");
 		}
 	});	
-	updatePaginationNavigation();
-	vypisNthStranu(aktualnaStrana, false);
+	window.location.reload();
 }
 
 // vymazanie aktuality ------------------------------------------------------
@@ -47,6 +46,15 @@ function vymazAktualitu(id){
 			vypisNthStranu(aktualnaStrana, false);
 		}
 	});	
+}
+
+// update aktuality --------------------------------------------------------
+function upravAktualitu(id){
+	var nadpis = $("aktualita-nadpis-" + id);
+	var text = $("#aktualita-text-" + id);
+	var nadpisText = nadpis.text();
+	var textText = text.text();
+	console.log(nadpisText + ": " + textText);
 }
 
 
@@ -128,12 +136,11 @@ function highlightActualPage(aktualnaStrana){
 
 function vypisAktualityAdmin(data){
 	var aktualityText = "";
-	console.log(data);
 	$.each(JSON.parse(data), function(index, aktualita){
-		aktualityText +=  '<div class="card">';
-	    aktualityText +=  '<h5 class="card-header">'+aktualita['nadpis']+'</h5>';
+		aktualityText +=  '<div class="card" id="aktualita-'+aktualita['id']+'">';
+	    aktualityText +=  '<h5 class="card-header" id="aktualita-nadpis-'+aktualita['id']+'">'+aktualita['nadpis']+'</h5>';
 	    aktualityText +=  '<div class="card-body">';
-	    aktualityText +=  '<p class="card-text">'+aktualita['text']+'</p>';
+	    aktualityText +=  '<p class="card-text" id="aktualita-nadpis-'+aktualita['id']+'">'+aktualita['text']+'</p>';
 	    aktualityText +=  '<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '<div class="card-footer">';
