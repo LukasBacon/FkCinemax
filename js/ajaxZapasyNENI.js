@@ -20,7 +20,12 @@ $(document).ready(function(){
   						else{ skoreD = zapas['skoreD']; }
   						if(zapas['skoreH'] === null){ skoreH = ""; }
   						else{ skoreH = zapas['skoreH']; }
-  						zapasy += '<div class="row">';
+  						if(zapas['domaci'].includes("FK CINEMAX Doľany") || zapas['hostia'].includes("FK CINEMAX Doľany")){
+  							zapasy += '<div class="row bg-warning-pale">';
+						}
+						else{
+							zapasy += '<div class="row">';
+						}
   						zapasy += '<div class="col-sm-1"></div>';
   						zapasy += '<div class="col-sm-2 border-bottom font-weight-bold">' + zapas['datum'] + '</div>';
   						zapasy += '<div class="col-sm-3 text-right border-bottom">' + zapas['domaci'] + '</div>';

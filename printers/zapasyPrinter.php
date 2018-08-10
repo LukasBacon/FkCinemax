@@ -96,14 +96,15 @@ EOF;
 
 function vypisKolo($kolo, $skupina, $rok){
   echo '<div class="row" id="k'.$kolo.'">';
-  echo '<div class="col-sm-12">';
-  echo '<h6>Kolo '.$kolo.'</h6>';
+  echo '<div class="col-sm-12 bg-dark text-center text-white">';
+  echo '<h6 class="mb-1 mt-1"><strong>Kolo '.$kolo.'</strong></h6>';
   echo '</div>';
   echo '</div>';
   $zapasy = vratZapasyKola($skupina, $rok, $kolo);
   foreach ($zapasy as $zapas) {
   	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']));
   }	
+  echo '<br>';
 }
 
 function vratZapasyKola($skupina, $rok, $kolo){
@@ -122,17 +123,17 @@ EOF;
 
 function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum){
   if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
-  echo '<div class="row bg-warning">';
+  echo '<div class="row bg-warning-pale">';
   }
   else{
-  echo '<div class="row">';
+  echo '<div class="row border-bottom">';
   }
-  echo '<div class="col-sm-1"></div>';
-  echo '<div class="col-sm-2 border-bottom font-weight-bold bg-warning-pale">'.$datum.'</div>';
-  echo '<div class="col-sm-3 text-right border-bottom">'.$domaci.'</div>';
-  echo '<div class="col-sm-2 text-center border-bottom">'.$skoreD.':'.$skoreH.'</div>';
-  echo '<div class="col-sm-3 border-bottom">'.$hostia.'</div>';
-  echo '<div class="col-sm-1"></div>';
+  echo '<div class="col-sm-2 font-weight-bold">'.$datum.'</div>';
+  echo '<div class="col-sm-3 text-right">'.$domaci.'</div>';
+  echo '<div class="col-sm-2 text-center">'.$skoreD.':'.$skoreH.'</div>';
+  echo '<div class="col-sm-3">'.$hostia.'</div>';
+ /* echo '<div class="col-sm-8 text-center">'.$domaci.' '.$skoreD.' : '.$skoreH.' '.$hostia.'</div>';*/
+  echo '<div class="col-sm-2"></div>';
   echo '</div>';
 }
 
