@@ -40,3 +40,9 @@
 #upravAlbumInput{
 	width:60%;
 }
+#novaFotkaPanel{
+	text-align: center;
+	border-bottom: solid #e9ecef 25px;
+	padding-bottom: 10px;
+	border-radius: 0.25rem;
+}

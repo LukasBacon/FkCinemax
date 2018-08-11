@@ -11,9 +11,11 @@ EOF;
 	}
 	$db->close();
 	if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1){
-		printAddPhotosFormular($nazovPriecinku, $id);
+		printPhotosWithFormular($nazovPriecinku, $id, $pole);
 	}
-	printPhotos($pole);
+	else{
+		printPhotos($pole);
+	}
 }
 
 function printPhotos($fotky){
@@ -35,21 +37,42 @@ function printPhotos($fotky){
 	}
 }
 
-function printAddPhotosFormular($nazovPriecinku, $idAlbumu){
-	?>
-	<form action="/FkCinemax/servlets/addPhotosServlet.php" method="post" enctype="multipart/form-data">
-	<label for="file">Vyber fotky:</label>
-	<input type="file" name="files[]" id="file" multiple/> 
-	<?php
-	echo '<input type="text" name="idAlbumu" value="'.$idAlbumu.'" hidden>';
-	echo '<input type="text" name="albumName" value="'.$nazovPriecinku.'" hidden>';
-	$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
-	?>
-	<br />
-	<input type="submit" name="submit" value="Submit" />
-	</form>
-	<?php
+function printPhotosWithFormular($nazovPriecinku, $idAlbumu, $fotky){
+	vypis_pridaj_novu($nazovPriecinku, $idAlbumu);
+
+	$pocet = 0;
+	foreach ($fotky as $fotka) {
+		$url = $fotka['url'];
+		if($pocet % 4 == 0){
+			echo '<div class="row">';
+		}
+		echo '<div class="col-sm-3">';
+			echo '<a href="'.$url.'">';
+			echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
+			echo '</a>';
+    echo '</div>';
+		if($pocet % 4 == 3){
+			echo '</div>';
+		}
+		$pocet += 1;
+	}
+}
+
+function vypis_pridaj_novu($nazovPriecinku, $idAlbumu){
+	echo '<div class="row m-0">';
+		echo '<div class="col-sm-12" id="novaFotkaPanel">';
+			echo '<h4>Pridaj novú fotku</h4>';
+			echo '<form class="form-inline d-flex justify-content-center" action="/FkCinemax/servlets/addPhotosServlet.php" method="post" enctype="multipart/form-data">';
+				echo '<input type="file" name="files[]" id="file" multiple/> ';
+				echo '<input type="text" name="idAlbumu" value="'.$idAlbumu.'" hidden>';
+				echo '<input type="text" name="albumName" value="'.$nazovPriecinku.'" hidden>';
+				$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+				echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
+				echo '<br />';
+				echo '<input type="submit" name="submit" value="Pridaj" class="btn btn-success"/>';
+			echo '</form>';
+		echo '</div>';
+	echo '</div><br>';
 }
 ?>
 
