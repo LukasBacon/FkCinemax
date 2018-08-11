@@ -17,3 +17,26 @@
 #fotoImg:hover{
 	transform: scale(1.02);	
 }
+.bg-lightGreen{
+	background-color: #b2f7c4;
+}
+.bg-black{
+	background-color: black;
+}
+#cancelImg{
+	position:absolute;
+	top:0;
+	right:0;
+	width: 40px;
+	height:auto;
+}
+
+#cancelImg:hover{
+	transform: scale(1.1);
+}
+#upravAlbumBtn:hover{
+	transform: scale(1.05);
+}
+#upravAlbumInput{
+	width:60%;
+}
