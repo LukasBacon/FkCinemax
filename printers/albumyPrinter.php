@@ -14,17 +14,16 @@ EOF;
   		echo "<div style='' class='row'>";
   	}
 		echo '<div class="col-sm-4">';
-			echo '<a style= "color:black;" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'">';
-				echo '<div style="border:solid grey 1px;" class="card mb-4">';
-					echo '<div style="" class="card-body">';
-		    		echo '<img class="card-img-top img-thumbnail" border="0" style="border:0;" 
-		    		src="'.$row['url'].'">'; 
-		    	echo '</div>';
-		    	echo '<div class="card-footer" style="text-align:left;">';
-		    		echo '<p>'.$row['nazov'].'</p>';
-		    	echo '</div>';
-		    echo '</div>';
-	    echo '</a>';
+				echo '<a id="aWithoutTextHover" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'">';
+					echo '<div id="cardAlbum" class="card mb-4">';
+						echo '<div class="card-body p-0">';
+								echo '<img id="albumImg" src="'.$row['url'].'">'; 
+			    	echo '</div>';
+			    	echo '<div class="card-footer" style="text-align:left;">';
+			    		echo '<p style="color:black;">'.$row['nazov'].'</p>';
+			    	echo '</div>';
+			    echo '</div>';
+		    echo '</a>';
     echo '</div>';
     if($pocet % 3 == 2){
   		echo "</div>";

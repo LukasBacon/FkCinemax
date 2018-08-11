@@ -22,7 +22,7 @@ function printPhotos($fotky){
 		}
 		echo '<div class="col-sm-3">';
 			echo '<a href="'.$url.'">';
-			echo '<img src="'.$url.'" class="img-thumbnail"/>';
+			echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
 			echo '</a>';
     echo '</div>';
 		if($pocet % 4 == 3){

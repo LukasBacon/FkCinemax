@@ -1,0 +1,19 @@
+#aWithoutTextHover:hover{
+	text-decoration:none;
+}
+#cardAlbum:hover{
+	transform: scale(1.02);
+	border:solid silver 1px;
+}
+#cardAlbum{
+	height: 350px;
+}
+#albumImg{
+	object-fit:cover; height:281px; width:100%;
+}
+#fotoImg{
+	object-fit:cover; height:200px; width:100%;
+}
+#fotoImg:hover{
+	transform: scale(1.02);	
+}
