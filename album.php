@@ -28,7 +28,8 @@ hlavicka();
             <?php
                 if (isset($_GET['id'])) {
                     $id = $_GET['id'];
-                    printPhotosOfAlbumWithId($id);
+                    $nazovPriecinku = $_GET['nazovPriecinku'];
+                    printPhotosOfAlbumWithId($id, $nazovPriecinku);
                 }
             ?>
         </div>

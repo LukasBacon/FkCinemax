@@ -3,7 +3,6 @@ var aktualnaStrana = 1;
 var pocetStran = 10000000;
 
 $(document).ready(function(){
-	var aktualnaStrana = 1;
 	updatePaginationNavigation();
 	vypisNthStranu(1, false);
 });
