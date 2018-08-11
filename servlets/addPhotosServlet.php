@@ -3,7 +3,7 @@ include('../funkcie.php');
 
 if (isset($_POST['submit'])){
     $error=array();
-    $extension=array("jpeg","jpg","png","gif");
+    $extension=array("jpeg","jpg", "JPG","png","gif");
     $album = $_POST['albumName'];
     $url = $_POST['url'];
     $idAlbumu = $_POST['idAlbumu'];
@@ -25,8 +25,6 @@ if (isset($_POST['submit'])){
     unset($_FILES['uploadedfile']);
     header('Location: ' . $url);
 }
-
-
 
 function compressImage($pathToImage)
 {

@@ -10,7 +10,9 @@ EOF;
 		$pole[] = $row;
 	}
 	$db->close();
-	printAddPhotosFormular($nazovPriecinku, $id);
+	if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1){
+		printAddPhotosFormular($nazovPriecinku, $id);
+	}
 	printPhotos($pole);
 }
 
