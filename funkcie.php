@@ -17,6 +17,7 @@ function hlavicka(){  ?>
 
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="css/modern-business.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
   </head>
 
   <body>
