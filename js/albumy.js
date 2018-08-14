@@ -24,8 +24,7 @@ function upravAlbum(id){
 	var upravAlbumBtn = $('#upravAlbumBtn'+id);
 	albumNazov.prop('hidden',true);
 	albumInput.removeAttr('hidden'); 
-	//albumInput.prop('placeholder','staryNazov');
-	upravAlbumBtn.replaceWith('<a id="potvrdNazovBtn'+id+'" class="d-inline float-right btn btn-admin" href="javascript:potvrdNazov('+id+');">Potvrď</a>');
+	upravAlbumBtn.replaceWith('<a id="potvrdNazovBtn'+id+'" class="d-inline float-right btn btn-admin" href="javascript:potvrdNazov('+id+');">Potvrď</a>');		
 }
 
 function potvrdNazov(id){

@@ -11,7 +11,7 @@ hlavicka();
 
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item">
-					<a href="index.html">Domov</a>
+					<a href="index.php">Domov</a>
 				</li>
 				<li class="breadcrumb-item active">Kontakt</li>
 			</ol>
