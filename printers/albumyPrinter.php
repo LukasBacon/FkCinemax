@@ -90,9 +90,9 @@ function vypis_novy_album_karta(){
 		echo '<div class="col-sm-4">';
 			echo '<div class="card" id="cardAlbum">';
 				echo '<form method="post">';
-					echo '<div class="card-body p-5 bg-black text-center" style="height:281px;">';
+					echo '<div class="card-body pt-5 bg-black text-center" style="height:281px;">';
 							echo '<h4 class="card-title text-white">Pridaj nový album</h4>';
-							echo '<input name="nazov" type="text" placeholder="Názov albumu" required>';
+							echo '<input name="nazov" id="inputNewAlbum" type="text" placeholder="Názov albumu" required>';
 					echo '</div>';
 					echo '<div class="card-footer text-center">';
 						echo '<input type="submit" name="novyAlbumBtn" value="Pridaj" class="btn btn-success">';

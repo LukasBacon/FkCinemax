@@ -26,8 +26,8 @@ function printPhotos($fotky){
 			echo '<div class="row">';
 		}
 		echo '<div class="col-sm-3">';
-			echo '<a href="'.$url.'">';
-			echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
+			echo '<a class="fotoA" href="'.$url.'">';
+				echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
 			echo '</a>';
     echo '</div>';
 		if($pocet % 4 == 3){
@@ -47,9 +47,14 @@ function printPhotosWithFormular($nazovPriecinku, $idAlbumu, $fotky){
 			echo '<div class="row">';
 		}
 		echo '<div class="col-sm-3">';
-			echo '<a href="'.$url.'">';
-			echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
-			echo '</a>';
+			echo '<div class="card">';
+				echo '<a href="javascript:vymazFotku('.$fotka['id'].');">';
+					echo '<img id="cancelImgPhoto" src="fotky/cancel.png">';
+				echo '</a>';
+				echo '<a class="fotoA" href="'.$url.'">';
+					echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
+				echo '</a>';
+			echo '</div>';
     echo '</div>';
 		if($pocet % 4 == 3){
 			echo '</div>';
