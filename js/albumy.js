@@ -17,6 +17,7 @@ function vymazAlbum(id){
 		}
 	});	
 }
+
 // update albumu --------------------------------------------------------
 function upravAlbum(id){
 	var albumInput =  $('#upravAlbumInput'+id);
@@ -38,5 +39,10 @@ function potvrdNazov(id){
 		albumNazov.removeAttr('hidden');
 		albumInput.prop('hidden',true);
 		potvrdNazovBtn.replaceWith('<a id="upravAlbumBtn'+id+'" class="d-inline float-right btn btn-admin" href="javascript:upravAlbum('+id+');">Uprav</a>');
+		$.ajax({
+			url:"servlets/upravNazovAlbumuServlet.php",
+			type:"post",
+			data:{"id":id, "novyNazov": nazov}
+		});	
 	}
 }

@@ -10,14 +10,17 @@ hlavicka();
       <!-- Page Heading/Breadcrumbs -->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="index.html">Domov</a>
+          <a href="index.php">Domov</a>
         </li>
         <li class="breadcrumb-item active">Fotogaléria</li>
       </ol>
 
       <?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
           if(isset($_POST['novyAlbumBtn'])){
-            pridaj_album($_POST['nazov']);
+            $ok = pridaj_album($_POST['nazov']);
+            if (!$ok){
+              # TODO
+            }
           }
           vypis_albumy_admin();
         }
