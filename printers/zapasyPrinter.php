@@ -95,7 +95,7 @@ EOF;
  }
 
 function vypisKolo($kolo, $skupina, $rok){
-  echo '<div class="row" id="k'.$kolo.'">';
+  echo '<div class="row ml-1 mr-1" id="k'.$kolo.'">';
   echo '<div class="col-sm-12 bg-dark text-center text-white">';
   echo '<h6 class="mb-1 mt-1"><strong>Kolo '.$kolo.'</strong></h6>';
   echo '</div>';
@@ -123,15 +123,15 @@ EOF;
 
 function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum){
   if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
-  echo '<div class="row bg-warning-pale">';
+  echo '<div class="row ml-1 mr-1 bg-warning-pale">';
   }
   else{
-  echo '<div class="row border-bottom">';
+  echo '<div class="row border-bottom mr-1 ml-1">';
   }
-  echo '<div class="col-sm-2 font-weight-bold">'.$datum.'</div>';
-  echo '<div class="col-sm-3 text-right">'.$domaci.'</div>';
+  echo '<div class="col-sm-2 font-weight-bold text-center">'.$datum.'</div>';
+  echo '<div class="col-sm-3 text-center">'.$domaci.'</div>';
   echo '<div class="col-sm-2 text-center">'.$skoreD.':'.$skoreH.'</div>';
-  echo '<div class="col-sm-3">'.$hostia.'</div>';
+  echo '<div class="col-sm-3 text-center">'.$hostia.'</div>';
  /* echo '<div class="col-sm-8 text-center">'.$domaci.' '.$skoreD.' : '.$skoreH.' '.$hostia.'</div>';*/
   echo '<div class="col-sm-2"></div>';
   echo '</div>';

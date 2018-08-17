@@ -20,10 +20,10 @@ hlavicka();
         <div class="col-lg-9">
           <?php vypisNazovLigy('Pripravka'); ?>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label" for="selectRok">Vyber rok:</label>
+              <label class="control-label ml-2" for="selectRok">Vyber rok:&nbsp;</label>
               <select class="form-control" id="selectRok">
                 <?php vratPrisluchajuceRokyKSkupine('Pripravka'); ?>
               </select>
@@ -31,6 +31,7 @@ hlavicka();
           </form>
         </div>
       </div>
+      <br>
        <!-- /. row -->
 
       <div class="row">

@@ -17,10 +17,7 @@ hlavicka();
 
       <?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
           if(isset($_POST['novyAlbumBtn'])){
-            $ok = pridaj_album($_POST['nazov']);
-            if (!$ok){
-              # TODO
-            }
+            pridaj_album($_POST['nazov']);
           }
           vypis_albumy_admin();
         }
