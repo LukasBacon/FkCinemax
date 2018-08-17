@@ -1,7 +1,7 @@
 <?php
 class MyDB extends SQLite3{
   function __construct(){
-    $this->open(__DIR__ . '\fkcinemax.db');
+    $this->open(__DIR__ . DIRECTORY_SEPARATOR .'fkcinemax.db');
   }
 }  
 

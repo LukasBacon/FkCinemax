@@ -46,7 +46,7 @@ function vypis_albumy_admin(){
 		SELECT a.id, a.nazov, a.nazov_priecinku, f.url FROM Albumy as a LEFT JOIN Fotky as f
 		ON f.id_album = a.id 
 		GROUP BY nazov
-		ORDER BY a.datum;
+		ORDER BY a.datum DESC;
 EOF;
   $ret = $db->query($sql);
   $pocet = 0;

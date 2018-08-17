@@ -30,4 +30,5 @@ EOF;
 
 runServlet();
 
+$id = $_POST['id'];
 ?>
