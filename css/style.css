@@ -30,7 +30,6 @@
 	width: 40px;
 	height:auto;
 }
-
 #cancelImg:hover{
 	transform: scale(1.1);
 }
@@ -39,4 +38,23 @@
 }
 #upravAlbumInput{
 	width:60%;
+}
+#novaFotkaPanel{
+	text-align: center;
+	border-bottom: solid #e9ecef 25px;
+	padding-bottom: 10px;
+	border-radius: 0.25rem;
+}
+#inputNewAlbum{
+	width: 90%;
+}
+#cancelImgPhoto{
+	position:absolute;
+	top:0;
+	right:0;
+	width: 20px;
+	height:auto;
+}
+#cancelImgPhoto:hover{
+	transform: scale(1.1);
 }

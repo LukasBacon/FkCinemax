@@ -39,31 +39,8 @@ hlavicka();
     <?php paticka();?>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="magnific-popup/jquery.magnific-popup.js"></script>
-    <script type="text/javascript"> 
-        $(document).ready(function() {
-
-            $('.popupgallery').magnificPopup({ 
-                type: 'image', 
-                delegate: 'a', 
-                closeOnContentClick: false, 
-                closeOnBgClick: true,
-                image: { 
-                    verticalFit: true
-                }, 
-                removalDelay: 300,
-                gallery: {
-                    enabled: true,
-                    preload: [0,2],
-                    navigateByImgClick: true,
-                    arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>',
-                    tPrev: 'Previous (Left arrow key)',
-                    tNext: 'Next (Right arrow key)', 
-                    tCounter: '<span class="mfp-counter">%curr% of %total%</span>'
-                }
-            }); 
-        });
-    </script>
-
+    <script src="js/fotky.js"></script>
     </body>
+
 
 </html>
