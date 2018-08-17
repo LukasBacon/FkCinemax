@@ -48,7 +48,7 @@ function printPhotosWithFormular($nazovPriecinku, $idAlbumu, $fotky){
 		}
 		echo '<div class="col-sm-3">';
 			echo '<div class="card">';
-				echo '<a href="javascript:vymazFotku('.$fotka['id'].');">';
+				echo '<a href="javascript:vymazFotku('.$fotka['id'].');" style="z-index:1;">';
 					echo '<img id="cancelImgPhoto" src="fotky/cancel.png">';
 				echo '</a>';
 				echo '<a class="fotoA" href="'.$url.'">';

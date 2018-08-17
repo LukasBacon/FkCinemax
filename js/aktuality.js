@@ -41,21 +41,46 @@ function vymazAktualitu(id){
 		type:"post",
 		data:{"id":id},
 		success: function(data){
-			updatePaginationNavigation();
-			vypisNthStranu(aktualnaStrana, false);
+			window.location.reload();
 		}
 	});	
 }
 
 // update aktuality --------------------------------------------------------
 function upravAktualitu(id){
-	var nadpis = $("aktualita-nadpis-" + id);
+	var upravBtn = $("#upravBtn-" + id);
+	var vymazBtn = $("#vymazBtn-" + id);
+	var nadpis = $("#aktualita-nadpis-" + id);
 	var text = $("#aktualita-text-" + id);
 	var nadpisText = nadpis.text();
 	var textText = text.text();
-	console.log(nadpisText + ": " + textText);
+
+	nadpis.replaceWith('<input class="card-header" id="new-nadpis-'+id+'" type="text" value="'+nadpisText+'">');		
+	text.replaceWith('<textarea id="new-text-'+id+'" rows="6" style="width:100%;">'+textText+'</textarea>');
+	vymazBtn.prop('hidden',true);
+	upravBtn.replaceWith('<a class="btn btn-admin" id="potvrdBtn-'+id+'" style="margin-right:10px;" href="javascript:potvrdAktualitu('+id+');">Potvrď</a>');
 }
 
+
+function potvrdAktualitu(id){
+	var vymazBtn = $("#vymazBtn-" + id);
+	var potvrdBtn = $("#potvrdBtn-" + id);
+	var newNadpis = $("#new-nadpis-" + id);
+	var newText = $("#new-text-" + id);
+	var newNadpisText = newNadpis.val();
+	var newTextText = newText.val();
+	
+	newNadpis.replaceWith('<h5 class="card-header" id="aktualita-nadpis-'+id+'">'+newNadpisText+'</h5>');		
+	newText.replaceWith('<p class="card-text" id="aktualita-text-'+id+'">'+newTextText+'</p>');
+	vymazBtn.prop('hidden',false);
+	potvrdBtn.replaceWith('<a class="btn btn-admin" id="upravBtn-'+id+'" style="margin-right:10px;" href="javascript:upravAktualitu('+id+');">Uprav</a>')
+
+	$.ajax({
+		url:"servlets/upravAktualituServlet.php",
+		type:"post",
+		data:{"id":id,"nadpis":newNadpisText,"text":newTextText}
+	});		
+}
 
 // paginaton ---------------------------------------------------------------
 function updatePaginationNavigation(){
@@ -139,12 +164,12 @@ function vypisAktualityAdmin(data){
 		aktualityText +=  '<div class="card" id="aktualita-'+aktualita['id']+'">';
 	    aktualityText +=  '<h5 class="card-header" id="aktualita-nadpis-'+aktualita['id']+'">'+aktualita['nadpis']+'</h5>';
 	    aktualityText +=  '<div class="card-body">';
-	    aktualityText +=  '<p class="card-text" id="aktualita-nadpis-'+aktualita['id']+'">'+aktualita['text']+'</p>';
+	    aktualityText +=  '<p class="card-text" id="aktualita-text-'+aktualita['id']+'">'+aktualita['text'].replace(/\n/g, "<br />")+'</p>';
 	    aktualityText +=  '<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '<div class="card-footer">';
-	    aktualityText +=  '<a class="btn btn-admin" style="margin-right:10px;" href="javascript:vymazAktualitu('+aktualita['id']+');">Vymaž</a>';
-	    aktualityText +=  '<a class="btn btn-admin" style="margin-right:10px;" href="javascript:upravAktualitu('+aktualita['id']+');">Uprav</a>';
+	    aktualityText +=  '<a class="btn btn-admin" id="vymazBtn-'+aktualita['id']+'" style="margin-right:10px;" href="javascript:vymazAktualitu('+aktualita['id']+');">Vymaž</a>';
+	    aktualityText +=  '<a class="btn btn-admin" id="upravBtn-'+aktualita['id']+'" style="margin-right:10px;" href="javascript:upravAktualitu('+aktualita['id']+');">Uprav</a>';
 	    aktualityText +=  aktualita['datum'];
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '</div>';
@@ -172,5 +197,6 @@ function vypisAktualityUser(data){
 function scrollToAktuality(){
 	$('html, body').animate({scrollTop: ($("#aktuality-section").offset().top) -= 110},500);
 }
+
 
 
