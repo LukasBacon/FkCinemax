@@ -73,6 +73,7 @@ function vypis_pridaj_novu($nazovPriecinku, $idAlbumu){
 				echo '<input type="text" name="albumName" value="'.$nazovPriecinku.'" hidden>';
 				$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 				echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
+				echo '(.png, .jpg) &nbsp;';
 				echo '<br />';
 				echo '<input type="submit" name="submit" value="Pridaj" class="btn btn-success"/>';
 			echo '</form>';
