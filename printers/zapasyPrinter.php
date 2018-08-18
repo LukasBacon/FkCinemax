@@ -102,7 +102,7 @@ function vypisKolo($kolo, $skupina, $rok){
   echo '</div>';
   $zapasy = vratZapasyKola($skupina, $rok, $kolo);
   foreach ($zapasy as $zapas) {
-  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']));
+  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']), $zapas['poznamka']);
   }	
   echo '<br>';
 }
@@ -121,7 +121,7 @@ EOF;
   return $zapasy;
 }
 
-function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum){
+function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka){
   if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
   echo '<div class="row ml-1 mr-1 bg-warning-pale">';
   }
@@ -132,8 +132,22 @@ function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum){
   echo '<div class="col-sm-3 text-center">'.$domaci.'</div>';
   echo '<div class="col-sm-2 text-center">'.$skoreD.':'.$skoreH.'</div>';
   echo '<div class="col-sm-3 text-center">'.$hostia.'</div>';
- /* echo '<div class="col-sm-8 text-center">'.$domaci.' '.$skoreD.' : '.$skoreH.' '.$hostia.'</div>';*/
-  echo '<div class="col-sm-2"></div>';
+  if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
+    if($poznamka == null){
+        echo '<div class="col-sm-2 text-center"><img class="m-2" src="fotky/i-not.png" width="20">';
+    }
+    else{
+        echo '<div class="col-sm-2 text-center"><a data-toggle="tooltip" data-placement="right" title="'.$poznamka.'"><img class="m-2" src="fotky/i.png" width="20"></a>';
+    }
+    if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
+      echo '<button class="btn btn-warning p-1" style="font-size:10px;" onclick="infoBox()">Pridaj/uprav poznámku</button>';
+    }
+    echo '</div>';
+
+  }
+  else{
+    echo '<div class="col-sm-2"></div>';
+  }
   echo '</div>';
 }
 

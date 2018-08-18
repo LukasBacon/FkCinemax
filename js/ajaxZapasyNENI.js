@@ -30,7 +30,18 @@ $(document).ready(function(){
   						zapasy += '<div class="col-sm-3 border-bottom text-center">' + zapas['domaci'] + '</div>';
   						zapasy += '<div class="col-sm-2 text-center border-bottom">'+skoreD+':'+skoreH+'</div>';
   						zapasy += '<div class="col-sm-3 border-bottom text-center">'+zapas['hostia']+'</div>';
-  						zapasy += '<div class="col-sm-2"></div>';
+  						if(zapas['domaci'].includes("FK CINEMAX Doľany") || zapas['hostia'].includes("FK CINEMAX Doľany")){
+  							if(zapas['poznamka'] == null){
+  								zapasy += '<div class="col-sm-2 text-center"><img class="pt-3" src="fotky/i-not.png" width="20"></div>';
+  							}
+  							else{
+  								zapasy += '<div class="col-sm-2 text-center"><a data-toggle="tooltip" data-placement="right" ' + 
+  								'title="'+zapas['poznamka']+'"><img class="pt-3" src="fotky/i.png" width="20"></a></div>';
+  							}
+						}
+						else{
+							zapasy += '<div class="col-sm-2"></div>';
+						}
   						zapasy += '</div>';
   					});
   					zapasy += '<br>';
@@ -61,6 +72,9 @@ $(document).ready(function(){
 			}
 		});
 	}
-
-
 });
+
+
+	function scrollUp(){
+		$('html, body').animate({scrollTop : 0},800);
+	}

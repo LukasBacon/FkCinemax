@@ -58,3 +58,11 @@
 #cancelImgPhoto:hover{
 	transform: scale(1.1);
 }
+#scrollArrow{
+	position:fixed;
+	top:83%;
+	right:5%;
+}
+#scrollArrow:hover{
+	transform: scale(1.2);	
+}
