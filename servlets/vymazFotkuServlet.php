@@ -27,6 +27,7 @@ EOF;
 	# vymazanie fotkt z priecinka
 	$pathToPhoto = dirname(getcwd()) . "/".$url;
 	unlink($pathToPhoto);
+}
 
 runServlet();
 

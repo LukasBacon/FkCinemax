@@ -48,7 +48,7 @@ function printPhotosWithFormular($nazovPriecinku, $idAlbumu, $fotky){
 		}
 		echo '<div class="col-sm-3">';
 			echo '<div class="card">';
-				echo '<a href="javascript:vymazFotku('.$fotka['id'].');">';
+				echo '<a href="javascript:vymazFotku('.$fotka['id'].');" style="z-index:1;">';
 					echo '<img id="cancelImgPhoto" src="fotky/cancel.png">';
 				echo '</a>';
 				echo '<a class="fotoA" href="'.$url.'">';
@@ -68,7 +68,7 @@ function vypis_pridaj_novu($nazovPriecinku, $idAlbumu){
 		echo '<div class="col-sm-12" id="novaFotkaPanel">';
 			echo '<h4>Pridaj novú fotku</h4>';
 			echo '<form class="form-inline d-flex justify-content-center" action="/FkCinemax/servlets/addPhotosServlet.php" method="post" enctype="multipart/form-data">';
-				echo '<input type="file" name="files[]" id="file" multiple/> ';
+				echo '<input type="file" name="files[]" id="files" accept=".jpg, .jpeg, .png" multiple/> ';
 				echo '<input type="text" name="idAlbumu" value="'.$idAlbumu.'" hidden>';
 				echo '<input type="text" name="albumName" value="'.$nazovPriecinku.'" hidden>';
 				$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
