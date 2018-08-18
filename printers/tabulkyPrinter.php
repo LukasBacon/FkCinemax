@@ -52,7 +52,7 @@ EOF;
   $ret = $db->query($sql);
   $row = $ret->fetchArray(SQLITE3_ASSOC);
   $db->close();	
-  echo "<h5 id='nazovLigy'>".$row['nazov']."</h5>";
+  echo "<h5 id='nazovLigy' class='float-left ml-2 mt-1 font-weight-bold' style='color: #6166b5;'>".$row['nazov']."</h5>";
 
 }
 

@@ -25,7 +25,7 @@ hlavicka();
         <div class="col-lg-3">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label" for="selectRokZapasy">Vyber rok:</label>
+              <label class="control-label ml-2" for="selectRokZapasy">Vyber rok:&nbsp;</label>
               <select class="form-control" id="selectRokZapasy">
                 <?php vratPrisluchajuceRokyKSkupine('Seniori'); ?>
               </select>
