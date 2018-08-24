@@ -7,7 +7,7 @@ $(document).ready(function(){
 	vypisNthStranu(1, false);
 });
 
-// pridanie akttuality ----------------------------------------------------- 
+// pridanie aktuality ----------------------------------------------------- 
 function pridajAktualitu(){
 	var nadpis = $("#pridaj-nadpis");
 	var text = $("#pridaj-text");
@@ -15,7 +15,7 @@ function pridajAktualitu(){
 	var nadpisText = nadpis.val();
 	var textText = text.val();
 	if (nadpisText.length == 0 || textText.length == 0){
-		infoDiv.html("Jedno z polí je prázdne.");
+		infoDiv.html("<p>Jedno z polí je prázdne.</p>");
 		return;
 	}
 	$.ajax({
