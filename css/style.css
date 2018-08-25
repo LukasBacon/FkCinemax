@@ -92,3 +92,11 @@
 .myTooltip:hover .myTooltipText {
     visibility: visible;
 }
+.buttonImg:hover{
+	transform: scale(1.1);		
+}
+#novyAlbumBtn{
+	background: url('../fotky/add.png') no-repeat;
+    cursor:pointer;
+    border: none;
+}

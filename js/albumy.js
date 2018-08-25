@@ -25,7 +25,7 @@ function upravAlbum(id){
 	var upravAlbumBtn = $('#upravAlbumBtn'+id);
 	albumNazov.prop('hidden',true);
 	albumInput.removeAttr('hidden'); 
-	upravAlbumBtn.replaceWith('<a id="potvrdNazovBtn'+id+'" class="d-inline float-right btn btn-admin" href="javascript:potvrdNazov('+id+');">Potvrď</a>');		
+	upravAlbumBtn.replaceWith('<a id="potvrdNazovBtn'+id+'" class="d-inline float-right" href="javascript:potvrdNazov('+id+');"><img class="buttonImg" src="fotky/ok.png" width="40"></a>');		
 }
 
 function potvrdNazov(id){
@@ -37,7 +37,7 @@ function potvrdNazov(id){
 		albumNazov.text(nazov);
 		albumNazov.removeAttr('hidden');
 		albumInput.prop('hidden',true);
-		potvrdNazovBtn.replaceWith('<a id="upravAlbumBtn'+id+'" class="d-inline float-right btn btn-admin" href="javascript:upravAlbum('+id+');">Uprav</a>');
+		potvrdNazovBtn.replaceWith('<a id="upravAlbumBtn'+id+'" class="d-inline float-right" href="javascript:upravAlbum('+id+');"><img class="buttonImg" src="fotky/edit.png" width="40"></a>');
 		$.ajax({
 			url:"servlets/upravNazovAlbumuServlet.php",
 			type:"post",

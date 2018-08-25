@@ -58,7 +58,7 @@ EOF;
 			echo '<div id="cardAlbum" class="card mb-4">';
 				echo '<div class="card-body p-0">';
 					echo '<a href="javascript:vymazAlbum('.$row['id'].');">';
-						echo '<img id="cancelImg" src="fotky/cancel.png">';
+						echo '<img id="cancelImg" src="fotky/remove.png">';
 					echo '</a>';
 					echo '<a id="aWithoutTextHover" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'&nazovPriecinku='.$row['nazov_priecinku'].'">';
 						if ($row['url'] == NULL){
@@ -72,7 +72,7 @@ EOF;
 			    echo '<div class="card-footer text-left">';
 			    	echo '<p id="albumNazov'.$row['id'].'" style="color:black;" class="float-left font-weight-bold">'.$row['nazov'].'</p>';
 			    	echo '<input id="upravAlbumInput'.$row['id'].'" class=" float-left" type="text" required hidden>';
-			    		echo '<a id="upravAlbumBtn'.$row['id'].'" class="d-inline float-right btn btn-admin" href="javascript:upravAlbum('.$row['id'].');">Uprav</a>';
+			    		echo '<a id="upravAlbumBtn'.$row['id'].'" class="d-inline float-right" href="javascript:upravAlbum('.$row['id'].');"><img class="buttonImg" src="fotky/edit.png" width="40"></a>';
 			    echo '</div>';
 			echo '</div>';
 		echo '</a>';
@@ -95,7 +95,7 @@ function vypis_novy_album_karta(){
 							echo '<input name="nazov" id="inputNewAlbum" type="text" placeholder="Názov albumu" required>';
 					echo '</div>';
 					echo '<div class="card-footer text-center">';
-						echo '<input type="submit" name="novyAlbumBtn" value="Pridaj" class="btn btn-success">';
+						echo '<input type="submit" id="novyAlbumBtn" name="novyAlbumBtn">';
 					echo '</div>';
 				echo '</form>';
 			echo '</div>';
