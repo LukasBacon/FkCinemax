@@ -102,7 +102,7 @@ function vypisKolo($kolo, $skupina, $rok){
   echo '</div>';
   $zapasy = vratZapasyKola($skupina, $rok, $kolo);
   foreach ($zapasy as $zapas) {
-  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']), $zapas['poznamka'], $zapas['id']);
+  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']), $zapas['poznamka'], $zapas['id'], $zapas['kolo']);
   }	
   echo '<br>';
 }
@@ -121,12 +121,12 @@ EOF;
   return $zapasy;
 }
 
-function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka, $id){
+function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka, $id, $kolo){
   if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
-  echo '<div class="row ml-1 mr-1 bg-warning-pale">';
+  echo '<div class="row ml-1 mr-1 border-bottom bg-warning-pale">';
   }
   else{
-  echo '<div class="row border-bottom mr-1 ml-1">';
+  echo '<div class="row mr-1 border-bottom ml-1">';
   }
   echo '<div class="col-sm-2 font-weight-bold text-center">'.$datum.'</div>';
   echo '<div class="col-sm-3 text-center">'.$domaci.'</div>';
@@ -134,10 +134,18 @@ function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka, $id){
   echo '<div class="col-sm-3 text-center">'.$hostia.'</div>';
   if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
     if($poznamka == null){
-        echo '<div class="col-sm-2 text-center"><img class="m-2" src="fotky/i-not.png" width="20">';
+      echo '<div class="col-sm-2 text-center ">
+        <div class="d-inline myTooltip">
+        <img id="infoImg'.$kolo.'" class="m-2" src="fotky/i-not.png" width="20">
+         <span hidden id="infoText'.$kolo.'" class="myTooltipText"></span>
+        </div>';
     }
     else{
-        echo '<div class="col-sm-2 text-center "><div class="d-inline myTooltip"><img class="m-2" src="fotky/i.png" width="20"><span class="myTooltipText">'.$poznamka.'</span></div>';
+        echo '<div class="col-sm-2 text-center ">
+        <div class="d-inline myTooltip">
+        <img id="infoImg'.$kolo.'" class="m-2" src="fotky/i.png" width="20">
+        <span id="infoText'.$kolo.'" class="myTooltipText">'.$poznamka.'</span>
+        </div>';
     }
     if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
       $param = '\''.$poznamka.'\','.$id;
