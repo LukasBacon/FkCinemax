@@ -184,71 +184,24 @@ EOF;
   $db->close();
 }
 
-function vypis_diskusie(){
+function vytvorDiskusiu($meno, $nazov, $popis){
   $db = napoj_db();
   $sql =<<<EOF
-    SELECT * FROM Diskusie ORDER BY datum_disk DESC;
+    SELECT count() as count FROM Diskusie WHERE nazov="$nazov" AND autor="$meno";
 EOF;
   $ret = $db->query($sql);
-  while($row = $ret->fetchArray(SQLITE3_ASSOC) ){?>
-    <div class="card my-4">
-      <div class="card-header">
-        <strong style="font-size: 1.25rem;"><?php echo $row['nazov']; ?></strong>
-        <strong style="float:right;">&#9660;</strong> <!-- opacna je 9650-->
-      </div>
-        <div class="card-body">
-          <h5 class="mt-0"><?php echo $row['autor']; ?></h5>
-                <?php echo $row['popis']; ?>
-                <!--
-                  KOMENTARE
-                <div class="card my-4">
-                  <div class="card-body">
-                    <h5 class="mt-0">Anonym</h5>
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                  </div>
-                  <div class="card-footer">27.02.2018</div>
-                </div>
-
-                <div class="card my-4">
-                  <div class="card-body">
-                    <h5 class="mt-0">Stefan</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                  </div>
-                  <div class="card-footer">27.02.2018</div>
-                </div>
-  
-                <div class="card my-4">
-                  <h5 class="card-header-match">Pridaj komentár</h5>
-                  <div class="card-body">
-                    <form novalidate>
-                      <div class="control-group form-group">
-                        <div class="controls">
-                          <label>Meno:</label>
-                          <input type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
-                          <p class="help-block"></p>
-                        </div>
-                      </div>
-                      <div class="control-group form-group">
-                        <div class="controls">
-                          <label>Komentár:</label>
-                          <textarea rows="4" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
-                        </div>
-                      </div>
-                      <div id="success"></div>
-                      <button type="submit" class="btn btn-primary" id="sendMessageButton">Pridaj</button>
-                    </form>
-                  </div>
-                </div>
-                --> 
-
-
-              </div>
-              <div class="card-footer"><?php echo vypisDatum($row['datum_disk']); ?></div>
-            </div>
-      <?php
+  $row = $ret->fetchArray(SQLITE3_ASSOC); 
+  $pocet = $row["count"];
+  if ($pocet != 0){
+    $db->close();
+    return;
   }
 
-  $db->close();  
+  $sql =<<<EOF
+    INSERT INTO Diskusie (nazov, datum_disk, popis, autor) VALUES ("$nazov", date('now'), "$popis", "$meno");
+EOF;
+  $db->query($sql);
+  $db->close();
 }
 
 function replaceSpecialChars($string){

@@ -76,8 +76,6 @@ EOF;
 	public static function vlozAktualneZapasy($skupina, $rok, $zapasy){
 		$db = napoj_db();
 		foreach ($zapasy as $zapas) {
-			$myfile = fopen('testfile', "a");
-			fwrite($myfile, $zapas->toString());
 		  $sql =<<<EOF
     		INSERT INTO Zapasy (datum, rok, domaci, hostia, skoreD, skoreH, kolo, skupina)
     		VALUES ("$zapas->datum", "$rok", "$zapas->domaci", "$zapas->hostia", "$zapas->skoreDomaci", "$zapas->skoreHostia", "$zapas->kolo", "$skupina");

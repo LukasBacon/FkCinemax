@@ -7,7 +7,7 @@ $(document).ready(function(){
 	vypisNthStranu(1, false);
 });
 
-// pridanie akttuality ----------------------------------------------------- 
+// pridanie aktuality ----------------------------------------------------- 
 function pridajAktualitu(){
 	var nadpis = $("#pridaj-nadpis");
 	var text = $("#pridaj-text");
@@ -15,7 +15,7 @@ function pridajAktualitu(){
 	var nadpisText = nadpis.val();
 	var textText = text.val();
 	if (nadpisText.length == 0 || textText.length == 0){
-		infoDiv.html("Jedno z polí je prázdne.");
+		infoDiv.html("<p>Jedno z polí je prázdne.</p>");
 		return;
 	}
 	$.ajax({
@@ -52,13 +52,22 @@ function upravAktualitu(id){
 	var vymazBtn = $("#vymazBtn-" + id);
 	var nadpis = $("#aktualita-nadpis-" + id);
 	var text = $("#aktualita-text-" + id);
-	var nadpisText = nadpis.text();
-	var textText = text.text();
+	$.ajax({
+		url:"servlets/getAktualituWithIdServlet.php",
+		type:"post",
+		data:{"id":id},
+		datatype: 'json',
+		success: function(data){
+			data = JSON.parse(data);
+			var nadpisText = data['nadpis'];
+			var textText = data['text'];
 
-	nadpis.replaceWith('<input class="card-header" id="new-nadpis-'+id+'" type="text" value="'+nadpisText+'">');		
-	text.replaceWith('<textarea id="new-text-'+id+'" rows="6" style="width:100%;">'+textText+'</textarea>');
-	vymazBtn.prop('hidden',true);
-	upravBtn.replaceWith('<a class="btn btn-admin" id="potvrdBtn-'+id+'" style="margin-right:10px;" href="javascript:potvrdAktualitu('+id+');">Potvrď</a>');
+			nadpis.replaceWith('<input class="card-header" id="new-nadpis-'+id+'" type="text" value="'+nadpisText+'">');		
+			text.replaceWith('<textarea rows="4" cols="100" class="form-control" id="new-text-'+id+'" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none">'+textText+'</textarea>');
+			vymazBtn.prop('hidden',true);
+			upravBtn.replaceWith('<a class="btn btn-admin" id="potvrdBtn-'+id+'" style="margin-right:10px;" href="javascript:potvrdAktualitu('+id+');">Potvrď</a>');
+		}
+	});	
 }
 
 
@@ -71,7 +80,7 @@ function potvrdAktualitu(id){
 	var newTextText = newText.val();
 	
 	newNadpis.replaceWith('<h5 class="card-header" id="aktualita-nadpis-'+id+'">'+newNadpisText+'</h5>');		
-	newText.replaceWith('<p class="card-text" id="aktualita-text-'+id+'">'+newTextText+'</p>');
+	newText.replaceWith('<p class="card-text" id="aktualita-text-'+id+'">'+reformatTextToHtml(newTextText)+'</p>');
 	vymazBtn.prop('hidden',false);
 	potvrdBtn.replaceWith('<a class="btn btn-admin" id="upravBtn-'+id+'" style="margin-right:10px;" href="javascript:upravAktualitu('+id+');">Uprav</a>')
 
@@ -164,7 +173,7 @@ function vypisAktualityAdmin(data){
 		aktualityText +=  '<div class="card" id="aktualita-'+aktualita['id']+'">';
 	    aktualityText +=  '<h5 class="card-header" id="aktualita-nadpis-'+aktualita['id']+'">'+aktualita['nadpis']+'</h5>';
 	    aktualityText +=  '<div class="card-body">';
-	    aktualityText +=  '<p class="card-text" id="aktualita-text-'+aktualita['id']+'">'+aktualita['text'].replace(/\n/g, "<br />")+'</p>';
+	    aktualityText +=  '<p class="card-text" id="aktualita-text-'+aktualita['id']+'">'+reformatTextToHtml(aktualita['text'])+'</p>';
 	    aktualityText +=  '<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '<div class="card-footer">';
@@ -183,7 +192,7 @@ function vypisAktualityUser(data){
 		aktualityText +=  '<div class="card">';
 	    aktualityText +=  '<h5 class="card-header">'+aktualita['nadpis']+'</h5>';
 	    aktualityText +=  '<div class="card-body">';
-	    aktualityText +=  '<p class="card-text">'+aktualita['text']+'</p>';
+	    aktualityText +=  '<p class="card-text">'+reformatTextToHtml(aktualita['text'])+'</p>';
 	    aktualityText +=  '<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
 	    aktualityText +=  '</div>';
 	    aktualityText +=  '<div class="card-footer">';
@@ -196,6 +205,10 @@ function vypisAktualityUser(data){
 
 function scrollToAktuality(){
 	$('html, body').animate({scrollTop: ($("#aktuality-section").offset().top) -= 110},500);
+}
+
+function reformatTextToHtml(text){
+	return text.replace(/\n/g, "<br />");
 }
 
 
