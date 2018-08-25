@@ -7,10 +7,6 @@ $(document).ready(function(){
 	vypisNthStranu(1);
 });
 
-
-// vymazanie diskusie ------------------------------------------------------
-
-
 // paginaton ---------------------------------------------------------------
 function updatePaginationNavigation(){
 	var paginationNavigation = $(".pagination");
@@ -57,10 +53,10 @@ function vypisNthStranu(cisloStrany){
 				success: function(session){
 					session = JSON.parse(session);
 					if (session["admin"] == 1){
-						diskusieText = vypisDiskusieAdmin(strana);
+						diskusieText = vypisDiskusie(strana, true);
 					}
 					else{
-						diskusieText = vypisDiskusieUser(strana);
+						diskusieText = vypisDiskusie(strana, false);
 					}
 					diskusieText += '</div>'
 					diskusie.html(diskusieText);
@@ -84,44 +80,95 @@ function highlightActualPage(aktualnaStrana){
 	$("#pagination-nav-page-" + aktualnaStrana).addClass("active");
 }
 
-function vypisDiskusieAdmin(data){
 
-}
-
-function vypisDiskusieUser(data){
+// vypisanie vsetkych diskusii z pola diskusii "data"
+function vypisDiskusie(data, admin){
 	var diskusieText = "";
 	$.each(JSON.parse(data), function(index, diskusia){
-		diskusieText += '<div class="card my-4">';
-      	diskusieText += 	vypisShowHeader(diskusia["id"], diskusia["nazov"]);
-        diskusieText += 	'<div class="card-body">';
-        diskusieText += 		'<h5 class="mt-0">'+diskusia["autor"]+'</h5>';
-        diskusieText += 		diskusia["popis"];
-        diskusieText += 		'<div id="komentare-'+diskusia['id']+'"></div>';
-        diskusieText += 	'</div>';
-        diskusieText +=     '<div class="card-footer">'+diskusia['datum_disk']+'</div>';
-        diskusieText += '</div>';
+		if (admin){
+			diskusieText += vypisDiskusiu(diskusia, true);
+		} 
+		else{
+			diskusieText += vypisDiskusiu(diskusia, false);
+		}
 	});
 	return diskusieText;
 }
 
-function ukazKomentare(id, nazov){
-	var komentare = $("#komentare-"+id);
+// vypisanie jednej diskusie
+function vypisDiskusiu(diskusia, admin){
+	var diskusiaText = "";
+	diskusiaText += '<div class="card my-4" id="diskusia-'+diskusia["id"]+'">';
+    diskusiaText += 	vypisShowHeader(diskusia["id"], diskusia["nazov"]);
+    diskusiaText += 	'<div class="card-body">';
+    diskusiaText += 		'<h5 class="mt-0">'+diskusia["autor"]+'</h5>';
+    diskusiaText += 		reformatTextToHtml(diskusia["popis"]);
+    diskusiaText += 		'<div id="komentare-'+diskusia['id']+'"></div>';
+    diskusiaText += 	'</div>';
+    diskusiaText +=     '<div class="card-footer pt-1 pb-1">';
+    diskusiaText +=     	diskusia['datum_disk'];
+    diskusiaText +=     	vypisVymazDiskusiuBtn(diskusia['id'], admin);
+    diskusiaText +=     '</div>';
+    diskusiaText += '</div>';
+    return diskusiaText;
+}
+
+// ak je admin true, vypise button na vymazanie diskusie s id "idDiskusie"
+// ak je admin false, vrati prazdny string
+function vypisVymazDiskusiuBtn(idDiskusie, admin){
+	var vymazDiskusiuBtn = '';
+	if (admin){
+		vymazDiskusiuBtn = '<a class="btn btn-admin" style="margin-left: 10px;" href="javascript:vymazDiskusiu('+idDiskusie+')">Vymaž</a>';	
+	}
+	return vymazDiskusiuBtn;
+}
+
+// vymaze diskusiu s id "idDiskusie" z databazy a aj jej komentare
+function vymazDiskusiu(idDiskusie){
+	if (!confirm('Naozaj chcete vymazať diskusiu?')){
+		return;
+	}
 	$.ajax({
-		url:"servlets/dajKomentareDiskusieServlet.php",
+		url:"servlets/vymazDiskusiuServlet.php",
 		type:"post",
-		data:{"id":id},
+		data:{"id":idDiskusie},
 		success: function(data){
-			var komentareHtml = '<div id="komentare-'+id+'">';
-			komentareHtml += vypisKomentare(data);
-			komentareHtml += vypisPridajKomentarForm(id);
-			komentareHtml += '</div>';
-			komentare.html(komentareHtml);
-			var header = $("#header-"+id);
-			header.replaceWith(vypisHideHeader(id, nazov));
+			vypisNthStranu(aktualnaStrana);
 		}
 	});
 }
 
+// vylistovanie komentarov pod diskusiu
+function ukazKomentare(id, nazov){
+	var admin = false;
+	$.ajax({
+		url:"servlets/getSessionServlet.php",
+		type:"post",
+		success: function(session){
+			session = JSON.parse(session);
+			if (session["admin"] == 1){
+				admin = true;
+			}
+			var komentare = $("#komentare-"+id);
+			$.ajax({
+				url:"servlets/dajKomentareDiskusieServlet.php",
+				type:"post",
+				data:{"id":id},
+				success: function(data){
+					var komentareHtml = '<div id="komentare-'+id+'">';
+					komentareHtml += vypisKomentare(data, admin);
+					komentareHtml += vypisPridajKomentarForm(id);
+					komentareHtml += '</div>';
+					komentare.html(komentareHtml);
+					var header = $("#header-"+id);
+					header.replaceWith(vypisHideHeader(id, nazov));
+				}
+			});
+		}
+	});
+}
+
+// skytie komentarov
 function skryKomentare(id, nazov){
 	var komentare = $("#komentare-"+id);
 	komentare.html("");
@@ -129,6 +176,7 @@ function skryKomentare(id, nazov){
 	header.replaceWith(vypisShowHeader(id, nazov));
 }
 
+// vypise header diskusie, ktorym sa da vylistovat komentare
 function vypisShowHeader(id, nazov){
 	var result = "";
 	result += 	'<a class="card-header" id="header-'+id+'" href="javascript:ukazKomentare('+id+',\''+nazov+'\');">';
@@ -138,6 +186,7 @@ function vypisShowHeader(id, nazov){
     return result;
 }
 
+// vypise header diskusie, ktorym sa daju skyt komentare
 function vypisHideHeader(id, nazov){
 	var result = "";
 	result += 	'<a class="card-header" id="header-'+id+'" href="javascript:skryKomentare('+id+',\''+nazov+'\');">';
@@ -147,20 +196,50 @@ function vypisHideHeader(id, nazov){
     return result;
 }
 
-function vypisKomentare(data){
+// vypise vsetky komentare z pola komentarov "data"
+function vypisKomentare(data, admin){
 	var komentareText = "";
 	$.each(JSON.parse(data), function(index, komentar){
 		komentareText += '<div class="card my-4">';
         komentareText += 	'<div class="card-body">';
         komentareText += 		'<h5 class="mt-0">'+komentar["meno"]+'</h5>';
-        komentareText += 		komentar["text"];
+        komentareText += 		reformatTextToHtml(komentar["text"]);
         komentareText += 	'</div>';
-        komentareText +=	'<div class="card-footer">'+komentar["datum"]+'</div>'
+        komentareText +=	'<div class="card-footer pt-1 pb-1">';
+        komentareText += 		komentar["datum"];
+        komentareText +=		vypisVymazKomentarBtn(komentar["id"], admin);
+        komentareText +=	'</div>';
         komentareText += '</div>';
 	});
 	return komentareText;
 }
 
+// ak je admin true, vypise button na vymazanie komentaru s id "idKomentaru"
+// ak je admin false, vrati prazdny string
+function vypisVymazKomentarBtn(idKomentaru, admin){
+	var vymazKomentarBtn = '';
+	if (admin){
+		vymazKomentarBtn = '<a class="btn btn-admin" style="margin-left: 10px;" href="javascript:vymazKomentar('+idKomentaru+')">Vymaž</a>';	
+	}
+	return vymazKomentarBtn;
+}
+
+// vymaze komentar s id "idKomentaru" z databazy a refreshne diskusiu (nech to jako pekne vypada)
+function vymazKomentar(idKomentaru){
+	if (!confirm('Naozaj chcete vymazať komentár?')){
+		return;
+	}
+	$.ajax({
+		url:"servlets/vymazKomentarServlet.php",
+		type:"post",
+		data:{"id":idKomentaru},
+		success: function(data){
+			refreshniDiskusiuSId(data);
+		}
+	});
+}
+
+// vypise formular na pridavanie komentarov
 function vypisPridajKomentarForm(idDiskusie){
 	var result = '';
 	result += '<div class="card my-4">';
@@ -177,12 +256,15 @@ function vypisPridajKomentarForm(idDiskusie){
     return result;
 }
 
+// prida komentar do databazy
 function pridajKomentar(idDiskusie){
 	var menoInput = $("#pridaj-meno-"+idDiskusie);
 	var komentarInput = $("#pridaj-komentar-"+idDiskusie);
 	var meno = menoInput.val();
 	var komentar = komentarInput.val();
-	// check ci je dobre vyplnene
+	if (meno == "" || komentar == ""){
+		return;
+	}
 	$.ajax({
 		url:"servlets/pridajKomentarDiskusiiServlet.php",
 		type:"post",
@@ -190,8 +272,39 @@ function pridajKomentar(idDiskusie){
 		success: function(data){
 			menoInput.val("");
 			komentarInput.val("");
-			// refreshni kometare diskuies id idDiskusie
-			// skontrolovat funkcnost
+			refreshniDiskusiuSId(idDiskusie);
+		}
+	});
+}
+
+// prekresli diskusiu s id "idDiskusie" a vyroluje jej komentare
+function refreshniDiskusiuSId(idDiskusie){
+	var diskusiaDiv = $("#diskusia-"+idDiskusie);
+	$.ajax({
+		url:"servlets/getDiskusiuSIdServlet.php",
+		type:"post",
+		data:{"idDiskusie":idDiskusie},
+		success: function(data){
+			var newDiskusiaDiv = "";
+			var menoDiskusie = "";
+			$.each(JSON.parse(data), function(index, diskusia){		// bude iba 1, ale nejako mi to nefugovalo, ked tam nebol foreach
+				$.ajax({
+					url:"servlets/getSessionServlet.php",
+					type:"post",
+					success: function(session){
+						session = JSON.parse(session);
+						if (session["admin"] == 1){
+							newDiskusiaDiv += vypisDiskusiu(diskusia, true);
+						}
+						else{
+							newDiskusiaDiv += vypisDiskusiu(diskusia, false);
+						}
+						menoDiskusie = diskusia["nazov"];
+						diskusiaDiv.replaceWith(newDiskusiaDiv);
+						ukazKomentare(idDiskusie, menoDiskusie);
+					}
+				});
+			});
 		}
 	});
 }
