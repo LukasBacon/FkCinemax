@@ -102,7 +102,7 @@ function vypisKolo($kolo, $skupina, $rok){
   echo '</div>';
   $zapasy = vratZapasyKola($skupina, $rok, $kolo);
   foreach ($zapasy as $zapas) {
-  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']), $zapas['poznamka']);
+  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']), $zapas['poznamka'], $zapas['id']);
   }	
   echo '<br>';
 }
@@ -121,7 +121,7 @@ EOF;
   return $zapasy;
 }
 
-function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka){
+function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka, $id){
   if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
   echo '<div class="row ml-1 mr-1 bg-warning-pale">';
   }
@@ -137,10 +137,11 @@ function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka){
         echo '<div class="col-sm-2 text-center"><img class="m-2" src="fotky/i-not.png" width="20">';
     }
     else{
-        echo '<div class="col-sm-2 text-center"><a data-toggle="tooltip" data-placement="right" title="'.$poznamka.'"><img class="m-2" src="fotky/i.png" width="20"></a>';
+        echo '<div class="col-sm-2 text-center "><div class="d-inline myTooltip"><img class="m-2" src="fotky/i.png" width="20"><span class="myTooltipText">'.$poznamka.'</span></div>';
     }
     if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-      echo '<button class="btn btn-warning p-1" style="font-size:10px;" onclick="infoBox()">Pridaj/uprav poznámku</button>';
+      $param = '\''.$poznamka.'\','.$id;
+      echo '<button class="btn btn-warning p-1" style="font-size:10px; vertical-align:middle;" onclick="infoBox('.$param.')">Pridaj/uprav <br>poznámku</button>';
     }
     echo '</div>';
 
@@ -175,6 +176,17 @@ EOF;
     }
     $db->close();	
     return $pole;
+}
+
+function vratKolo($idZapasu){
+    $db = napoj_db();
+  $sql =<<<EOF
+    SELECT kolo FROM Zapasy WHERE id="$idZapasu";
+EOF;
+  $ret = $db->query($sql);
+  $row = $ret->fetchArray(SQLITE3_ASSOC);
+  $db->close(); 
+  return $row;  
 }
 
 ?>
