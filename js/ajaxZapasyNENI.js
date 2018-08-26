@@ -45,7 +45,7 @@ $(document).ready(function(){
 						else{
 							zapasy += '<div class="row border-bottom mr-1 ml-1">';
 						}
-						zapasy += '<div class="col-sm-2 font-weight-bold text-center">' + zapas['datum'] + '</div>';
+						zapasy += '<div class="col-sm-2 font-weight-bold text-center">' + vypisDatum(zapas['datum']) + '</div>';
 						zapasy += '<div class="col-sm-3 text-center">' + zapas['domaci'] + '</div>';
 						zapasy += '<div class="col-sm-2 text-center">'+skoreD+':'+skoreH+'</div>';
 						zapasy += '<div class="col-sm-3 text-center">'+zapas['hostia']+'</div>';
@@ -100,7 +100,7 @@ $(document).ready(function(){
 						else{
 							zapasy += '<div class="row border-bottom mr-1 ml-1">';
 						}
-						zapasy += '<div class="col-sm-2 font-weight-bold text-center">' + zapas['datum'] + '</div>';
+						zapasy += '<div class="col-sm-2 font-weight-bold text-center">' + vypisDatum(zapas['datum']) + '</div>';
 						zapasy += '<div class="col-sm-3 text-center">' + zapas['domaci'] + '</div>';
 						zapasy += '<div class="col-sm-2 text-center">'+skoreD+':'+skoreH+'</div>';
 						zapasy += '<div class="col-sm-3 text-center">'+zapas['hostia']+'</div>';
@@ -148,6 +148,14 @@ $(document).ready(function(){
 				}
 			}
 		});
+	}
+
+	function vypisDatum(datetime){
+		var rok = datetime.substring(0,4);
+		var mesiac = datetime.substring(5,7) ;
+		var den = datetime.substring(8,10);
+		var cas = datetime.substring(11);
+		return den + '.' + mesiac + '.' + rok + ' ' + cas;
 	}
 
 });
