@@ -54,7 +54,7 @@ $(document).ready(function(){
 								zapasy += '<div class="col-sm-2 text-center ">';
 								zapasy += '<div class="d-inline myTooltip">';
 								zapasy += '<img id="infoImg'+zapas['kolo']+'" class="m-2" src="fotky/i-not.png" width="20">';
-								zapasy += '<span hidden id="infoText'+zapas['kolo']+'" class="myTooltipText">'+zapas['poznamka']+'</span></div>';
+								zapasy += '<span hidden id="infoText'+zapas['kolo']+'" class="myTooltipText"></span></div>';
 							}
 							else{
 								zapasy += '<div class="col-sm-2 text-center ">';
@@ -62,8 +62,7 @@ $(document).ready(function(){
 								zapasy += '<img id="infoImg'+zapas['kolo']+'" class="m-2" src="fotky/i.png" width="20">';
 								zapasy += '<span id="infoText'+zapas['kolo']+'" class="myTooltipText">'+zapas['poznamka']+'</span></div>';
 							}
-							zapasy += '<button class="btn btn-warning p-1" style="font-size:10px; vertical-align:middle;" '+
-							          'onclick="infoBox(\"'+zapas['poznamka']+'\",'+zapas['id']+')"><img src="fotky/edit.png" width="25"></button>';
+							zapasy += '<a class="buttonImg" href="javascript:infoBox(\''+zapas['poznamka']+'\','+zapas['id']+')"><img src="fotky/edit.png" width="30"></a>'
 							zapasy += '</div>';
 						}
 						else{
@@ -150,6 +149,7 @@ $(document).ready(function(){
 			}
 		});
 	}
+
 });
 /*
 zapas->odscrolluje na vrch stranky s animaciou
@@ -164,9 +164,11 @@ Cez servlet upravim poznamku v databaze. Ak je nova poznamka prazdna, i-cko zose
 Inak i-cko zmodrie a zobrazi sa novy text poznamky.
 */
 function infoBox(poznamka, id){
-	if(poznamka === null){
+	if(!poznamka){
+		console.log("je null " + poznamka);
 		poznamka = "";
 	}
+	console.log(poznamka);
   var txt = prompt("Zadajte text poznámky k zápasu (góly, karty, ...):", poznamka);
   if(txt != null){
    	console.log("text je neprazdny:" + txt);

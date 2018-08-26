@@ -148,8 +148,9 @@ function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka, $id, 
         </div>';
     }
     if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-      $param = '\''.$poznamka.'\','.$id;
-      echo '<button class="btn btn-warning p-1" style="font-size:10px; vertical-align:middle;" onclick="infoBox('.$param.')">Pridaj/uprav <br>poznámku</button>';
+      $param = '\''.addslashes($poznamka).'\','.$id;
+      //echo '<button class="btn btn-warning p-1" style="font-size:10px; vertical-align:middle;" onclick="infoBox('.$param.')">Pridaj/uprav <br>poznámku</button>';
+      echo '<a class="buttonImg" href="javascript:infoBox('.$param.')"><img src="fotky/edit.png" width="30"></a>';
     }
     echo '</div>';
 
