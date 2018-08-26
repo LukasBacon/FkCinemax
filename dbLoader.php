@@ -85,15 +85,14 @@ EOF;
     		VALUES ("$zapas->datum", "$rok", "$zapas->domaci", "$zapas->hostia", "$zapas->kolo", "$skupina");
 EOF;
 			if($zapas->skoreDomaci === null && $zapas->skoreHostia === null){
-				echo $zapas->skoreDomaci."----".$zapas->skoreHostia;
-		  	$ret = $db->exec($sql1);
+		  		$ret = $db->exec($sql1);
 			}
 			else{
-		  	$ret = $db->exec($sql);
+		  		$ret = $db->exec($sql);
 			}
-		  if(!$ret){
-		    echo $db->lastErrorMsg();
-		  }	
+		  	if(!$ret){
+		    	echo $db->lastErrorMsg();
+		  	}	
 		}
 		$db->close();
 	}

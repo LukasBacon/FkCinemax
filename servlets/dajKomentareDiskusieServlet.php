@@ -12,7 +12,7 @@ $id = $_POST['id'];
 
 $db = napoj_db();
 $sql =<<<EOF
-SELECT * FROM Komentare WHERE id_diskusie="$id" ORDER BY datum ASC;
+SELECT * FROM Komentare WHERE id_diskusie="$id" ORDER BY datum ASC, cas ASC;
 EOF;
 $ret = $db->query($sql);
 $pole = array();
