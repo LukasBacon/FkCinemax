@@ -95,36 +95,12 @@ function vypis_novy_album_karta(){
 							echo '<input name="nazov" id="inputNewAlbum" type="text" placeholder="Názov albumu" required>';
 					echo '</div>';
 					echo '<div class="card-footer text-center">';
-						echo '<input type="submit" id="novyAlbumBtn" name="novyAlbumBtn">';
+						echo '<a class="buttonImg" href="javascript:pridajAlbum()"><img src="fotky/add.png" width="40"></a>';
 					echo '</div>';
 				echo '</form>';
 			echo '</div>';
 		echo '</div>';
+
 }
 
-function pridaj_album($nazov){
-	$nazovPriecinku = replaceSpecialChars($nazov);
-	$db = napoj_db();
-	$sql =<<<EOF
-	SELECT exists (SELECT * FROM albumy WHERE nazov = "$nazov" OR nazov_priecinku = "$nazovPriecinku") as exist;
-EOF;
-  	$ret = $db->query($sql);
-  	$row = $ret->fetchArray(SQLITE3_ASSOC); 
-  	if($row['exist'] == 1) {
-  		$db->close();	
-  		return false;
-	}
-
-  	$sql =<<<EOF
-		INSERT INTO Albumy (nazov, nazov_priecinku, datum) VALUES ("$nazov", "$nazovPriecinku", date('now'));
-EOF;
-  	$ret = $db->query($sql);
-  	$db->close();	
-
-  	$cestaKPrieckinku = getcwd() . "/fotky/".$nazovPriecinku;
-  	if (!file_exists($cestaKPrieckinku)) {
-    	mkdir($cestaKPrieckinku);
-	}
-	return true;
-}
 ?>

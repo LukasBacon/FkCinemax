@@ -45,3 +45,32 @@ function potvrdNazov(id){
 		});	
 	}
 }
+
+function pridajAlbum(){
+	var nazov = $('#inputNewAlbum').val();
+	console.log("som tu. nazov:" + nazov);
+	if(nazov != ""){
+		console.log("idem dalej");
+		$.ajax({
+			url:"servlets/pridajAlbumServlet.php",
+			type:"post",
+			data:{"nazov":nazov},
+			success: function(data){
+				if(data == false){
+					alert("Album so zadaným názvom už existuje. Zmeňte ho.");
+				}
+				else{
+					alert(data);
+					location.reload();
+					$('#inputNewAlbum').val("");
+				}
+				console.log(data);
+			},
+			error: function(data){
+				console.log("error:" + data);
+			}
+		});		
+	}
+}
+
+

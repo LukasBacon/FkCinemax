@@ -16,11 +16,6 @@ hlavicka();
       </ol>
 
       <?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-          if(isset($_POST['novyAlbumBtn'])){
-            if(!pridaj_album($_POST['nazov'])){
-              echo '<p><strong style="color:red;">Album so zadaným názvom už existuje!</strong></p>';
-            }
-          }
           vypis_albumy_admin();
         }
         else{
