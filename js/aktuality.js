@@ -65,7 +65,7 @@ function upravAktualitu(id){
 			nadpis.replaceWith('<input class="card-header" id="new-nadpis-'+id+'" type="text" value="'+nadpisText+'">');		
 			text.replaceWith('<textarea rows="4" cols="100" class="form-control" id="new-text-'+id+'" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none">'+textText+'</textarea>');
 			vymazBtn.prop('hidden',true);
-			upravBtn.replaceWith('<a class="btn btn-admin" id="potvrdBtn-'+id+'" style="margin-right:10px;" href="javascript:potvrdAktualitu('+id+');">Potvrď</a>');
+			upravBtn.replaceWith(vypisPotvrdAktualituBtn(id));
 		}
 	});	
 }
@@ -82,7 +82,7 @@ function potvrdAktualitu(id){
 	newNadpis.replaceWith('<h5 class="card-header" id="aktualita-nadpis-'+id+'">'+newNadpisText+'</h5>');		
 	newText.replaceWith('<p class="card-text" id="aktualita-text-'+id+'">'+reformatTextToHtml(newTextText)+'</p>');
 	vymazBtn.prop('hidden',false);
-	potvrdBtn.replaceWith('<a class="btn btn-admin" id="upravBtn-'+id+'" style="margin-right:10px;" href="javascript:upravAktualitu('+id+');">Uprav</a>')
+	potvrdBtn.replaceWith(vypisUpravAktualituBtn(id));
 
 	$.ajax({
 		url:"servlets/upravAktualituServlet.php",
@@ -170,18 +170,18 @@ function highlightActualPage(aktualnaStrana){
 function vypisAktualityAdmin(data){
 	var aktualityText = "";
 	$.each(JSON.parse(data), function(index, aktualita){
-		aktualityText +=  '<div class="card" id="aktualita-'+aktualita['id']+'">';
-	    aktualityText +=  '<h5 class="card-header" id="aktualita-nadpis-'+aktualita['id']+'">'+aktualita['nadpis']+'</h5>';
-	    aktualityText +=  '<div class="card-body">';
-	    aktualityText +=  '<p class="card-text" id="aktualita-text-'+aktualita['id']+'">'+reformatTextToHtml(aktualita['text'])+'</p>';
-	    aktualityText +=  '<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
-	    aktualityText +=  '</div>';
-	    aktualityText +=  '<div class="card-footer">';
-	    aktualityText +=  '<a class="btn btn-admin" id="vymazBtn-'+aktualita['id']+'" style="margin-right:10px;" href="javascript:vymazAktualitu('+aktualita['id']+');">Vymaž</a>';
-	    aktualityText +=  '<a class="btn btn-admin" id="upravBtn-'+aktualita['id']+'" style="margin-right:10px;" href="javascript:upravAktualitu('+aktualita['id']+');">Uprav</a>';
-	    aktualityText +=  aktualita['datum'];
-	    aktualityText +=  '</div>';
-	    aktualityText +=  '</div>';
+		aktualityText +=  	'<div class="card" id="aktualita-'+aktualita['id']+'">';
+	    aktualityText +=  		'<h5 class="card-header" id="aktualita-nadpis-'+aktualita['id']+'">'+aktualita['nadpis']+'</h5>';
+	    aktualityText +=  		'<div class="card-body">';
+	    aktualityText +=  			'<p class="card-text" id="aktualita-text-'+aktualita['id']+'">'+reformatTextToHtml(aktualita['text'])+'</p>';
+	    aktualityText +=  			'<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
+	    aktualityText +=  		'</div>';
+	    aktualityText +=  		'<div class="card-footer" style="text-align: left;">';
+	    aktualityText +=  			vypisUpravAktualituBtn(aktualita['id']);
+	    aktualityText +=  			vypisVymazAktualituBtn(aktualita['id']);
+	    aktualityText +=  			'<div class="float-right mt-2">' + aktualita['datum'] + "</div>";
+	    aktualityText +=  		'</div>';
+	    aktualityText +=  	'</div>';
 	});
 	return aktualityText;
 }
@@ -189,18 +189,42 @@ function vypisAktualityAdmin(data){
 function vypisAktualityUser(data){
 	var aktualityText = "";
 	$.each(JSON.parse(data), function(index, aktualita){
-		aktualityText +=  '<div class="card">';
-	    aktualityText +=  '<h5 class="card-header">'+aktualita['nadpis']+'</h5>';
-	    aktualityText +=  '<div class="card-body">';
-	    aktualityText +=  '<p class="card-text">'+reformatTextToHtml(aktualita['text'])+'</p>';
-	    aktualityText +=  '<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
-	    aktualityText +=  '</div>';
-	    aktualityText +=  '<div class="card-footer">';
-	    aktualityText +=  aktualita['datum'];
-	    aktualityText +=  '</div>';
-	    aktualityText +=  '</div>';
+		aktualityText +=  	'<div class="card">';
+	    aktualityText +=  		'<h5 class="card-header">'+aktualita['nadpis']+'</h5>';
+	    aktualityText +=  		'<div class="card-body">';
+	    aktualityText +=  			'<p class="card-text">'+reformatTextToHtml(aktualita['text'])+'</p>';
+	    aktualityText +=  			'<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
+	    aktualityText +=  		'</div>';
+	    aktualityText +=  		'<div class="card-footer">';
+	    aktualityText +=  			aktualita['datum'];
+	    aktualityText +=  		'</div>';
+	    aktualityText +=  	'</div>';
 	});
 	return aktualityText;
+}
+
+function vypisVymazAktualituBtn(id){
+	var result = '';
+	result += '<a class="mx-1" id="vymazBtn-'+id+'" style="margin-right:10px;" href="javascript:vymazAktualitu('+id+');">';
+	result += 	'<img width="40" src="fotky/remove.png">';
+	result += '</a>';
+	return result;
+}
+
+function vypisUpravAktualituBtn(id){
+	var result = '';
+	result += '<a class="mx-1" id="upravBtn-'+id+'" style="margin-right:10px;" href="javascript:upravAktualitu('+id+');">';
+	result += 	'<img width="40" src="fotky/edit.png">';
+	result += '</a>';
+	return result;
+}
+
+function vypisPotvrdAktualituBtn(id){
+	var result = '';
+	result += '<a class="mx-1" id="potvrdBtn-'+id+'" style="margin-right:10px;" href="javascript:potvrdAktualitu('+id+');">';
+	result += '<img width="40" src="fotky/ok.png">';
+	result += '</a>';
+	return result;
 }
 
 function scrollToAktuality(){

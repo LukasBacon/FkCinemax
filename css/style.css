@@ -56,7 +56,7 @@
 	height:auto;
 }
 #cancelImgPhoto:hover{
-	transform: scale(1.1);
+	transform: scale(1.1)
 }
 #scrollArrow{
 	position:fixed;
@@ -99,4 +99,10 @@
 	background: url('../fotky/add.png') no-repeat;
     cursor:pointer;
     border: none;
+}
+
+.diskusie-header:hover{
+	text-decoration: none;
+	color: #6166b5;
+>>>>>>> 7388e372f2148f5bc4cca104321d373496f230bf
 }

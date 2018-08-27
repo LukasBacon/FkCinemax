@@ -7,7 +7,7 @@ $text = $_POST['text'];
 
 $db = napoj_db();
 $sql =<<<EOF
-INSERT INTO Komentare (meno, text, datum, id_diskusie) VALUES ("$meno", "$text", date('now'), "$idDiskusie");
+INSERT INTO Komentare (meno, text, datum, cas, id_diskusie) VALUES ("$meno", "$text", date('now'), time('now'), "$idDiskusie");
 EOF;
 $db->query($sql);
 $db->close();	
