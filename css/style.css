@@ -58,3 +58,8 @@
 #cancelImgPhoto:hover{
 	transform: scale(1.1);
 }
+
+.diskusie-header:hover{
+	text-decoration: none;
+	color: #6166b5;
+}

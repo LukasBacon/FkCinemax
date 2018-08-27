@@ -102,7 +102,7 @@ dbLoader::over();
                   </div>
                   <div id="info-div"></div>
                   <!-- For success/fail messages -->
-                  <a  class="btn btn-admin" id="pridaj-button" href="javascript:pridajAktualitu();">Pridaj</a>
+                  <a class="" id="pridaj-button" href="javascript:pridajAktualitu();"><img width="40" src="fotky/add.png"></a>
               </div>
 
             </div>
