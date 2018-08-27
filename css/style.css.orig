@@ -56,7 +56,8 @@
 	height:auto;
 }
 #cancelImgPhoto:hover{
-	transform: scale(1.1)
+	transform: scale(1.1);
+<<<<<<< HEAD
 }
 #scrollArrow{
 	position:fixed;
@@ -95,30 +96,16 @@
 .buttonImg:hover{
 	transform: scale(1.1);		
 }
-.buttonImg{
-	cursor: pointer;
-}
 #novyAlbumBtn{
 	background: url('../fotky/add.png') no-repeat;
     cursor:pointer;
     border: none;
+||||||| merged common ancestors
+=======
 }
+
 .diskusie-header:hover{
 	text-decoration: none;
 	color: #6166b5;
-}
-#submitFoto{
-    background: url(../fotky/add.png) no-repeat center;
-    border: 0;
-    display: block;
-    width: 40px;
-    color: transparent;
-    cursor:pointer;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-#submitFoto:hover{
-	transform: scale(1.1);		
+>>>>>>> 7388e372f2148f5bc4cca104321d373496f230bf
 }
