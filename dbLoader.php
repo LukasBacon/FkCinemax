@@ -6,36 +6,48 @@ class dbLoader{
 
 	/*overi ci treba aktualizovat tabulku zapasov a tabulku tabuliek*/
 	public static function over(){
+		$start = microtime(true);
+		echo "<script>console.log('over() started');</script>"; 
 		$pole = dbLoader::najdiNaposledyOdohraneZapasyBezSkore();
 		$pole += dbLoader::vratSkupinyARokyBezZapasov();
+		echo "<script>console.log(" . json_encode($pole) .  ");</script>";
 		foreach ($pole as $dvojica) {
 			$skupina = $dvojica['skupina'];
 			$rok = $dvojica['rok'];
 			$url = dbLoader::ziskajUrlPodlaSkupinyARoku($skupina, $rok);
 			dbLoader::aktualizujDatabazu($url, $skupina, $rok);
 		}
+		echo "<script>console.log('DBLoader:over() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 
 	}
 
 	public static function aktualizujDatabazu($url, $skupina, $rok){
+		$start = microtime(true);
 		$parsovac = dbLoader::preparsujFutbalnet($url);
 		dbLoader::aktualizujZapasy($parsovac, $skupina, $rok);
 		dbLoader::aktualizujTabulky($parsovac, $skupina, $rok);
+		echo "<script>console.log('DBLoader:aktualizujDatabazu() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 
 	}
 
 	public static function preparsujFutbalnet($url){
+		$start = microtime(true);
 		$parsovac = new Parser;
-		$parsovac->parsuj($url);					
+		$parsovac->parsuj($url);	
+		echo "<script>console.log('DBLoader:preparsuj() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 				
 		return $parsovac;
 	}
 
 	public static function aktualizujZapasy($parsovac, $skupina, $rok){
+		$start = microtime(true);
 		dbLoader::vymazUdajeZoZapasov($skupina, $rok);
 		dbLoader::vlozAktualneZapasy($skupina, $rok, $parsovac->zapasy); 
+		echo "<script>console.log('DBLoader:aktualizujZapasy() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 
 	}
 
 	public static function aktualizujTabulky($parsovac, $skupina, $rok){
+		$start = microtime(true);
 		dbLoader::vymazUdajeZTabuliek($skupina, $rok);
 		dbLoader::vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
+		echo "<script>console.log('DBLoader:aktualizujTabulky() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 
 	}
 
 	public static function ziskajUrlPodlaSkupinyARoku($skupina, $rok){
