@@ -58,7 +58,7 @@ EOF;
 			echo '<div id="cardAlbum" class="card mb-4">';
 				echo '<div class="card-body p-0">';
 					echo '<a href="javascript:vymazAlbum('.$row['id'].');">';
-						echo '<img id="cancelImg" src="fotky/cancel.png">';
+						echo '<img id="cancelImg" src="fotky/remove.png">';
 					echo '</a>';
 					echo '<a id="aWithoutTextHover" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'&nazovPriecinku='.$row['nazov_priecinku'].'">';
 						if ($row['url'] == NULL){
@@ -72,7 +72,7 @@ EOF;
 			    echo '<div class="card-footer text-left">';
 			    	echo '<p id="albumNazov'.$row['id'].'" style="color:black;" class="float-left font-weight-bold">'.$row['nazov'].'</p>';
 			    	echo '<input id="upravAlbumInput'.$row['id'].'" class=" float-left" type="text" required hidden>';
-			    		echo '<a id="upravAlbumBtn'.$row['id'].'" class="d-inline float-right btn btn-admin" href="javascript:upravAlbum('.$row['id'].');">Uprav</a>';
+			    		echo '<a id="upravAlbumBtn'.$row['id'].'" class="d-inline float-right" href="javascript:upravAlbum('.$row['id'].');"><img class="buttonImg" src="fotky/edit.png" width="40"></a>';
 			    echo '</div>';
 			echo '</div>';
 		echo '</a>';
@@ -95,36 +95,12 @@ function vypis_novy_album_karta(){
 							echo '<input name="nazov" id="inputNewAlbum" type="text" placeholder="Názov albumu" required>';
 					echo '</div>';
 					echo '<div class="card-footer text-center">';
-						echo '<input type="submit" name="novyAlbumBtn" value="Pridaj" class="btn btn-success">';
+						echo '<a class="buttonImg" href="javascript:pridajAlbum()"><img src="fotky/add.png" width="40"></a>';
 					echo '</div>';
 				echo '</form>';
 			echo '</div>';
 		echo '</div>';
+
 }
 
-function pridaj_album($nazov){
-	$nazovPriecinku = replaceSpecialChars($nazov);
-	$db = napoj_db();
-	$sql =<<<EOF
-	SELECT exists (SELECT * FROM albumy WHERE nazov = "$nazov" OR nazov_priecinku = "$nazovPriecinku") as exist;
-EOF;
-  	$ret = $db->query($sql);
-  	$row = $ret->fetchArray(SQLITE3_ASSOC); 
-  	if($row['exist'] == 1) {
-  		$db->close();	
-  		return false;
-	}
-
-  	$sql =<<<EOF
-		INSERT INTO Albumy (nazov, nazov_priecinku, datum) VALUES ("$nazov", "$nazovPriecinku", date('now'));
-EOF;
-  	$ret = $db->query($sql);
-  	$db->close();	
-
-  	$cestaKPrieckinku = getcwd() . "/fotky/".$nazovPriecinku;
-  	if (!file_exists($cestaKPrieckinku)) {
-    	mkdir($cestaKPrieckinku);
-	}
-	return true;
-}
 ?>

@@ -102,7 +102,7 @@ function vypisKolo($kolo, $skupina, $rok){
   echo '</div>';
   $zapasy = vratZapasyKola($skupina, $rok, $kolo);
   foreach ($zapasy as $zapas) {
-  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']));
+  	vypisZapas($zapas['domaci'], $zapas['hostia'], $zapas['skoreD'], $zapas['skoreH'], vypisDatumACas($zapas['datum']), $zapas['poznamka'], $zapas['id'], $zapas['kolo']);
   }	
   echo '<br>';
 }
@@ -121,19 +121,43 @@ EOF;
   return $zapasy;
 }
 
-function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum){
+function vypisZapas($domaci, $hostia, $skoreD, $skoreH, $datum, $poznamka, $id, $kolo){
   if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
-  echo '<div class="row ml-1 mr-1 bg-warning-pale">';
+  echo '<div class="row ml-1 mr-1 border-bottom bg-warning-pale">';
   }
   else{
-  echo '<div class="row border-bottom mr-1 ml-1">';
+  echo '<div class="row mr-1 border-bottom ml-1">';
   }
   echo '<div class="col-sm-2 font-weight-bold text-center">'.$datum.'</div>';
   echo '<div class="col-sm-3 text-center">'.$domaci.'</div>';
   echo '<div class="col-sm-2 text-center">'.$skoreD.':'.$skoreH.'</div>';
   echo '<div class="col-sm-3 text-center">'.$hostia.'</div>';
- /* echo '<div class="col-sm-8 text-center">'.$domaci.' '.$skoreD.' : '.$skoreH.' '.$hostia.'</div>';*/
-  echo '<div class="col-sm-2"></div>';
+  if(strpos($domaci, "FK CINEMAX Doľany") !== false || strpos($hostia, "FK CINEMAX Doľany") !== false){
+    if($poznamka == null){
+      echo '<div class="col-sm-2 text-center ">
+        <div class="d-inline myTooltip">
+        <img id="infoImg'.$kolo.'" class="m-2" src="fotky/i-not.png" width="20">
+         <span hidden id="infoText'.$kolo.'" class="myTooltipText"></span>
+        </div>';
+    }
+    else{
+        echo '<div class="col-sm-2 text-center ">
+        <div class="d-inline myTooltip">
+        <img id="infoImg'.$kolo.'" class="m-2" src="fotky/i.png" width="20">
+        <span id="infoText'.$kolo.'" class="myTooltipText">'.$poznamka.'</span>
+        </div>';
+    }
+    if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
+      $param = '\''.addslashes($poznamka).'\','.$id;
+      //echo '<button class="btn btn-warning p-1" style="font-size:10px; vertical-align:middle;" onclick="infoBox('.$param.')">Pridaj/uprav <br>poznámku</button>';
+      echo '<a class="buttonImg" href="javascript:infoBox('.$param.')"><img src="fotky/edit.png" width="30"></a>';
+    }
+    echo '</div>';
+
+  }
+  else{
+    echo '<div class="col-sm-2"></div>';
+  }
   echo '</div>';
 }
 
@@ -161,6 +185,17 @@ EOF;
     }
     $db->close();	
     return $pole;
+}
+
+function vratKolo($idZapasu){
+    $db = napoj_db();
+  $sql =<<<EOF
+    SELECT kolo FROM Zapasy WHERE id="$idZapasu";
+EOF;
+  $ret = $db->query($sql);
+  $row = $ret->fetchArray(SQLITE3_ASSOC);
+  $db->close(); 
+  return $row;  
 }
 
 ?>
