@@ -10,6 +10,7 @@
 }
 #albumImg{
 	object-fit:cover; height:281px; width:100%;
+
 }
 #fotoImg{
 	object-fit:cover; height:200px; width:100%;
@@ -52,7 +53,7 @@
 	position:absolute;
 	top:0;
 	right:0;
-	width: 20px;
+	width: 30px;
 	height:auto;
 }
 #cancelImgPhoto:hover{
@@ -120,5 +121,8 @@
   background-size: cover;
 }
 #submitFoto:hover{
-	transform: scale(1.1);		
+	transform: scale(1.1);
+}
+.btn-file:hover{
+	transform: scale(1.1);
 }
