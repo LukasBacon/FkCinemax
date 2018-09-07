@@ -13,17 +13,6 @@ class dbLoader{
 		echo "<script>console.log('toUpdate = " . json_encode($poleUpdata) .  "');</script>";
 		echo "<script>console.log('toInsert = " . json_encode($poleInsert) .  "');</script>";
 
-		// update zapasov:
-		// 		ziskam si unikatne dvojice (skupina, rok) -> liga, v ktorych treba updatnut zapasy
-		// 		kazdu tuto ligu updatnem -> ziskam zapasy, ktore treba updatnut, preparsujem ligu do pola, y pola ziskam udaje ktore potrebujem updatnut v zapasoch a updatnem
-		//		nevyhody: ked sa zmeni nazov klubu v zapasoch tak sme v rici, update nejako musi upozornit ze neneslo zapas, ktory malo updatnut, v zapasoch z futbalnetu
-		//                - mozne riesenie:
-		//						spravit funkciu, ktora bz sa spustila, ked sa zmeni nazov nejakeho klubu
-		//								fungovala by takto:
-		//									- v adminovy pri zapasoch ligy by bol vzsuvaci formular na zmenu nazvu klubu
-		//									- bol by tam select obsahujuci doterajsie nazvu klubov
-		//									- vybral by sa, ktory treba zmenit a napisal by sa jeho novy nazov (ktory bude v tabulke, lebo tak bude vzdy rovnaka s futbalnetom)
-		//									- v databaze zapasoch by sa kazdy vyskyt stareho klubu prepisal na novy -> potom by update uz zbehol 	
 		foreach ($poleUpdata as $dvojica) {
 			$skupina = $dvojica['skupina'];
 			$rok = $dvojica['rok'];
@@ -155,6 +144,9 @@ EOF;
 
 		// zapas je riadok tabulky, $parserZapas je objekt typu Zapas (parser/Zapas.php)
 		$parserZapas = DBLoader::najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy);
+		if ($parserZapas == null){
+			return;
+		}
 		$id = $zapas['id'];
 		$db = napoj_db();
 	    $sql1 =<<<EOF
@@ -178,6 +170,7 @@ EOF;
 				return $parserZapas;
 			}
 		}
+		return null;
 		// nenaslo 
 		// nejako na to upozorni !!!
 		// TODO
