@@ -185,7 +185,7 @@ function skryKomentare(id, nazov){
 function vypisShowHeader(id, nazov){
 	var result = "";
 	result += 	'<a class="card-header diskusie-header" id="header-'+id+'" href="javascript:ukazKomentare('+id+',\''+nazov+'\');">';
-    result += 		'<strong style="font-size: 1.25rem;">'+nazov+'</strong>';
+    result += 		'<strong style="font-size: 1.25rem; color:black;">'+nazov+'</strong>';
     result += 		'<strong style="float:right;">&#9660;</strong>';
     result += 	'</a>';
     return result;

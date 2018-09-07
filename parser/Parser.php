@@ -23,8 +23,11 @@ class Parser
     }
     $this->body = file_get_html($url)->find('body', 0);
     $this->nacitajNazovLigyARocnik();
+    echo "<script>console.log('nacitajNazovLigyARocnik OK');</script>"; 
     $this->nacitajZapasy();
+    echo "<script>console.log('nacitajZapasy OK');</script>"; 
     $this->nacitajTabulku();
+    echo "<script>console.log('nacitajTabulku OK');</script>"; 
     return True;
   }
 
