@@ -2,8 +2,11 @@
 $heslo="zelenajetrava"; //heslo admina
 date_default_timezone_set('UTC');
 include('db.php');
+include('dbLoader.php');
 
-function hlavicka(){  ?>
+function hlavicka(){  
+  dbLoader::over();
+  ?>
   <!DOCTYPE html>
   <html lang="en">
 

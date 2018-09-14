@@ -143,7 +143,9 @@ EOF;
 		// ak $parserZapas nema skore .. daj NULL do db
 
 		// zapas je riadok tabulky, $parserZapas je objekt typu Zapas (parser/Zapas.php)
-		$parserZapas = DBLoader::najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy);
+		$tuple = DBLoader::najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy);
+		$parserZapas = $tuple['zapas'];
+		$isInversed = $tuple['inversed'];
 		if ($parserZapas == null){
 			return;
 		}
@@ -155,25 +157,75 @@ EOF;
 		$sql2 =<<<EOF
 	    	UPDATE Zapasy SET datum = "$parserZapas->datum" WHERE id = "$id";
 EOF;
+		$sql3 =<<<EOF
+	    	UPDATE Zapasy SET 	domaci = "$parserZapas->domaci", 
+	    						hostia = "$parserZapas->hostia", 
+	    						skoreD = "$parserZapas->skoreDomaci", 
+	    						skoreH = "$parserZapas->skoreHostia", 
+	    						datum = "$parserZapas->datum" WHERE id = "$id";
+EOF;
+		$sql4 =<<<EOF
+	    	UPDATE Zapasy SET 	domaci = "$parserZapas->domaci", 
+	    						hostia = "$parserZapas->hostia", 
+	    						datum = "$parserZapas->datum" WHERE id = "$id";
+EOF;
 
 	    if($parserZapas->skoreDomaci === null && $parserZapas->skoreHostia === null){
-		  	$ret = $db->exec($sql2);
+	    	if ($isInversed){
+	    		// ak je skore null a domaci a hostia sa vymenili
+	    		$ret = $db->exec($sql4);
+	    	}
+	    	else{
+	    		// ak je skore null a domaci a hostia sa nevymenili
+	    		$ret = $db->exec($sql2);
+	    	}
 		}
 		else{
-		  	$ret = $db->exec($sql1);
+		    if ($isInversed){
+		    	// ak skore nie je null a domaci a hostia sa vymenili
+	    		$ret = $db->exec($sql3);
+	    	}
+	    	else{
+	    		// ak skore nie je null a domaci a hostia sa nevymenili
+	    		$ret = $db->exec($sql1);
+	    	}
 		}
 	}
 
 	public static function najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy){
 		foreach ($parserZapasy as $parserZapas) {
-			if ($parserZapas->kolo === $zapas["kolo"] && $parserZapas->domaci === $zapas["domaci"] && $parserZapas->hostia === $zapas["hostia"]){
-				return $parserZapas;
+			if ($parserZapas->kolo === $zapas["kolo"]){
+				if ($parserZapas->domaci === $zapas["domaci"] && $parserZapas->hostia === $zapas["hostia"]){
+					return array('zapas' => $parserZapas,'inversed' =>  false);
+				}
+				if ($parserZapas->domaci === $zapas["hostia"] && $parserZapas->hostia === $zapas["domaci"]){
+					return array('zapas' => $parserZapas,'inversed' =>  true);
+				}
 			}
 		}
-		return null;
-		// nenaslo 
-		// nejako na to upozorni !!!
-		// TODO
+		$to      = 'lukasslaninka19@gmail.com';
+		$subject = 'FK Cinemax Parser error';
+		$message = '' .json_encode($zapas).' was not found in $parserZapasy.';
+		echo "<script>console.log('mail message = ". $message ."');</script>"; 
+		$headers = 'From: fkcinemaxparser@parser.com' . "\r\n" .
+		    'Reply-To: fkcinemaxparser@parser.com' . "\r\n" .
+		    'X-Mailer: PHP/' . phpversion();
+
+		set_error_handler(
+		    create_function(
+		        '$severity, $message, $file, $line',
+		        'throw new ErrorException($message, $severity, $severity, $file, $line);'
+		    )
+		);
+		try {
+		    mail($to, $subject, $message, $headers);
+		}
+		catch (Exception $e) {
+		    echo "<script>console.log('Mail was not sent.');</script>"; 
+		}
+		restore_error_handler();
+
+		return array('zapas' => null, 'inversed' =>  false);
 	}
 
 	public static function najdiLigySNaposledyOdohranymiZapasmiBezSkore(){
