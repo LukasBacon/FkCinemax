@@ -127,4 +127,19 @@
 .btn-file:hover{
 	transform: scale(1.1);
 }
+.rowHraci{
+	padding-bottom: 20px;
+}
+.hraciForm{
+	margin-top: 10px;
+}
+.hracFoto{
+	max-height:300px;
+	width: auto;
+}
+label{
+	margin-top:10px;
+	margin-bottom:2px;
+	font-weight: bold;
+}
 
