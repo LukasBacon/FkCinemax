@@ -206,7 +206,7 @@ function vypisAktualityUser(data){
 function vypisVymazAktualituBtn(id){
 	var result = '';
 	result += '<a class="mx-1" id="vymazBtn-'+id+'" style="margin-right:10px;" href="javascript:vymazAktualitu('+id+');">';
-	result += 	'<img width="40" src="fotky/remove.png">';
+	result += 	'<img width="40" class="withHover" src="fotky/remove.png">';
 	result += '</a>';
 	return result;
 }
@@ -214,7 +214,7 @@ function vypisVymazAktualituBtn(id){
 function vypisUpravAktualituBtn(id){
 	var result = '';
 	result += '<a class="mx-1" id="upravBtn-'+id+'" style="margin-right:10px;" href="javascript:upravAktualitu('+id+');">';
-	result += 	'<img width="40" src="fotky/edit.png">';
+	result += 	'<img width="40" class="withHover" src="fotky/edit.png">';
 	result += '</a>';
 	return result;
 }
@@ -222,7 +222,7 @@ function vypisUpravAktualituBtn(id){
 function vypisPotvrdAktualituBtn(id){
 	var result = '';
 	result += '<a class="mx-1" id="potvrdBtn-'+id+'" style="margin-right:10px;" href="javascript:potvrdAktualitu('+id+');">';
-	result += '<img width="40" src="fotky/ok.png">';
+	result += '<img width="40" class="withHover" src="fotky/ok.png">';
 	result += '</a>';
 	return result;
 }

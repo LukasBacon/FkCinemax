@@ -93,9 +93,6 @@
 .myTooltip:hover .myTooltipText {
     visibility: visible;
 }
-.buttonImg:hover{
-	transform: scale(1.1);		
-}
 .buttonImg{
 	cursor: pointer;
 }
@@ -121,12 +118,6 @@
   -o-background-size: cover;
   background-size: cover;
 }
-#submitFoto:hover{
-	transform: scale(1.1);
-}
-.btn-file:hover{
-	transform: scale(1.1);
-}
 .rowHraci{
 	padding-bottom: 20px;
 }
@@ -141,5 +132,8 @@ label{
 	margin-top:10px;
 	margin-bottom:2px;
 	font-weight: bold;
+}
+.withHover:hover{
+	transform: scale(1.1);	
 }
 

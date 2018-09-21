@@ -49,7 +49,7 @@ function printPhotosWithFormular($nazovPriecinku, $idAlbumu, $fotky){
 		echo '<div class="col-sm-3">';
 			echo '<div class="card">';
 				echo '<a href="javascript:vymazFotku('.$fotka['id'].');" style="z-index:1;">';
-					echo '<img id="cancelImgPhoto" src="fotky/remove.png">';
+					echo '<img id="cancelImgPhoto withHover" src="fotky/remove.png">';
 				echo '</a>';
 				echo '<a class="fotoA" href="'.$url.'">';
 					echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
@@ -69,15 +69,15 @@ function vypis_pridaj_novu($nazovPriecinku, $idAlbumu){
 			echo '<h4>Pridaj novú fotku</h4>';
 			echo 'Povolené formáty: png a jpg <br>';
 			echo '<form class="form-inline d-flex justify-content-center" action="/FkCinemax/servlets/addPhotosServlet.php" method="post" enctype="multipart/form-data">';
-				echo '<label class="btn-file" style="width:60px;">';
+				echo '<label class="btn-file withHover" style="width:60px;">';
 					echo '<input type="file" class="custom-file-input" style="width:0%;" name="files[]" id="files" accept=".jpg, .jpeg, .png" multiple/> ';
-					echo '<span class="custom-file-control"><img src="fotky/foto.png" id="fileLabel" class="buttonImg" width="40"></span>';
+					echo '<span class="custom-file-control"><img src="fotky/foto.png" id="fileLabel" class="buttonImg withHover" width="40"></span>';
 				echo '</label>';
 				echo '<input type="text" name="idAlbumu" value="'.$idAlbumu.'" hidden>';
 				echo '<input type="text" name="albumName" value="'.$nazovPriecinku.'" hidden>';
 				$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 				echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
-				echo '<input type="submit" id="submitFoto" name="submit" value="Pridaj" class="btn btn-success" hidden/>';
+				echo '<input type="submit" id="submitFoto withHover" name="submit" value="Pridaj" class="btn btn-success" hidden/>';
 			echo '</form>';
 		echo '</div>';
 	echo '</div><br>';

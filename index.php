@@ -43,18 +43,15 @@ hlavicka();
         <!-- Zapasy -->
         <div class="col-lg-5">
           <div class="card">
-            <h5 class="card-header-success">Posledný zápas</h5>
+            <h5 class="card-header-match">Posledné zápasy</h5>
             <div class="card-body">
               <ul class="list-group list-group-flush">
                 <?php vypisPosledneZapasy(array('Seniori', 'Pripravka')); ?>
-                <li class="list-group-item">
-                  <a class="btn btn-success" href="z_pripravka.php">Zápasy prípravky</a>
-                </li>
               </ul>
             </div>
           </div>
           <div class="card">
-            <h5 class="card-header-match">Nasledujúci zápas</h5>
+            <h5 class="card-header-match">Nasledujúce zápasy</h5>
             <div class="card-body">
               <ul class="list-group list-group-flush">
                 <?php vypisNasledujuceZapasy(array('Seniori')); ?>
@@ -100,7 +97,7 @@ hlavicka();
                   </div>
                   <div id="info-div"></div>
                   <!-- For success/fail messages -->
-                  <a class="" id="pridaj-button" href="javascript:pridajAktualitu();"><img width="40" src="fotky/add.png"></a>
+                  <a class="" id="pridaj-button" href="javascript:pridajAktualitu();"><img class="withHover" width="40" src="fotky/add.png"></a>
               </div>
 
             </div>
