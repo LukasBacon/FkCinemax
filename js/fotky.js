@@ -18,6 +18,12 @@ $(document).ready(function(){
             tCounter: '<span class="mfp-counter">%curr% of %total%</span>'
         }
     }); 
+
+
+    $("#files").change(function() {
+        $('#submitFoto').click();
+    });
+
 });
 
 

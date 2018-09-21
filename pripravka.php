@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('funkcie.php');
+include('printers/hraciPrinter.php');
 hlavicka();
 ?>
     <!-- Page Content -->
@@ -16,6 +17,7 @@ hlavicka();
       </ol>
 
       <?php if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
+          vypis_pridaj_noveho("Pripravka");
           vypis_hracov_admin("Pripravka");
         }
         else{
