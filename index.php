@@ -1,10 +1,8 @@
 <?php
 include('funkcie.php');
 include('printers/zapasyPrinter.php');
-include('dbLoader.php');
 session_start();
 hlavicka();
-dbLoader::over();
 ?>
     <!-- hlavicka - pohyblive obrazky -->
     <header>
