@@ -26,7 +26,7 @@ hlavicka();
           <div class="col-lg-4">
             <!-- Nova diskusia -->
             <div class="card my-4">
-              <h5 class="card-header-match">Vytvor novú diskusiu:</h5>
+              <strong class="card-header-match" style="font-size: 1.25rem; color:black;">Vytvor novú diskusiu:</strong>
               <div class="card-body">
                 <form method="post">
                   <div class="control-group form-group">

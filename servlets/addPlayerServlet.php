@@ -16,19 +16,19 @@ if (isset($_POST['submit'])){
             $fileURL = 'seniori/foto.png';
         }
         else{
-            $fileURL = 'seniori/'+$meno+$priezvisko+koncovka;
+            $fileURL = 'seniori/'+$meno+$priezvisko+koncovka;//bez diakritiky
         }
     }
         if(nofile){
             $fileURL = 'pripravka/foto.png';
         }
         else{
-            $fileURL = 'pripravka/'+$meno+$priezvisko+koncovka;
+            $fileURL = 'pripravka/'+$meno+$priezvisko+koncovka;//bez diakritiky
         }    else{
 
     }
     /*neviem co*/
-    foreach($_FILES["files"]["name"] as $key => $file_name){
+    /*foreach($_FILES["files"]["name"] as $key => $file_name){
 	    $file_name=$_FILES["files"]["name"][$key];
 	    $file_tmp=$_FILES["files"]["tmp_name"][$key];
 	    $ext=pathinfo($file_name,PATHINFO_EXTENSION);
@@ -44,9 +44,9 @@ if (isset($_POST['submit'])){
 	    }
     }
     unset($_FILES['uploadedfile']);
-    header('Location: ' . $url);
+    header('Location: ' . $url);*/
 }
-
+/*
 function compressImage($pathToImage){
 	list($width, $height) = getimagesize($pathToImage);
 	if ($width > $height){
@@ -91,7 +91,7 @@ function resizeImage($sourceImage, $targetImage, $maxWidth, $maxHeight, $quality
     imagedestroy($newImage);
     return true;
 }
-
+*/
 function pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupina){
 	$db = napoj_db();
   	$sql =<<<EOF

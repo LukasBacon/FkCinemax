@@ -2537,8 +2537,8 @@ fieldset:disabled a.btn {
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #0069d9;
-  border-color: #0062cc;
+  background-color: #373d8e;
+  border-color: #373d8e;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -3313,7 +3313,7 @@ tbody.collapse.show {
 .dropdown-item.active, .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background-color: #007bff;
+  background-color: #6166b5;
 }
 
 .dropdown-item.disabled, .dropdown-item:disabled {

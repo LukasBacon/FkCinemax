@@ -29,6 +29,7 @@ $(document).ready(function(){
 			data:{"rok":rok, "skupina":skupina},
 			success: function(data){
 				divZapasy.empty();
+				
 				var zapasy = "";
 				$.each(JSON.parse(data), function(kolo, zapasyKola){
 					zapasy += '<div class="row ml-1 mr-1"  id="k' + kolo + '">';
@@ -62,7 +63,7 @@ $(document).ready(function(){
 								zapasy += '<img id="infoImg'+zapas['kolo']+'" class="m-2" src="fotky/i.png" width="20">';
 								zapasy += '<span id="infoText'+zapas['kolo']+'" class="myTooltipText">'+zapas['poznamka']+'</span></div>';
 							}
-							zapasy += '<a class="buttonImg withHover" href="javascript:infoBox(\''+zapas['poznamka']+'\','+zapas['id']+')"><img src="fotky/edit.png" width="30"></a>'
+							zapasy += '<a class="buttonImg" href="javascript:infoBox(\''+zapas['poznamka']+'\','+zapas['id']+')"><img class="withHover" src="fotky/edit.png" width="30"></a>'
 							zapasy += '</div>';
 						}
 						else{

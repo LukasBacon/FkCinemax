@@ -103,9 +103,15 @@
 }
 .diskusie-header:hover{
 	text-decoration: none;
-	color: black;
+	/*color: black;*/
 }
+.diskusia-header a{
+	color:black;
 
+}
+.diskusia-header a:hover{
+	color:black;
+}
 #submitFoto{
     background: url(../fotky/add.png) no-repeat center;
     border: 0;
@@ -135,5 +141,8 @@ label{
 }
 .withHover:hover{
 	transform: scale(1.1);	
+}
+.diskusie-header:hover {
+  background-color: #ffd95e;
 }
 
