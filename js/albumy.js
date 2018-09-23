@@ -1,9 +1,10 @@
 $(document).ready(function(){
-	$("#inputNewAlbum").keyup(function(event){
-		console.log(event.keyCode);
+	$("#inputNewAlbum").on('keyup keypress', function(event){
+		var keyCode = event.keyCode || event.which;
 		if (event.keyCode === 13) {
-			console.log("enter bol");
-			$("#addNewAlbumBtn")[0].click();
+			event.preventDefault();
+			pridajAlbum();
+			return false;
 		}
 	});
 });
@@ -54,9 +55,7 @@ function potvrdNazov(id){
 
 function pridajAlbum(){
 	var nazov = $('#inputNewAlbum').val();
-	console.log("som tu. nazov:" + nazov);
 	if(nazov != ""){
-		console.log("idem dalej");
 		$.ajax({
 			url:"servlets/pridajAlbumServlet.php",
 			type:"post",
@@ -69,7 +68,6 @@ function pridajAlbum(){
 					location.reload();
 					$('#inputNewAlbum').val("");
 				}
-				console.log(data);
 			},
 			error: function(data){
 				console.log("error:" + data);

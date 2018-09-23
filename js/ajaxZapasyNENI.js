@@ -173,14 +173,12 @@ Cez servlet upravim poznamku v databaze. Ak je nova poznamka prazdna, i-cko zose
 Inak i-cko zmodrie a zobrazi sa novy text poznamky.
 */
 function infoBox(poznamka, id){
-	if(!poznamka){
-		console.log("je null " + poznamka);
+	if(poznamka === 'null'){
 		poznamka = "";
 	}
-	console.log(poznamka);
-  var txt = prompt("Zadajte text poznámky k zápasu (góly, karty, ...):", poznamka);
-  if(txt != null){
-   	console.log("text je neprazdny:" + txt);
+	var txt = prompt("Zadajte text poznámky k zápasu (góly, karty, ...):", poznamka);
+	if(txt != null){
+	 	console.log("text je neprazdny:" + txt);
 	 	$.ajax({
 			url:"servlets/upravPoznamkuServlet.php",
 			type:"post",
