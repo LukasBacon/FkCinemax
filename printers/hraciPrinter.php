@@ -49,7 +49,7 @@ EOF;
       $poc++;
     }
   }
-  //posledny je nalavo
+  //posledny je nalavo 
   if(($poc % 2) > 0){
     echo '<div class="col-md-6"></div></div>';
   }
@@ -114,16 +114,13 @@ function vypis_pridaj_noveho($skupina){
 			echo '<input id="typ" name="post" type="text"><br>';
 			echo '<label for="rok">Ročník: </label><br>';
 			echo '<input id="rok" name="rocnik" type="text"><br>';
-
 			echo '<label for="timy">Tímy: </label><br>';
 			echo '<textarea id="timy" name="timy"></textarea><br>';
 			echo '<label for="foto">Fotka: </label><br>';
-
 			echo '<input type="file" name="file" id="foto" accept=".jpg, .jpeg, .png"/> ';
 			echo '<input type="hidden" name="skupina" value="'.$skupina.'">';
       $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
       echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
-
 			echo '<br><br>';
 			echo '<div align="center">';
 			echo '<input type="submit" name="submit" id="submitFoto" value="P" class="btn btn-success withHover">';

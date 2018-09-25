@@ -11,7 +11,7 @@ if (isset($_POST['submit'])){
     $skupina = $_POST['skupina'];
     $fileURL = "";
 
-    $ifFile = false;
+    $isFile = false;
     if ( $_FILES['file']['error'] <= UPLOAD_ERR_OK ){
         $file = $_FILES['file'];
         $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
@@ -38,66 +38,6 @@ if (isset($_POST['submit'])){
             pridajFotkuNaServer($file, $fileURL);
         }  
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupina);
 
