@@ -24,11 +24,6 @@ if (isset($_POST['submit'])){
             $fileURL = 'fotky/seniori/face.png';
         }
         else{
-
-
-
-
-
             $fileURL = 'fotky/seniori/'.replaceSpecialChars($meno).replaceSpecialChars($priezvisko).".".$ext;
             pridajFotkuNaServer($file, $fileURL);
 
