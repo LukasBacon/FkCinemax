@@ -93,9 +93,6 @@
 .myTooltip:hover .myTooltipText {
     visibility: visible;
 }
-.buttonImg:hover{
-	transform: scale(1.1);		
-}
 .buttonImg{
 	cursor: pointer;
 }
@@ -106,9 +103,15 @@
 }
 .diskusie-header:hover{
 	text-decoration: none;
-	color: black;
+	/*color: black;*/
 }
+.diskusia-header a{
+	color:black;
 
+}
+.diskusia-header a:hover{
+	color:black;
+}
 #submitFoto{
     background: url(../fotky/add.png) no-repeat center;
     border: 0;
@@ -120,12 +123,6 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-#submitFoto:hover{
-	transform: scale(1.1);
-}
-.btn-file:hover{
-	transform: scale(1.1);
 }
 .rowHraci{
 	padding-bottom: 20px;
@@ -141,5 +138,11 @@ label{
 	margin-top:10px;
 	margin-bottom:2px;
 	font-weight: bold;
+}
+.withHover:hover{
+	transform: scale(1.1);	
+}
+.diskusie-header:hover {
+  background-color: #ffd95e;
 }
 

@@ -1,5 +1,12 @@
 $(document).ready(function(){
-
+	$("#inputNewAlbum").on('keyup keypress', function(event){
+		var keyCode = event.keyCode || event.which;
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			pridajAlbum();
+			return false;
+		}
+	});
 });
 
 
@@ -25,7 +32,7 @@ function upravAlbum(id){
 	var upravAlbumBtn = $('#upravAlbumBtn'+id);
 	albumNazov.prop('hidden',true);
 	albumInput.removeAttr('hidden'); 
-	upravAlbumBtn.replaceWith('<a id="potvrdNazovBtn'+id+'" class="d-inline float-right" href="javascript:potvrdNazov('+id+');"><img class="buttonImg" src="fotky/ok.png" width="40"></a>');		
+	upravAlbumBtn.replaceWith('<a id="potvrdNazovBtn'+id+'" class="d-inline float-right" href="javascript:potvrdNazov('+id+');"><img class="buttonImg withHover" src="fotky/ok.png" width="40"></a>');		
 }
 
 function potvrdNazov(id){
@@ -37,7 +44,7 @@ function potvrdNazov(id){
 		albumNazov.text(nazov);
 		albumNazov.removeAttr('hidden');
 		albumInput.prop('hidden',true);
-		potvrdNazovBtn.replaceWith('<a id="upravAlbumBtn'+id+'" class="d-inline float-right" href="javascript:upravAlbum('+id+');"><img class="buttonImg" src="fotky/edit.png" width="40"></a>');
+		potvrdNazovBtn.replaceWith('<a id="upravAlbumBtn'+id+'" class="d-inline float-right" href="javascript:upravAlbum('+id+');"><img class="buttonImg withHover" src="fotky/edit.png" width="40"></a>');
 		$.ajax({
 			url:"servlets/upravNazovAlbumuServlet.php",
 			type:"post",
@@ -48,9 +55,7 @@ function potvrdNazov(id){
 
 function pridajAlbum(){
 	var nazov = $('#inputNewAlbum').val();
-	console.log("som tu. nazov:" + nazov);
 	if(nazov != ""){
-		console.log("idem dalej");
 		$.ajax({
 			url:"servlets/pridajAlbumServlet.php",
 			type:"post",
@@ -60,11 +65,9 @@ function pridajAlbum(){
 					alert("Album so zadaným názvom už existuje. Zmeňte ho.");
 				}
 				else{
-					alert(data);
 					location.reload();
 					$('#inputNewAlbum').val("");
 				}
-				console.log(data);
 			},
 			error: function(data){
 				console.log("error:" + data);

@@ -11,7 +11,7 @@ if (isset($_POST['submit'])){
     $skupina = $_POST['skupina'];
     $fileURL = "";
 
-    $ifFile = false;
+    $isFile = false;
     if ( $_FILES['file']['error'] <= UPLOAD_ERR_OK ){
         $file = $_FILES['file'];
         $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
@@ -26,6 +26,7 @@ if (isset($_POST['submit'])){
         else{
             $fileURL = 'fotky/seniori/'.replaceSpecialChars($meno).replaceSpecialChars($priezvisko).".".$ext;
             pridajFotkuNaServer($file, $fileURL);
+
         }
     }
     else{
@@ -39,6 +40,7 @@ if (isset($_POST['submit'])){
     }
 
     pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupina);
+
 
     unset($_FILES['file']);
     header('Location: ' . $pageUrl);

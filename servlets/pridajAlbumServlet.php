@@ -2,7 +2,6 @@
 include('../funkcie.php');
 
 $nazov = $_POST['nazov'];
-echo "som tu";
 $nazovPriecinku = replaceSpecialChars($nazov);
 $db = napoj_db();
 $sql =<<<EOF

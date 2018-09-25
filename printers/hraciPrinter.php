@@ -49,7 +49,7 @@ EOF;
       $poc++;
     }
   }
-  //posledny je nalavo
+  //posledny je nalavo 
   if(($poc % 2) > 0){
     echo '<div class="col-md-6"></div></div>';
   }
@@ -72,8 +72,8 @@ function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narod
   		echo '<img class="img-fluid rounded mb-3 mb-md-0" src="'.$url.'">';
   	echo '</div>';
   	echo '<div class="form-inline d-flex justify-content-center hraciForm">';
-  		echo '<a class="pr-1" id="vymazBtn-'.$id.'" href="javascript:vymazHraca('.$id.');"><img width="40" class="buttonImg" src="fotky/remove.png" alt="Vymaž hráča"></a>';
-  	  echo '<a class="pr-1" id="upravBtn-'.$id.'" href="javascript:upravHraca('.$id.');"><img width="40" class="buttonImg" src="fotky/edit.png" alt="Uprav info o hráčovi"></a>';
+  		echo '<a class="pr-1" id="vymazBtn-'.$id.'" href="javascript:vymazHraca('.$id.');"><img width="40" class="buttonImg withHover" src="fotky/remove.png" alt="Vymaž hráča"></a>';
+  	  echo '<a class="pr-1" id="upravBtn-'.$id.'" href="javascript:upravHraca('.$id.');"><img width="40" class="buttonImg withHover" src="fotky/edit.png" alt="Uprav info o hráčovi"></a>';
       echo '<div class="pr-1" id="zmenBtn-'.$id.'">';
         echo '<form action="/FkCinemax/servlets/editPhotoServlet.php" method="post" enctype="multipart/form-data"  style="margin:0px; padding:0px;">';
           $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -85,7 +85,7 @@ function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narod
           echo '<input type="submit" name="submit" id="submitFile-'.$id.'" value="Edit" hidden>';
           echo '<label class="btn-file" style="width:40px; margin:0px;">';
             echo '<input type="file" class="custom-file-input" style="width:0%;" name="file" id="editFile-'.$id.'" accept=".jpg, .jpeg, .png"/> ';
-            echo '<span class="custom-file-control"><img src="fotky/foto.png" id="fileLabel" class="buttonImg" width="40"></span>';
+            echo '<span class="custom-file-control"><img src="fotky/foto.png" id="fileLabel" class="buttonImg withHover" width="40"></span>';
           echo '</label>';
         echo '</form>';
       echo '</div>';
@@ -123,7 +123,7 @@ function vypis_pridaj_noveho($skupina){
       echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
 			echo '<br><br>';
 			echo '<div align="center">';
-			echo '<input type="submit" name="submit" id="submitFoto" value="P" class="btn btn-success">';
+			echo '<input type="submit" name="submit" id="submitFoto" value="P" class="btn btn-success withHover">';
 			echo '</div>';
 			echo '</form>';
 		echo '</div>';

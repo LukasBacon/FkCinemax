@@ -72,7 +72,7 @@ EOF;
 			    echo '<div class="card-footer text-left">';
 			    	echo '<p id="albumNazov'.$row['id'].'" style="color:black;" class="float-left font-weight-bold">'.$row['nazov'].'</p>';
 			    	echo '<input id="upravAlbumInput'.$row['id'].'" class=" float-left" type="text" required hidden>';
-			    		echo '<a id="upravAlbumBtn'.$row['id'].'" class="d-inline float-right" href="javascript:upravAlbum('.$row['id'].');"><img class="buttonImg" src="fotky/edit.png" width="40"></a>';
+			    		echo '<a id="upravAlbumBtn'.$row['id'].'" class="d-inline float-right" href="javascript:upravAlbum('.$row['id'].');"><img class="buttonImg withHover" src="fotky/edit.png" width="40"></a>';
 			    echo '</div>';
 			echo '</div>';
 		echo '</a>';
@@ -95,7 +95,7 @@ function vypis_novy_album_karta(){
 							echo '<input name="nazov" id="inputNewAlbum" type="text" placeholder="Názov albumu" required>';
 					echo '</div>';
 					echo '<div class="card-footer text-center">';
-						echo '<a class="buttonImg" href="javascript:pridajAlbum()"><img src="fotky/add.png" width="40"></a>';
+						echo '<a class="buttonImg withHover" id="addNewAlbumBtn" href="javascript:pridajAlbum()"><img class="withHover" src="fotky/add.png" width="40"></a>';
 					echo '</div>';
 				echo '</form>';
 			echo '</div>';

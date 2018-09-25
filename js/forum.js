@@ -123,7 +123,7 @@ function vypisVymazDiskusiuBtn(idDiskusie, admin){
 	var vymazDiskusiuBtn = '';
 	if (admin){
 		vymazDiskusiuBtn = 	'<a class="mx-1" style="margin-left: 10px;" href="javascript:vymazDiskusiu('+idDiskusie+')">';
-		vymazDiskusiuBtn += 	'<img src="fotky/remove.png" width="40">';
+		vymazDiskusiuBtn += 	'<img class="withHover" src="fotky/remove.png" width="40">';
 		vymazDiskusiuBtn += '</a>';
 	}
 	return vymazDiskusiuBtn;
@@ -186,7 +186,7 @@ function vypisShowHeader(id, nazov){
 	var result = "";
 	result += 	'<a class="card-header diskusie-header" id="header-'+id+'" href="javascript:ukazKomentare('+id+',\''+nazov+'\');">';
     result += 		'<strong style="font-size: 1.25rem; color:black;">'+nazov+'</strong>';
-    result += 		'<strong style="float:right;">&#9660;</strong>';
+    result += 		'<strong style="float:right; color:black">&#9660;</strong>';
     result += 	'</a>';
     return result;
 }
@@ -195,8 +195,8 @@ function vypisShowHeader(id, nazov){
 function vypisHideHeader(id, nazov){
 	var result = "";
 	result += 	'<a class="card-header diskusie-header" id="header-'+id+'" href="javascript:skryKomentare('+id+',\''+nazov+'\');">';
-    result += 		'<strong style="font-size: 1.25rem;">'+nazov+'</strong>';
-    result += 		'<strong style="float:right;">&#9650;</strong>';
+    result += 		'<strong style="font-size: 1.25rem; color:black;">'+nazov+'</strong>';
+    result += 		'<strong style="float:right; color:black;">&#9650;</strong>';
     result += 	'</a>';
     return result;
 }
@@ -232,7 +232,7 @@ function vypisVymazKomentarBtn(idKomentaru, admin){
 	var vymazKomentarBtn = '';
 	if (admin){
 		vymazKomentarBtn = 	'<a class="mx-1" style="margin-left: 10px;" href="javascript:vymazKomentar('+idKomentaru+')">';	
-		vymazKomentarBtn += 	'<img src="fotky/remove.png" width="40">';
+		vymazKomentarBtn += 	'<img class="withHover" src="fotky/remove.png" width="40">';
 		vymazKomentarBtn += '</a>';
 	}
 	return vymazKomentarBtn;
@@ -259,16 +259,25 @@ function vypisPridajKomentarForm(idDiskusie){
 	result += '<div class="card my-3 mx-2">';
     result += 	'<div class="card-body">';
     result +=		'<label>Meno:</label>';
-    result += 		'<input type="text" style="width:100%;" id="pridaj-meno-'+idDiskusie+'">';
+    result += 		'<input class="form-control" type="text" style="width:100%;" id="pridaj-meno-'+idDiskusie+'">';
     result +=		'<label>Komentár:</label>';
-    result += 		'<textarea rows="5" style="width:100%;" id="pridaj-komentar-'+idDiskusie+'"></textarea>';
+    result += 		'<textarea rows="5" class="form-control" style="width:100%;" id="pridaj-komentar-'+idDiskusie+'"></textarea>';
     result += 	'</div>';
     result +=	'<div class="card-footer text-left">';
-    result +=		'<a class="mx-2" href="javascript:pridajKomentar('+idDiskusie+')"><img src="fotky/add.png" width="40"></a>';
+    result +=		'<a class="mx-2" href="javascript:pridajKomentar('+idDiskusie+')"><img class="withHover" src="fotky/add.png" width="40"></a>';
     result +=   '</div>';
     result += '</div>';
     return result;
 }
+/*
+                  <div class="control-group form-group">
+                    <div class="controls">
+                      <label>Názov diskusie:</label>
+                      <input type="text" class="form-control" id="nazov" name="nazov" required data-validation-required-message="Musíte vyplniť názov diskusie.">
+                      <p class="help-block"></p>
+                    </div>
+                  </div>
+*/
 
 // prida komentar do databazy
 function pridajKomentar(idDiskusie){
