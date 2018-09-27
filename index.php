@@ -46,7 +46,10 @@ hlavicka();
             <h5 class="card-header-match">Posledné zápasy</h5>
             <div class="card-body">
               <ul class="list-group list-group-flush">
-                <?php vypisPosledneZapasy(array('Seniori', 'Pripravka')); ?>
+                <?php vypisPosledneZapasy(array('Seniori')); ?>
+                <li class="list-group-item">
+                  <a class="btn btn-primary" href="z_pripravka.php">Zápasy prípravky</a>
+                </li>
               </ul>
             </div>
           </div>

@@ -2524,15 +2524,15 @@ fieldset:disabled a.btn {
 
 .btn-admin {
   color: #fff;
-  background-color: #d61800;
-  border-color: #d61800;
+  background-color: #28a745;
+  border-color: #28a745;
   margin-bottom: 2px;
 }
 
 .btn-admin:hover {
   color: #fff;
-  background-color: #d45642;
-  border-color: #d45642;
+  background-color: #29873f;
+  border-color: #29873f;
 }
 
 .btn-primary:hover {

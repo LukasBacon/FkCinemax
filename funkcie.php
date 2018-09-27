@@ -76,10 +76,10 @@ function hlavicka(){
 
 function paticka(){ ?>
   <p style="margin-bottom: 100px;"></p>
-  <footer class="py-3 bg-dark" style="z-index: 1">
+  <footer class="bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">
-       <a href="admin.php">Copyright &copy; Gabriela Slaninková 2018</a>
+       <a href="admin.php" id="footerA">Copyright &copy; Gabriela Slaninková & Lukáš Slaninka 2018</a>
       </p>
     </div>
   </footer> 

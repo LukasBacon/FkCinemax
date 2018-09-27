@@ -40,6 +40,7 @@ hlavicka();
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="magnific-popup/jquery.magnific-popup.js"></script>
     <script src="js/fotky.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     </body>
 
 

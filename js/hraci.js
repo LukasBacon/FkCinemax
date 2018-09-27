@@ -102,11 +102,11 @@ function potvrdHraca(id){
 }
 
 function vypisPotvrdBtn(id){
-	return '<a class="" id="potvrdBtn-'+id+'" href="javascript:potvrdHraca('+id+');"><img width="40" class="buttonImg" src="fotky/ok.png" alt="Potvrd info o hráčovi"></a>';
+	return '<a class="" id="potvrdBtn-'+id+'" href="javascript:potvrdHraca('+id+');"><img width="40" class="buttonImg withHover" src="fotky/ok.png" alt="Potvrd info o hráčovi"></a>';
 }
 
 function vypisUpravBtn(id){
-	return '<a class="" id="upravBtn-'+id+'" href="javascript:upravHraca('+id+');"><img width="40" class="buttonImg" src="fotky/edit.png" alt="Uprav info o hráčovi"></a>';
+	return '<a class="" id="upravBtn-'+id+'" href="javascript:upravHraca('+id+');"><img width="40" class="buttonImg withHover" src="fotky/edit.png" alt="Uprav info o hráčovi"></a>';
 }
 
 function reformatTextToHtml(text){
