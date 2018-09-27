@@ -103,19 +103,20 @@ function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narod
 function vypis_pridaj_noveho($skupina){
   echo '<input type="hidden" name="skupina" id="skupinaHidden" value="'.$skupina.'">';
 	echo '<div class="row m-0">';
-		echo '<div class="col-sm-12" id="novaFotkaPanel">';
+    echo '<div class="col-sm-4"></div>';
+		echo '<div class="col-sm-4" id="novaFotkaPanel">';
 			echo '<h4>Pridaj nového hráča</h4>';
 			echo '<form class="justify-content-center" action="/FkCinemax/servlets/addPlayerServlet.php" method="post" enctype="multipart/form-data">';
 			echo '<label for="meno">Meno: </label><br>';
-			echo '<input id="meno" name="meno" type="text"><br>';
+			echo '<input id="meno" name="meno" type="text" class="form-control" required><br>';
 			echo '<label for="priezvisko">Priezvisko: </label><br>';
-			echo '<input id="priezvisko" name="priezvisko" type="text"><br>';
+			echo '<input id="priezvisko" name="priezvisko" type="text" class="form-control" required><br>';
 			echo '<label for="typ">Post: </label><br>';
-			echo '<input id="typ" name="post" type="text"><br>';
+			echo '<input id="typ" name="post" type="text" class="form-control"><br>';
 			echo '<label for="rok">Ročník: </label><br>';
-			echo '<input id="rok" name="rocnik" type="text"><br>';
+			echo '<input id="rok" name="rocnik" type="text" class="form-control"><br>';
 			echo '<label for="timy">Tímy: </label><br>';
-			echo '<textarea id="timy" name="timy"></textarea><br>';
+			echo '<textarea id="timy" name="timy" class="form-control"></textarea><br>';
 			echo '<label for="foto">Fotka: </label><br>';
 			echo '<input type="file" name="file" id="foto" accept=".jpg, .jpeg, .png"/> ';
 			echo '<input type="hidden" name="skupina" value="'.$skupina.'">';
@@ -127,6 +128,9 @@ function vypis_pridaj_noveho($skupina){
 			echo '</div>';
 			echo '</form>';
 		echo '</div>';
-	echo '</div><br>';
+    echo '<div class="col-sm-4"></div>';
+  echo '</div><br>';
+  echo '<div class="row m-0" id="panel">';
+  echo '</div>';
 }
 ?>
