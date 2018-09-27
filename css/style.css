@@ -124,11 +124,15 @@
 	padding-bottom: 20px;
 }
 .hraciForm{
-	margin-top: 10px;
+	margin-top: 5px;
+}
+.hracFotoPanel{
+
 }
 .hracFoto{
-	max-height:300px;
-	width: auto;
+	object-fit:cover;
+	width:100%;
+	height:350px;
 }
 label{
 	margin-top:10px;
@@ -142,8 +146,7 @@ label{
   background-color: #ffd95e;
 }
 #panel{
-	border-bottom: solid #e9ecef 25px;
-	padding-bottom: 10px;
-	border-radius: 0.25rem;
+	width:100%;
+	margin-top: 0;
 }
 

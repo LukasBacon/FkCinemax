@@ -11,12 +11,12 @@ EOF;
     //nalavo
     if($poc % 2 == 0){
       echo '<div class="row">';
-			vypis_hraca($row['url'], $row['meno'], $row['priezvisko'], $row['typ_hraca'], $row['rok_narodenia'], $row['kluby']);
+			vypis_hraca($row['id'], $row['url'], $row['meno'], $row['priezvisko'], $row['typ_hraca'], $row['rok_narodenia'], $row['kluby'], $row['skupina']);
       $poc++;
     }
     //napravo
     else{
-    	vypis_hraca($row['url'], $row['meno'], $row['priezvisko'], $row['typ_hraca'], $row['rok_narodenia'], $row['kluby']);
+    	vypis_hraca($row['id'], $row['url'], $row['meno'], $row['priezvisko'], $row['typ_hraca'], $row['rok_narodenia'], $row['kluby'], $row['skupina']);
       echo '</div>';
       $poc++;
     }
@@ -56,9 +56,11 @@ EOF;
   $db->close();
 }
 
-function vypis_hraca($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, $kluby){
+function vypis_hraca($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, $kluby, $skupina){
   echo '<div class="col-md-3">';
- 	 echo '<img class="img-fluid rounded mb-3 mb-md-0" src="'.$url.'">';
+ 	  echo '<div class="hracFotoPanel" style="margin-bottom:1rem;">';
+      echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'">';
+    echo '</div>';
   echo '</div>';
   echo '<div class="col-md-3 border-bottom mb-3 pb-3">';
   	echo '<h3>'.$meno.' '.$priezvisko.'</h3>';
@@ -68,8 +70,8 @@ function vypis_hraca($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, 
 
 function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, $kluby, $skupina){
   echo '<div class="col-md-3">';
-  	echo '<div class="hracFoto">';
-  		echo '<img class="img-fluid rounded mb-3 mb-md-0" src="'.$url.'">';
+  	echo '<div class="hracFotoPanel">';
+  		echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'">';
   	echo '</div>';
   	echo '<div class="form-inline d-flex justify-content-center hraciForm">';
   		echo '<a class="pr-1" id="vymazBtn-'.$id.'" href="javascript:vymazHraca('.$id.');"><img width="40" class="buttonImg withHover" src="fotky/remove.png" alt="Vymaž hráča"></a>';
@@ -124,13 +126,14 @@ function vypis_pridaj_noveho($skupina){
       echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
 			echo '<br><br>';
 			echo '<div align="center">';
-			echo '<input type="submit" name="submit" id="submitFoto" value="P" class="btn btn-success withHover">';
+			echo '<input type="submit" name="submit" id="submitFoto" value="+" class="btn btn-success withHover">';
 			echo '</div>';
 			echo '</form>';
 		echo '</div>';
     echo '<div class="col-sm-4"></div>';
   echo '</div><br>';
-  echo '<div class="row m-0" id="panel">';
+  echo '<div class="row m-0">';
+  echo '<div class="breadcrumb" id="panel"></div>';
   echo '</div>';
 }
 ?>
