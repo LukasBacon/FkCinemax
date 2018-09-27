@@ -125,6 +125,7 @@
 }
 .hraciForm{
 	margin-top: 5px;
+	margin-bottom: 10px;
 }
 .hracFotoPanel{
 
@@ -149,4 +150,19 @@ label{
 	width:100%;
 	margin-top: 0;
 }
-
+#footerA:hover{
+	text-decoration: none;
+	color:#6166b5;
+}
+footer{
+	z-index: 1;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+@media (max-width: 991.98px) {
+	footer{
+		padding-top: 0.7rem !important;
+		padding-bottom: 0.7rem !important;
+		font-size: 0.7rem;
+	}
+}
