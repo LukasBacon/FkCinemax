@@ -41,14 +41,21 @@ function potvrdNazov(id){
 	var potvrdNazovBtn = $('#potvrdNazovBtn'+id);
 	var nazov = albumInput.val();
 	if(nazov !== ""){
-		albumNazov.text(nazov);
 		albumNazov.removeAttr('hidden');
 		albumInput.prop('hidden',true);
 		potvrdNazovBtn.replaceWith('<a id="upravAlbumBtn'+id+'" class="d-inline float-right" href="javascript:upravAlbum('+id+');"><img class="buttonImg withHover" src="fotky/edit.png" width="40"></a>');
 		$.ajax({
 			url:"servlets/upravNazovAlbumuServlet.php",
 			type:"post",
-			data:{"id":id, "novyNazov": nazov}
+			data:{"id":id, "novyNazov": nazov},
+			success: function(data){
+				if (data == false){
+					alert("Album s týmto názvom už existuje.");
+				}
+				else{
+					albumNazov.text(nazov);
+				}
+			}
 		});	
 	}
 }
