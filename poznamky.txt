@@ -12,3 +12,7 @@ do databazy treba vlozit hracov
 
 CO TREBA SPRAVIT PO ROKU
 pridame novu ligu do tabulky Ligy
+
+PARSER ZAPASOV NERIESI
+-ak sa zapas v kole prelozi na iny datum - updatne ho až v datum ktory mal povodne
+-ak sa zmeni nazov nejakeho klubu pocas sezony
