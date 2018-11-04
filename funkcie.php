@@ -5,7 +5,7 @@ include('db.php');
 include('dbLoader.php');
 
 function hlavicka(){  
-  //dbLoader::over();
+  dbLoader::over();
   ?>
   <!DOCTYPE html>
   <html lang="en">

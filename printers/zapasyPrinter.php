@@ -3,7 +3,7 @@
 function vratnasledujuciZapas($skupina){
 	$db = napoj_db();
   $sql =<<<EOF
-    SELECT z.datum, z.rok, z.domaci, z.hostia, z.skoreD, z.skoreH, z.kolo, z.skupina, l.nazov 
+    SELECT z.datum, z.rok, z.domaci, z.hostia, z.skoreD, z.skoreH, z.kolo, z.skupina, l.nazov, z.poznamka 
     FROM Zapasy as z JOIN Ligy as l ON z.rok = l.rok AND z.skupina = l. skupina
 		WHERE datetime(z.datum) > datetime('now') AND z.skupina = "$skupina" AND 
 			(hostia LIKE '%FK CINEMAX Doľany%' OR domaci LIKE '%FK CINEMAX Doľany%')
@@ -47,7 +47,7 @@ function vypisNasledujuceZapasy(array $skupiny){
 		}*/
     $kolo = $zapas['kolo'];
 		echo '<li class="list-group-item">';
-	  echo '<p class="card-text"><strong>'.$zapas["nazov"].' '.$zapas["rok"].'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' : '.$zapas["hostia"].'</p>';
+	  echo '<p class="card-text"><strong>'.$zapas["nazov"].' '.$zapas["rok"].'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' : '.$zapas["hostia"].'<br><small>'.$zapas['poznamka'].'</small></p>';
 	  echo '</li>';
 	}
 }
