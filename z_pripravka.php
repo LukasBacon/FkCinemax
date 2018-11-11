@@ -15,7 +15,7 @@ hlavicka();
           <a href="index.php">Domov</a>
         </li>
         <li class="breadcrumb-item active">Zápasy</li>
-        <li class="breadcrumb-item active" id="nazovSkupiny">Prípravka</li>
+        <li class="breadcrumb-item active" id="nazovSkupiny">Pripravka</li>
       </ol>
 
       <div class="row">
