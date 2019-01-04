@@ -123,6 +123,7 @@ EOF;
 
 function vytvorAktualitu($nadpis, $text){
   $datum = date('Y-m-d');
+  $cas = date('H:i:s');
   $db = napoj_db();
 
   $sql =<<<EOF
@@ -136,7 +137,7 @@ EOF;
     return;
   }
   $sql =<<<EOF
-  INSERT INTO Aktuality (nadpis, text, datum) VALUES ("$nadpis", "$text", "$datum");
+  INSERT INTO Aktuality (nadpis, text, datum, cas) VALUES ("$nadpis", "$text", "$datum", "$cas");
 EOF;
   $db->query($sql);
   $db->close();
