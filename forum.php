@@ -10,7 +10,9 @@ hlavicka();
       <?php
       if (isset($_POST["submit"])){
         vytvorDiskusiu($_POST["meno"], $_POST["nazov"], $_POST["komentar"]);
-        unset($_POST['submit']);
+        $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        echo "<script>window.location.replace('". $url ."');</script>";
+        // je to tu lebo to treba obnovit 
       }
       ?>
 
@@ -63,7 +65,7 @@ hlavicka();
             <div class="diskusiePage">
             </div>
 
-            <!-- pagination navigation --> 
+            <!-- pagination navigation -->
             <ul class="pagination justify-content-center">
             </ul>
           </div>

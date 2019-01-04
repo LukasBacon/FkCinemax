@@ -7,6 +7,7 @@ $(document).ready(function(){
 	vypisNthStranu(1, false);
 });
 
+<<<<<<< Updated upstream
 // pridanie aktuality ----------------------------------------------------- 
 function pridajAktualitu(){
 	var nadpis = $("#pridaj-nadpis");
@@ -31,6 +32,8 @@ function pridajAktualitu(){
 	window.location.reload();
 }
 
+=======
+>>>>>>> Stashed changes
 // vymazanie aktuality ------------------------------------------------------
 function vymazAktualitu(id){
 	if (!confirm('Naozaj chcete vymazať aktualitu?')){
@@ -43,7 +46,7 @@ function vymazAktualitu(id){
 		success: function(data){
 			window.location.reload();
 		}
-	});	
+	});
 }
 
 // update aktuality --------------------------------------------------------
@@ -62,12 +65,12 @@ function upravAktualitu(id){
 			var nadpisText = data['nadpis'];
 			var textText = data['text'];
 
-			nadpis.replaceWith('<input class="card-header" id="new-nadpis-'+id+'" type="text" value="'+nadpisText+'">');		
+			nadpis.replaceWith('<input class="card-header" id="new-nadpis-'+id+'" type="text" value="'+nadpisText+'">');
 			text.replaceWith('<textarea rows="4" cols="100" class="form-control" id="new-text-'+id+'" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none">'+textText+'</textarea>');
 			vymazBtn.prop('hidden',true);
 			upravBtn.replaceWith(vypisPotvrdAktualituBtn(id));
 		}
-	});	
+	});
 }
 
 
@@ -78,8 +81,8 @@ function potvrdAktualitu(id){
 	var newText = $("#new-text-" + id);
 	var newNadpisText = newNadpis.val();
 	var newTextText = newText.val();
-	
-	newNadpis.replaceWith('<h5 class="card-header" id="aktualita-nadpis-'+id+'">'+newNadpisText+'</h5>');		
+
+	newNadpis.replaceWith('<h5 class="card-header" id="aktualita-nadpis-'+id+'">'+newNadpisText+'</h5>');
 	newText.replaceWith('<p class="card-text" id="aktualita-text-'+id+'">'+reformatTextToHtml(newTextText)+'</p>');
 	vymazBtn.prop('hidden',false);
 	potvrdBtn.replaceWith(vypisUpravAktualituBtn(id));
@@ -88,7 +91,7 @@ function potvrdAktualitu(id){
 		url:"servlets/upravAktualituServlet.php",
 		type:"post",
 		data:{"id":id,"nadpis":newNadpisText,"text":newTextText}
-	});		
+	});
 }
 
 // paginaton ---------------------------------------------------------------
@@ -106,14 +109,14 @@ function updatePaginationNavigation(){
 			for (var strana = 1; strana <= pocetStran; strana++) {
 				paginationNavigationText += '<li class="page-item" id="pagination-nav-page-' + strana + '">';
 			    paginationNavigationText += '<a class="page-link" href="javascript:vypisNthStranu('+ strana +', true);">' + strana +'</a>';
-			    paginationNavigationText += '</li>'; 
+			    paginationNavigationText += '</li>';
 			}
 			paginationNavigationText += '<li class="page-item pagination-next"><a class="page-link" href="javascript:vypisNextStranu();">&raquo;</a></li>';
 			paginationNavigation.html(paginationNavigationText);
 			highlightActualPage(aktualnaStrana);
 			$(".pagination").rPage();
 		}
-	});	
+	});
 }
 
 function vypisNthStranu(cisloStrany, scroll){
@@ -242,5 +245,3 @@ function linkify(text) {
         return '<a href="' + url + '">' + url + '</a>';
     });
 }
-
-

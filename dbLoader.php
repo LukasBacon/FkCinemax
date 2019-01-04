@@ -1,76 +1,106 @@
 <?php
 include('parser/Parser.php');
-
 /*nacita zapasy a tabulku z futbalnetu a naplni databazu*/
 class dbLoader{
-
+	public  $parsery = array();
 	/*overi ci treba aktualizovat tabulku zapasov a tabulku tabuliek*/
 	public function over(){
 		$start = microtime(true);
-		echo "<script>console.log('over() started');</script>"; 
-		$poleUpdata = dbLoader::najdiLigySNaposledyOdohranymiZapasmiBezSkore();
-		$poleInsert = dbLoader::vratSkupinyARokyBezZapasov();
+		echo "<script>console.log('over() started');</script>";
+		$poleUpdata = $this->najdiLigySNaposledyOdohranymiZapasmiBezSkore();
+		$poleInsert = $this->vratSkupinyARokyBezZapasov();
 		echo "<script>console.log('toUpdate = " . json_encode($poleUpdata) .  "');</script>";
 		echo "<script>console.log('toInsert = " . json_encode($poleInsert) .  "');</script>";
-
 		foreach ($poleUpdata as $dvojica) {
 			$skupina = $dvojica['skupina'];
 			$rok = $dvojica['rok'];
-			$url = dbLoader::ziskajUrlPodlaSkupinyARoku($skupina, $rok);
-			dbLoader::aktualizujLigu($url, $skupina, $rok);
+			$url = $this->ziskajUrlPodlaSkupinyARoku($skupina, $rok);
+			$this->aktualizujLigu($url, $skupina, $rok);
 		}
 		foreach ($poleInsert as $dvojica) {
 			$skupina = $dvojica['skupina'];
 			$rok = $dvojica['rok'];
-			$url = dbLoader::ziskajUrlPodlaSkupinyARoku($skupina, $rok);
-			dbLoader::vlozNoveUdajeDoDatabazy($url, $skupina, $rok);
+			$url = $this->ziskajUrlPodlaSkupinyARoku($skupina, $rok);
+			$this->vlozNoveUdajeDoDatabazy($url, $skupina, $rok);
 		}
-		echo "<script>console.log('DBLoader:over() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 
+		echo "<script>console.log('DBLoader:over() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
-
+	public function overDatumyNasledujucichNZapasov($n, $skupina){
+		$start = microtime(true);
+		$db = napoj_db();
+	    $sql1 =<<<EOF
+	    SELECT z.*, l.url  FROM Zapasy as z JOIN Ligy as l ON l.skupina = z.skupina AND l.rok = z.rok
+		WHERE z.datum > datetime('now') AND (z.hostia LIKE 'FK CINEMAX Doľany%' OR z.domaci LIKE 'FK CINEMAX Doľany%') ORDER BY z.datum ASC LIMIT "$n";
+EOF;
+	    $sql2 =<<<EOF
+	    SELECT z.*, l.url  FROM Zapasy as z JOIN Ligy as l ON l.skupina = z.skupina AND l.rok = z.rok
+		WHERE z.datum > datetime('now') AND z.skupina = "$skupina" AND (z.hostia LIKE 'FK CINEMAX Doľany%' OR z.domaci LIKE 'FK CINEMAX Doľany%') ORDER BY z.datum ASC LIMIT "$n";
+EOF;
+		if ($skupina == null) $ret = $db->query($sql1);
+		else {$ret = $db->query($sql2);}
+	    $pole = array();
+	    while ($row=$ret->fetchArray(SQLITE3_ASSOC)){
+	    	$pole[] = $row;
+	    }
+	    $db->close();
+	    foreach($pole as $zapas){
+	    	$url = $zapas["url"];
+	    	$parser = null;
+	    	if (isset($this->parsery[$url])){
+	    		$parser = $this->parsery[$url];
+	    	}
+	    	else{
+	    		$parser = $this->preparsujFutbalnet($url);
+	    	}
+	    	$parserZapas = $this->najdiRovnakyZapasVParserZapasoch($zapas, $parser->zapasy)["zapas"];
+	    	//echo "<script>console.log('overenie = ". $zapas["datum"] . ", ". $parserZapas->datum ."');</script>";
+	    	if ($zapas["datum"] != $parserZapas->datum){
+	    		echo "<script>console.log('zle ".$zapas["id"] . ", ". $parserZapas->datum . "');</script>";
+	    		$this->updatniDatumZapasuSId($zapas["id"], $parserZapas->datum);
+	    	}
+	    }
+	    echo "<script>console.log('DBLoader:overDatumyNasledujucichNZapasov(".$n.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
+	}
 	public function vlozNoveUdajeDoDatabazy($url, $skupina, $rok){
 		// testovane na https://obfz-bratislava-vidiek.futbalnet.sk/sutaz/2440/print?part=3850
 		$start = microtime(true);
-		$parsovac = dbLoader::preparsujFutbalnet($url);
-		dbLoader::vlozAktualneZapasy($skupina, $rok, $parsovac->zapasy); 
-		dbLoader::vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
+		$parsovac = $this->preparsujFutbalnet($url);
+		$this->vlozAktualneZapasy($skupina, $rok, $parsovac->zapasy);
+		$this->vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
 		echo "<script>console.log('DBLoader:vlozNoveUdajeDoDatabazy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
-
-
 	public function aktualizujLigu($url, $skupina, $rok){
 		$start = microtime(true);
 		$parsovac = dbLoader::preparsujFutbalnet($url);
-		dbLoader::aktualizujZapasy($parsovac, $skupina, $rok);
-		dbLoader::aktualizujTabulky($parsovac, $skupina, $rok);
-		echo "<script>console.log('DBLoader:aktualizujLigu(". $skupina.", ".$rok.") exetution time = ". (microtime(true) - $start) ." sec');</script>"; 
+		$this->aktualizujZapasy($parsovac, $skupina, $rok);
+		$this->aktualizujTabulky($parsovac, $skupina, $rok);
+		echo "<script>console.log('DBLoader:aktualizujLigu(". $skupina.", ".$rok.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
-
 	public function preparsujFutbalnet($url){
 		$start = microtime(true);
 		$parsovac = new Parser;
-		$parsovac->parsuj($url);	
-		echo "<script>console.log('DBLoader:preparsuj() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 				
+		$parsovac->parsuj($url);
+		echo "<script>console.log('DBLoader:preparsuj() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		if (!isset($this->parsery[$url])){
+			$this->parsery[$url] = $parsovac;
+		}
 		return $parsovac;
 	}
-
 	public function aktualizujZapasy($parsovac, $skupina, $rok){
 		$start = microtime(true);
-		$zapasy = dbLoader::vratOdohraneZapasyLigyBezSkore($skupina, $rok);	
+		$zapasy = $this->vratOdohraneZapasyLigyBezSkore($skupina, $rok);
 		echo "<script>console.log('zapasyToUpdate (". $rok . ", " . $skupina . ") = " . json_encode($zapasy) . "');</script>";
 		foreach ($zapasy as $zapas) {
-			dbLoader::aktualizujDetailyZapasu($zapas, $parsovac->zapasy);
-		}	
-		echo "<script>console.log('DBLoader:aktualizujZapasy() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 
+			$this->aktualizujDetailyZapasu($zapas, $parsovac->zapasy);
+		}
+		echo "<script>console.log('DBLoader:aktualizujZapasy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
-
 	public function aktualizujTabulky($parsovac, $skupina, $rok){
 		$start = microtime(true);
-		dbLoader::vymazUdajeZTabuliek($skupina, $rok); 
-		dbLoader::vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
-		echo "<script>console.log('DBLoader:aktualizujTabulky() exetution time = ". (microtime(true) - $start) ." sec');</script>"; 
+		$this->vymazUdajeZTabuliek($skupina, $rok);
+		$this->vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
+		echo "<script>console.log('DBLoader:aktualizujTabulky() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
-
 	public function ziskajUrlPodlaSkupinyARoku($skupina, $rok){
 		$db = napoj_db();
 	    $sql =<<<EOF
@@ -78,10 +108,9 @@ class dbLoader{
 EOF;
 	    $ret = $db->query($sql);
 	    $row = $ret->fetchArray(SQLITE3_ASSOC);
-	    $db->close();	
+	    $db->close();
 	    return $row['url'];
 	}
-
 	public function vymazUdajeZTabuliek($skupina, $rok){
 	    $db = napoj_db();
 	    $sql =<<<EOF
@@ -93,7 +122,6 @@ EOF;
 	    }
 	    $db->close();
 	}
-
 	public function vlozAktualneZapasy($skupina, $rok, $zapasy){
 		$db = napoj_db();
 		$db->exec('BEGIN;');
@@ -114,12 +142,11 @@ EOF;
 			}
 		  	if(!$ret){
 		    	echo $db->lastErrorMsg();
-		  	}	
+		  	}
 		}
 		$db->exec('COMMIT;');
 		$db->close();
 	}
-
 	public function vlozAktualneDataTabulky($skupina, $rok, $tabulka){
 		$db = napoj_db();
 		$db->exec('BEGIN;');
@@ -131,19 +158,17 @@ EOF;
 		  $ret = $db->exec($sql);
 		  if(!$ret){
 		    echo $db->lastErrorMsg();
-		  }	
+		  }
 		}
 		$db->exec('COMMIT;');
 		$db->close();
 	}
-
 	public function aktualizujDetailyZapasu($zapas, $parserZapasy){
 		// v $parserZapasy najde zapas $parserZapas, ktory je rovny zapasu $zapas (domaci, hostia, kolo)
 		// v databaze atualizuje zapas $zapas udajmi zo $parserZapas (skoreDomaci, skoreHostia, datum)
 		// ak $parserZapas nema skore .. daj NULL do db
-
 		// zapas je riadok tabulky, $parserZapas je objekt typu Zapas (parser/Zapas.php)
-		$tuple = DBLoader::najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy);
+		$tuple = $this->najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy);
 		$parserZapas = $tuple['zapas'];
 		$isInversed = $tuple['inversed'];
 		if ($parserZapas == null){
@@ -158,18 +183,17 @@ EOF;
 	    	UPDATE Zapasy SET datum = "$parserZapas->datum" WHERE id = "$id";
 EOF;
 		$sql3 =<<<EOF
-	    	UPDATE Zapasy SET 	domaci = "$parserZapas->domaci", 
-	    						hostia = "$parserZapas->hostia", 
-	    						skoreD = "$parserZapas->skoreDomaci", 
-	    						skoreH = "$parserZapas->skoreHostia", 
+	    	UPDATE Zapasy SET 	domaci = "$parserZapas->domaci",
+	    						hostia = "$parserZapas->hostia",
+	    						skoreD = "$parserZapas->skoreDomaci",
+	    						skoreH = "$parserZapas->skoreHostia",
 	    						datum = "$parserZapas->datum" WHERE id = "$id";
 EOF;
 		$sql4 =<<<EOF
-	    	UPDATE Zapasy SET 	domaci = "$parserZapas->domaci", 
-	    						hostia = "$parserZapas->hostia", 
+	    	UPDATE Zapasy SET 	domaci = "$parserZapas->domaci",
+	    						hostia = "$parserZapas->hostia",
 	    						datum = "$parserZapas->datum" WHERE id = "$id";
 EOF;
-
 	    if($parserZapas->skoreDomaci === null && $parserZapas->skoreHostia === null){
 	    	if ($isInversed){
 	    		// ak je skore null a domaci a hostia sa vymenili
@@ -190,9 +214,7 @@ EOF;
 	    		$ret = $db->exec($sql1);
 	    	}
 		}
-		$db->close();
 	}
-
 	public function najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy){
 		foreach ($parserZapasy as $parserZapas) {
 			if ($parserZapas->kolo === $zapas["kolo"]){
@@ -204,14 +226,14 @@ EOF;
 				}
 			}
 		}
+		// nenasiel k nemu rovnaky zapas
 		$to      = 'lukasslaninka19@gmail.com';
 		$subject = 'FK Cinemax Parser error';
 		$message = '' .json_encode($zapas).' was not found in $parserZapasy.';
-		echo "<script>console.log('mail message = ". $message ."');</script>"; 
+		echo "<script>console.log('mail message = ". $message ."');</script>";
 		$headers = 'From: fkcinemaxparser@parser.com' . "\r\n" .
 		    'Reply-To: fkcinemaxparser@parser.com' . "\r\n" .
 		    'X-Mailer: PHP/' . phpversion();
-
 		set_error_handler(
 		    create_function(
 		        '$severity, $message, $file, $line',
@@ -222,13 +244,11 @@ EOF;
 		    mail($to, $subject, $message, $headers);
 		}
 		catch (Exception $e) {
-		    echo "<script>console.log('Mail was not sent.');</script>"; 
+		    echo "<script>console.log('Mail was not sent.');</script>";
 		}
 		restore_error_handler();
-
 		return array('zapas' => null, 'inversed' =>  false);
 	}
-
 	public function najdiLigySNaposledyOdohranymiZapasmiBezSkore(){
 		$db = napoj_db();
 	    $sql =<<<EOF
@@ -239,11 +259,10 @@ EOF;
 	    while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
 	    	$pole[] = $row;
 	    }
-	    $db->close();	
+	    $db->close();
 	    return $pole;
 	}
-
-	public function vratOdohraneZapasyLigyBezSkor($skupina, $rok){
+	public function vratOdohraneZapasyLigyBezSkore($skupina, $rok){
 		$db = napoj_db();
 	    $sql =<<<EOF
 	    SELECT * FROM Zapasy WHERE datum < datetime('now') AND skoreD is null AND skoreH is null AND rok = "$rok" AND skupina = "$skupina";
@@ -253,16 +272,15 @@ EOF;
 	    while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
 	    	$pole[] = $row;
 	    }
-	    $db->close();	
+	    $db->close();
 	    return $pole;
 	}
-
 	public function vratSkupinyARokyBezZapasov(){
 		$db = napoj_db();
 	    $sql =<<<EOF
-				SELECT skupina, rok 
+				SELECT skupina, rok
 				FROM Ligy as l
-				WHERE not exists 
+				WHERE not exists
 					(SELECT * FROM Zapasy as z where l.skupina = z.skupina AND l.rok = z.rok);
 EOF;
 	    $ret = $db->query($sql);
@@ -270,9 +288,16 @@ EOF;
 	    while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
 	    	$pole[] = $row;
 	    }
-	    $db->close();	
-	    return $pole;		
+	    $db->close();
+	    return $pole;
+	}
+	public function updatniDatumZapasuSId($id, $datum){
+		$db = napoj_db();
+	    $sql =<<<EOF
+	    	UPDATE Zapasy SET datum = "$datum" WHERE id = "$id";
+EOF;
+		$ret = $db->exec($sql);
+		$db->close();
 	}
 }
-
 ?>

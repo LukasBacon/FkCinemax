@@ -38,8 +38,15 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
 
     <!-- Page Content -->
     <div class="container">
-      <br>
+      <?php
+      if (isset($_POST["submit"])){
+        vytvorAktualitu($_POST["nadpis"], $_POST["text"]);
+        $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        echo "<script>window.location.replace('". $url ."');</script>";
+      }
+      ?>
 
+      <br>
       <!-- row -->
       <div class="row">
         <!-- Zapasy -->
@@ -82,38 +89,40 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
         <!-- Aktuality -->
         <div class="col-lg-7" id="aktuality-section">
           <!-- admin - pridaj aktualitu a vypis-->
-          <?php 
+          <?php
           if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){ ?>
             <div class="card">
               <h5 class="card-header-admin">Pridaj aktualitu</h5>
               <div class="card-body">
+                <form method="post">
                   <div class="control-group form-group">
                     <div class="controls">
                       <label>Nadpis</label>
-                      <input type="text" class="form-control" id="pridaj-nadpis" required data-validation-required-message="Zadaj nadpis aktuality.">
+                      <input type="text" class="form-control" id="pridaj-nadpis" name="nadpis" required data-validation-required-message="Zadaj nadpis aktuality.">
                       <p class="help-block"></p>
                     </div>
                   </div>
                   <div class="control-group form-group">
                     <div class="controls">
                       <label>Text:</label>
-                      <textarea rows="4" cols="100" class="form-control" id="pridaj-text" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none"></textarea>
+                      <textarea rows="4" cols="100" class="form-control" id="pridaj-text" name="text" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none"></textarea>
                     </div>
                   </div>
                   <div id="info-div"></div>
                   <!-- For success/fail messages -->
-                  <a class="" id="pridaj-button" href="javascript:pridajAktualitu();"><img class="withHover" width="40" src="fotky/add.png"></a>
+                  <input type="submit" id="pridaj-button" class="withHover" name="submit" value="">
+                  <!-- predtym  <a class="" id="pridaj-button" href="javascript:pridajAktualitu();"><img class="withHover" width="40" src="fotky/add.png"></a> -->
+                </form>
               </div>
-
             </div>
             <?php
           }
           ?>
-          <!-- aktuality -->   
+          <!-- aktuality -->
           <div class="aktualityPage">
-          </div>  
+          </div>
 
-          <!-- pagination navigation --> 
+          <!-- pagination navigation -->
           <ul class="pagination justify-content-center">
           </ul>
         <!-- /.Aktuality -->
