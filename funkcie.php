@@ -4,7 +4,7 @@ date_default_timezone_set('UTC');
 include('db.php');
 include('dbLoader.php');
 
-function hlavicka(){  
+function hlavicka(){
   $dbLoader = new dbLoader;
   $dbLoader->over();
   ?>
@@ -84,7 +84,7 @@ function paticka(){ ?>
        <a href="admin.php" id="footerA">Copyright &copy; Gabriela Slaninková & Lukáš Slaninka 2018</a>
       </p>
     </div>
-  </footer> 
+  </footer>
 <?php
 }
 
@@ -107,7 +107,7 @@ function vytvorDiskusiu($meno, $nazov, $popis){
     SELECT count() as count FROM Diskusie WHERE nazov="$nazov" AND autor="$meno";
 EOF;
   $ret = $db->query($sql);
-  $row = $ret->fetchArray(SQLITE3_ASSOC); 
+  $row = $ret->fetchArray(SQLITE3_ASSOC);
   $pocet = $row["count"];
   if ($pocet != 0){
     $db->close();
@@ -116,6 +116,27 @@ EOF;
 
   $sql =<<<EOF
     INSERT INTO Diskusie (nazov, datum_disk, popis, autor) VALUES ("$nazov", date('now'), "$popis", "$meno");
+EOF;
+  $db->query($sql);
+  $db->close();
+}
+
+function vytvorAktualitu($nadpis, $text){
+  $datum = date('Y-m-d');
+  $db = napoj_db();
+
+  $sql =<<<EOF
+    SELECT count() as count FROM Aktuality WHERE nadpis="$nadpis";
+EOF;
+  $ret = $db->query($sql);
+  $row = $ret->fetchArray(SQLITE3_ASSOC);
+  $pocet = $row["count"];
+  if ($pocet != 0){
+    $db->close();
+    return;
+  }
+  $sql =<<<EOF
+  INSERT INTO Aktuality (nadpis, text, datum) VALUES ("$nadpis", "$text", "$datum");
 EOF;
   $db->query($sql);
   $db->close();
