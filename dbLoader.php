@@ -190,6 +190,7 @@ EOF;
 	    		$ret = $db->exec($sql1);
 	    	}
 		}
+		$db->close();
 	}
 
 	public static function najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy){
@@ -242,7 +243,7 @@ EOF;
 	    return $pole;
 	}
 
-	public static function vratOdohraneZapasyLigyBezSkore($skupina, $rok){
+	public static function vratOdohraneZapasyLigyBezSkor($skupina, $rok){
 		$db = napoj_db();
 	    $sql =<<<EOF
 	    SELECT * FROM Zapasy WHERE datum < datetime('now') AND skoreD is null AND skoreH is null AND rok = "$rok" AND skupina = "$skupina";

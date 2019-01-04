@@ -15,7 +15,7 @@ function pridajAktualitu(){
 	var nadpisText = nadpis.val();
 	var textText = text.val();
 	if (nadpisText.length == 0 || textText.length == 0){
-		infoDiv.html("<p>Jedno z polí je prázdne.</p>");
+		infoDiv.html('<p style="color:red;">Jedno z polí je prázdne.</p>');
 		return;
 	}
 	$.ajax({

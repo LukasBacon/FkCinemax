@@ -13,4 +13,5 @@ $sql =<<<EOF
 UPDATE Hraci SET meno="$meno", priezvisko="$priezvisko", typ_hraca="$post", rok_narodenia="$rocnik", kluby="$kluby"  WHERE id = "$id";
 EOF;
 $ret = $db->query($sql);
+$db->close();
 ?>

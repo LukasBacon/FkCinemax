@@ -27,7 +27,8 @@ EOF;
 	# vymazanie fotkt z priecinka
 	$pathToPhoto = dirname(getcwd()) . "/".$url;
 	unlink($pathToPhoto);
-
+	$db->close();
+}
 runServlet();
 
 $id = $_POST['id'];

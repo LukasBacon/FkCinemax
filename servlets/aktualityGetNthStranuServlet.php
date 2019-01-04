@@ -14,7 +14,7 @@ $pocetPoloziekNaStranu = $_POST['pocetPoloziekNaStranu'];
 $offset = $pocetPoloziekNaStranu * ($cisloStrany - 1);
 $db = napoj_db();
 $sql =<<<EOF
-SELECT * FROM Aktuality ORDER BY datum DESC LIMIT "$pocetPoloziekNaStranu" OFFSET "$offset";
+SELECT * FROM Aktuality ORDER BY datum DESC, cas DESC LIMIT "$pocetPoloziekNaStranu" OFFSET "$offset";
 EOF;
 $ret = $db->query($sql);
 $pole = array();
