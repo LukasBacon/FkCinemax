@@ -62,7 +62,7 @@ function vypis_hraca($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, 
       echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'">';
     echo '</div>';
   echo '</div>';
-  echo '<div class="col-md-3 border-bottom pb-3">';
+  echo '<div  class="col-md-3 pb-3" style="position:relative; border-bottom: solid 8px #e9ecef;">';
   	echo '<h3>'.$meno.' '.$priezvisko.'</h3>';
   	echo $typ_hraca.'<br>'.$rok_narodenia.'<br>'.nl2br($kluby);
   echo '</div>';
@@ -85,15 +85,15 @@ function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narod
           echo '<input type="hidden" name="meno" value="'.$meno.'">';
           echo '<input type="hidden" name="priezvisko" value="'.$priezvisko.'">';
           echo '<input type="submit" name="submit" id="submitFile-'.$id.'" value="Edit" hidden>';
-          echo '<label class="btn-file" style="width:40px; margin:0px;">';
+          echo '<label class="btn-file" style="width:40px; margin:0px; display: flex !important;">';
             echo '<input type="file" class="custom-file-input" style="width:0%;" name="file" id="editFile-'.$id.'" accept=".jpg, .jpeg, .png"/> ';
-            echo '<span class="custom-file-control"><img src="fotky/foto.png" id="fileLabel" class="buttonImg withHover" width="40"></span>';
+            echo '<span class="custom-file-control"><img src="fotky/foto.png" alt="Uprav fotku hráčova" id="fileLabel" class="buttonImg withHover" width="40"></span>';
           echo '</label>';
         echo '</form>';
       echo '</div>';
   	echo '</div>';
   echo '</div>';
-  echo '<div class="col-md-3 border-bottom pb-3" style="position:relative;">';
+  echo '<div class="col-md-3 pb-3" style="position:relative; border-bottom: solid 8px #e9ecef;">';
   	echo '<h3 id="celeMeno-'.$id.'">'.$meno.' '.$priezvisko.'</h3>';
   	echo '<div id="post-'.$id.'">'.$typ_hraca.'</div>';
     echo '<div id="rocnik-'.$id.'">'.$rok_narodenia.'</div>';

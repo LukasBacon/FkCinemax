@@ -19,8 +19,8 @@ $(document).ready(function(){
         }
     }); 
 
-
-    $("#files").change(function() {
+    $('#files').change(function() {
+        console.log('klikla som');
         $('#submitFoto').click();
     });
 
