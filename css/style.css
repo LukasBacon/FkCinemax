@@ -179,3 +179,11 @@ footer{
 	border-radius: 0.25rem;
 	box-shadow: 0 0 0 0.2rem #98e6ab;
 }
+#pridaj-button-akt{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}

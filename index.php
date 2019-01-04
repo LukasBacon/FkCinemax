@@ -94,7 +94,7 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
             <div class="card">
               <h5 class="card-header-admin">Pridaj aktualitu</h5>
               <div class="card-body">
-                <form method="post">
+                <form method="post" id="pridajAktualituForm">
                   <div class="control-group form-group">
                     <div class="controls">
                       <label>Nadpis</label>
@@ -110,8 +110,18 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
                   </div>
                   <div id="info-div"></div>
                   <!-- For success/fail messages -->
-                  <input type="submit" id="pridaj-button" class="withHover" name="submit" value="">
-                  <!-- predtym  <a class="" id="pridaj-button" href="javascript:pridajAktualitu();"><img class="withHover" width="40" src="fotky/add.png"></a> -->
+
+                  <!--
+                  <input type="submit" id="pridaj-button-akt" class="withHover" width="40" src="fotky/add.png" name="submit" value="">-->
+
+                  <button type="submit" name="submit" class="whithHover" id="pridaj-button-akt">
+                    <img class="withHover" width="40" src="fotky/add.png">
+                  </button>
+
+
+                  <!--<a href="#" class="" id="pridaj-button" onclick="submit(); return false;">
+                    <img class="withHover" width="40" src="fotky/add.png">
+                  </a>-->
                 </form>
               </div>
             </div>

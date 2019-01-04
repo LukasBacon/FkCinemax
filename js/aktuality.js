@@ -7,33 +7,6 @@ $(document).ready(function(){
 	vypisNthStranu(1, false);
 });
 
-<<<<<<< Updated upstream
-// pridanie aktuality ----------------------------------------------------- 
-function pridajAktualitu(){
-	var nadpis = $("#pridaj-nadpis");
-	var text = $("#pridaj-text");
-	var infoDiv = $("#info-div");
-	var nadpisText = nadpis.val();
-	var textText = text.val();
-	if (nadpisText.length == 0 || textText.length == 0){
-		infoDiv.html('<p style="color:red;">Jedno z polí je prázdne.</p>');
-		return;
-	}
-	$.ajax({
-		url:"servlets/pridajAktualituServlet.php",
-		type:"post",
-		data:{"nadpis":nadpisText, "text":textText},
-		success: function(data){
-			nadpis.val("");
-			text.val("");
-			infoDiv.html("Aktualita pridaná.");
-		}
-	});	
-	window.location.reload();
-}
-
-=======
->>>>>>> Stashed changes
 // vymazanie aktuality ------------------------------------------------------
 function vymazAktualitu(id){
 	if (!confirm('Naozaj chcete vymazať aktualitu?')){
