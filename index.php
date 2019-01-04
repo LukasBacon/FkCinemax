@@ -15,13 +15,13 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
           <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-          <div class="carousel-item active" style="background-image: url('fotky/Vitaz_ligy/main1.jpg')">
+          <div class="carousel-item active" style="background-image: url('fotky/main/main1.jpg')">
             <div class="carousel-caption d-none d-md-block"></div>
           </div>
-          <div class="carousel-item" style="background-image: url('fotky/Vitaz_ligy/main4.jpg')">
+          <div class="carousel-item" style="background-image: url('fotky/main/main4.jpg')">
             <div class="carousel-caption d-none d-md-block"></div>
           </div>
-          <div class="carousel-item" style="background-image: url('fotky/Vitaz_ligy/main2.jpg')">
+          <div class="carousel-item" style="background-image: url('fotky/main/main2.jpg')">
             <div class="carousel-caption d-none d-md-block"></div>
           </div>
         </div>
@@ -94,7 +94,7 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
             <div class="card">
               <h5 class="card-header-admin">Pridaj aktualitu</h5>
               <div class="card-body">
-                <form method="post">
+                <form method="post" id="pridajAktualituForm">
                   <div class="control-group form-group">
                     <div class="controls">
                       <label>Nadpis</label>
@@ -110,8 +110,9 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
                   </div>
                   <div id="info-div"></div>
                   <!-- For success/fail messages -->
-                  <input type="submit" id="pridaj-button" class="withHover" name="submit" value="">
-                  <!-- predtym  <a class="" id="pridaj-button" href="javascript:pridajAktualitu();"><img class="withHover" width="40" src="fotky/add.png"></a> -->
+                  <button type="submit" name="submit" class="whithHover" id="pridaj-button-akt">
+                    <img class="withHover" width="40" src="fotky/add.png">
+                  </button>
                 </form>
               </div>
             </div>

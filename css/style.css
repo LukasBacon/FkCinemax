@@ -121,7 +121,6 @@
   background-size: cover;
 }
 .rowHraci{
-	padding-bottom: 20px;
 }
 .hraciForm{
 	margin-top: 5px;
@@ -166,16 +165,17 @@ footer{
 		font-size: 0.7rem;
 	}
 }
-.dark-body{
-	
-	/*background-color: #f9fefa;*/
-}
-
-.dark-footer{
-	/*background-color: #eafaee;*/
-}
 .border-card{
 	border: solid 1px #28a745;
 	border-radius: 0.25rem;
 	box-shadow: 0 0 0 0.2rem #98e6ab;
 }
+#pridaj-button-akt{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
