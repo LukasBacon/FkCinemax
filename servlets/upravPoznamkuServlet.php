@@ -12,4 +12,5 @@ EOF;
 $ret = $db->query($sql);
 $kolo = vratKolo($id);
 echo $kolo['kolo'];
+$db->close();
 ?>

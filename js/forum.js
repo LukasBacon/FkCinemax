@@ -256,14 +256,14 @@ function vymazKomentar(idKomentaru){
 // vypise formular na pridavanie komentarov
 function vypisPridajKomentarForm(idDiskusie){
 	var result = '';
-	result += '<div class="card my-3 mx-2">';
-    result += 	'<div class="card-body">';
+	result += '<div class="card my-3 mx-2 border-card">';
+    result += 	'<div class="card-body dark-body">';
     result +=		'<label>Meno:</label>';
     result += 		'<input class="form-control" type="text" style="width:100%;" id="pridaj-meno-'+idDiskusie+'">';
     result +=		'<label>Komentár:</label>';
     result += 		'<textarea rows="5" class="form-control" style="width:100%;" id="pridaj-komentar-'+idDiskusie+'"></textarea>';
     result += 	'</div>';
-    result +=	'<div class="card-footer text-left">';
+    result +=	'<div class="card-footer text-left dark-footer">';
     result +=		'<a class="mx-2" href="javascript:pridajKomentar('+idDiskusie+')"><img class="withHover" src="fotky/add.png" width="40"></a>';
     result +=   '</div>';
     result += '</div>';

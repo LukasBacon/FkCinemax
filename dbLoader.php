@@ -234,6 +234,7 @@ EOF;
 	    		$ret = $db->exec($sql1);
 	    	}
 		}
+		$db->close();
 	}
 
 	public function najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy){

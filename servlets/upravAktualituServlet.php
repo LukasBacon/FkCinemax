@@ -10,4 +10,5 @@ $sql =<<<EOF
 UPDATE Aktuality SET nadpis="$nadpis", text="$text", datum=date('now') WHERE id = "$id";
 EOF;
 $ret = $db->query($sql);
+$db->close();
 ?>
