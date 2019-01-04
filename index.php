@@ -3,6 +3,8 @@ include('funkcie.php');
 include('printers/zapasyPrinter.php');
 session_start();
 hlavicka();
+$dbLoader = new dbLoader;
+$dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
 ?>
     <!-- hlavicka - pohyblive obrazky -->
     <header>

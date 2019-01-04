@@ -4,6 +4,8 @@ include('funkcie.php');
 include('printers/tabulkyPrinter.php');
 include('printers/zapasyPrinter.php');
 hlavicka();
+$dbLoader = new dbLoader;
+$dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
 ?>
 
     <!-- Page Content -->
