@@ -2,7 +2,7 @@
 function vypis_albumy(){
 	$db = napoj_db();
   $sql =<<<EOF
-		SELECT a.id, a.nazov, a.nazov_priecinku, f.url FROM Albumy as a LEFT JOIN Fotky as f
+		SELECT a.id, a.nazov, f.url FROM Albumy as a LEFT JOIN Fotky as f
 		ON f.id_album = a.id 
 		GROUP BY nazov
 		ORDER BY a.datum;
@@ -14,7 +14,7 @@ EOF;
   		echo "<div style='' class='row'>";
   	}
 		echo '<div class="col-sm-4">';
-				echo '<a id="aWithoutTextHover" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'&nazovPriecinku='.$row['nazov_priecinku'].'">';
+				echo '<a id="aWithoutTextHover" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'">';
 					echo '<div id="cardAlbum" class="card mb-4">';
 						echo '<div class="card-body p-0">';
 							if ($row['url'] == NULL){
@@ -43,7 +43,7 @@ function vypis_albumy_admin(){
 
 	$db = napoj_db();
   $sql =<<<EOF
-		SELECT a.id, a.nazov, a.nazov_priecinku, f.url FROM Albumy as a LEFT JOIN Fotky as f
+		SELECT a.id, a.nazov, f.url FROM Albumy as a LEFT JOIN Fotky as f
 		ON f.id_album = a.id 
 		GROUP BY nazov
 		ORDER BY a.datum DESC;
@@ -60,7 +60,7 @@ EOF;
 					echo '<a href="javascript:vymazAlbum('.$row['id'].');">';
 						echo '<img id="cancelImg" src="fotky/remove.png">';
 					echo '</a>';
-					echo '<a id="aWithoutTextHover" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'&nazovPriecinku='.$row['nazov_priecinku'].'">';
+					echo '<a id="aWithoutTextHover" href = "album.php?id='.$row['id'].'&nazov='.$row['nazov'].'">';
 						if ($row['url'] == NULL){
 							echo '<img id="albumImg" src="fotky/no_photo.jpg">'; 
 						}

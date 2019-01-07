@@ -5,7 +5,7 @@ $nazov = $_POST['nazov'];
 $nazovPriecinku = replaceSpecialChars($nazov);
 $db = napoj_db();
 $sql =<<<EOF
-	SELECT exists (SELECT * FROM albumy WHERE nazov = "$nazov" OR nazov_priecinku = "$nazovPriecinku") as exist;
+	SELECT exists (SELECT * FROM albumy WHERE nazov_priecinku = "$nazovPriecinku") as exist;
 EOF;
 $ret = $db->query($sql);
 $row = $ret->fetchArray(SQLITE3_ASSOC); 
@@ -14,6 +14,7 @@ if($row['exist'] == 1) {
 	echo false;
 }
 else{
+	$nazov = replaceApostrophes($nazov);
 	$sql =<<<EOF
 		INSERT INTO Albumy (nazov, nazov_priecinku, datum) VALUES ("$nazov", "$nazovPriecinku", date('now'));
 EOF;
