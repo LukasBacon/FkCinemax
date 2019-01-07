@@ -57,6 +57,7 @@ EOF;
 EOF;    
     $ret = $db->query($sql);
     $row = $ret->fetchArray(SQLITE3_ASSOC);
+    $db->close();
     return $row;
   }
 }
