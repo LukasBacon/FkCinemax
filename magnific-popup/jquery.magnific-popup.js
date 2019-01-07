@@ -1129,7 +1129,7 @@ var _imgInterval,
 $.magnificPopup.registerModule('image', {
 
 	options: {
-		markup: '<div class="mfp-figure">'+
+		markup: '<div class="mfp-figure" id="figure">'+
 					'<div class="mfp-close"></div>'+
 					'<figure>'+
 						'<div class="mfp-img"></div>'+

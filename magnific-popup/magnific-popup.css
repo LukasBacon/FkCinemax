@@ -349,3 +349,15 @@ img.mfp-img {
   .mfp-container {
     padding-left: 6px;
     padding-right: 6px; } }
+
+@media screen and (max-width: 892px) {
+  .mfp-content { 
+    top: 10vh;
+    position: absolute;
+    left: 0;
+  }
+
+  .mfp-arrow{
+    top:50vh;
+  }
+}
