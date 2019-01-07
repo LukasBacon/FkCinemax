@@ -214,7 +214,9 @@ EOF;
 	    		$ret = $db->exec($sql1);
 	    	}
 		}
+		$db->close();
 	}
+	
 	public function najdiRovnakyZapasVParserZapasoch($zapas, $parserZapasy){
 		foreach ($parserZapasy as $parserZapas) {
 			if ($parserZapas->kolo === $zapas["kolo"]){

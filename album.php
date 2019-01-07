@@ -28,13 +28,11 @@ hlavicka();
             <?php
                 if (isset($_GET['id'])) {
                     $id = $_GET['id'];
-                    $nazovPriecinku = $_GET['nazovPriecinku'];
-                    printPhotosOfAlbumWithId($id, $nazovPriecinku);
+                    printPhotosOfAlbumWithId($id);
                 }
             ?>
         </div>
     </div>
-
 
     <?php paticka();?>
     <script src="vendor/jquery/jquery.min.js"></script>

@@ -179,3 +179,16 @@ footer{
     outline:none;
 }
 
+.nazovAlbumu{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.admin-card-footer{
+	display: inline-flex;
+}
+
+.upravAlbumInput{
+	overflow: hidden;
+}

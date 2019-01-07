@@ -1,8 +1,8 @@
 <?php  
-function printPhotosOfAlbumWithId($id, $nazovPriecinku){
+function printPhotosOfAlbumWithId($id){
 	$db = napoj_db();
 	$sql =<<<EOF
-	SELECT * FROM Fotky WHERE id_album = "$id" ORDER BY datum DESC;
+	SELECT * FROM Fotky WHERE id_album = "$id" ORDER BY cas DESC, url ASC;
 EOF;
 	$ret = $db->query($sql);
 	$pole = array();
@@ -11,7 +11,7 @@ EOF;
 	}
 	$db->close();
 	if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1){
-		printPhotosWithFormular($nazovPriecinku, $id, $pole);
+		printPhotosWithFormular($id, $pole);
 	}
 	else{
 		printPhotos($pole);
@@ -37,8 +37,8 @@ function printPhotos($fotky){
 	}
 }
 
-function printPhotosWithFormular($nazovPriecinku, $idAlbumu, $fotky){
-	vypis_pridaj_novu($nazovPriecinku, $idAlbumu);
+function printPhotosWithFormular($idAlbumu, $fotky){
+	vypis_pridaj_novu($idAlbumu);
 
 	$pocet = 0;
 	foreach ($fotky as $fotka) {
@@ -63,7 +63,7 @@ function printPhotosWithFormular($nazovPriecinku, $idAlbumu, $fotky){
 	}
 }
 
-function vypis_pridaj_novu($nazovPriecinku, $idAlbumu){
+function vypis_pridaj_novu($idAlbumu){
 	echo '<div class="row m-0">';
 		echo '<div class="col-sm-12" id="novaFotkaPanel">';
 			echo '<h4>Pridaj novú fotku</h4>';
@@ -74,7 +74,6 @@ function vypis_pridaj_novu($nazovPriecinku, $idAlbumu){
 					echo '<span class="custom-file-control"><img src="fotky/foto.png" id="fileLabel" class="buttonImg withHover" width="40"></span>';
 				echo '</label>';
 				echo '<input type="text" name="idAlbumu" value="'.$idAlbumu.'" hidden>';
-				echo '<input type="text" name="albumName" value="'.$nazovPriecinku.'" hidden>';
 				$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 				echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
 				echo '<input type="submit" id="submitFoto" name="submit" value="Pridaj" class="btn btn-success withHover" hidden/>';
