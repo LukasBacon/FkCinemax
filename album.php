@@ -34,7 +34,6 @@ hlavicka();
         </div>
     </div>
 
-
     <?php paticka();?>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="magnific-popup/jquery.magnific-popup.js"></script>

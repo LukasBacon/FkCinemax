@@ -25,7 +25,7 @@ EOF;
 							}
 			    	echo '</div>';
 			    	echo '<div class="card-footer" style="text-align:left;">';
-			    		echo '<p style="color:black; font-weight-bold">'.$row['nazov'].'</p>';
+			    		echo '<p class="nazovAlbumu" style="color:black; font-weight-bold">'.$row['nazov'].'</p>';
 			    	echo '</div>';
 			    echo '</div>';
 		    echo '</a>';
@@ -69,9 +69,9 @@ EOF;
 						}
 					echo '</a>';
 			    echo '</div>';
-			    echo '<div class="card-footer text-left">';
-			    	echo '<p id="albumNazov'.$row['id'].'" style="color:black;" class="float-left font-weight-bold">'.$row['nazov'].'</p>';
-			    	echo '<input id="upravAlbumInput'.$row['id'].'" class=" float-left" type="text" required hidden>';
+			    echo '<div class="card-footer text-left admin-card-footer">';
+			    	echo '<p id="albumNazov'.$row['id'].'" style="color:black;" class="nazovAlbumu font-weight-bold">'.$row['nazov'].'</p>';
+			    	echo '<input id="upravAlbumInput'.$row['id'].'" class="upravAlbumInput" type="text" required hidden>';
 			    		echo '<a id="upravAlbumBtn'.$row['id'].'" class="d-inline float-right" href="javascript:upravAlbum('.$row['id'].');"><img class="buttonImg withHover" src="fotky/edit.png" width="40"></a>';
 			    echo '</div>';
 			echo '</div>';
