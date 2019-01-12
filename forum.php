@@ -3,7 +3,6 @@ session_start();
 include('funkcie.php');
 hlavicka();
 ?>
-
     <!-- Page Content -->
     <div class="container">
 
@@ -77,6 +76,11 @@ hlavicka();
 
     </div>
     <!-- /.container -->
+
+
+    </div>
+    <!-- /.content -->
+
 
 <?php paticka();?>
 

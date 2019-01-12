@@ -46,6 +46,9 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
     </div>
     <!-- /.container -->
 
+    </div>
+    <!-- /.content -->
+
 <?php paticka();?>
 
     <!-- Bootstrap corev JavaScript -->

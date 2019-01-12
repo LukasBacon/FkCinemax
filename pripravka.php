@@ -28,6 +28,9 @@ hlavicka();
     </div>
     <!-- /.container -->
 
+    </div>
+    <!-- /.content -->
+
 
 <?php paticka();?>
 

@@ -68,10 +68,11 @@ hlavicka();
       </div>
       <!-- /.row -->
 
-
-
     </div>
     <!-- /.container -->
+
+    </div>
+    <!-- /.content -->
 
 <?php paticka();?>
 

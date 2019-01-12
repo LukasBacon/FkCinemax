@@ -27,6 +27,7 @@ function hlavicka(){
 
   <body>
     <!-- Navigacia -->
+    <div class="content">
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
         <img src="fotky/logo.png" class="img-logo">
@@ -77,11 +78,10 @@ function hlavicka(){
 }
 
 function paticka(){ ?>
-  <p style="margin-bottom: 100px;"></p>
   <footer class="bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">
-       <a href="admin.php" id="footerA">Copyright &copy; Gabriela Slaninková & Lukáš Slaninka 2018</a>
+       <a href="admin.php" id="footerA">Copyright &copy; Gabriela Slaninková & Lukáš Slaninka 2019</a>
       </p>
     </div>
   </footer>

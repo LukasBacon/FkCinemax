@@ -22,12 +22,13 @@ hlavicka();
           vypis_albumy();
         }
       ?>
-
+    </div>
     </div>
     <!-- /.container -->
+    </div>
+    <!-- /.content -->
 
-
-<?php paticka();?>
+  <?php paticka();?>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
