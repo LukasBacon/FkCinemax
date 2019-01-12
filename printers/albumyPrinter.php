@@ -5,7 +5,7 @@ function vypis_albumy(){
 		SELECT a.id, a.nazov, f.url FROM Albumy as a LEFT JOIN Fotky as f
 		ON f.id_album = a.id 
 		GROUP BY nazov
-		ORDER BY a.datum;
+		ORDER BY a.datum DESC;
 EOF;
   $ret = $db->query($sql);
   $pocet = 0;
@@ -71,6 +71,7 @@ EOF;
 			    echo '</div>';
 			    echo '<div class="card-footer text-left admin-card-footer">';
 			    	echo '<p id="albumNazov'.$row['id'].'" style="color:black;" class="nazovAlbumu font-weight-bold">'.$row['nazov'].'</p>';
+			    	echo '<span class="spacer"></span>';
 			    	echo '<input id="upravAlbumInput'.$row['id'].'" class="upravAlbumInput" type="text" required hidden>';
 			    		echo '<a id="upravAlbumBtn'.$row['id'].'" class="d-inline float-right" href="javascript:upravAlbum('.$row['id'].');"><img class="buttonImg withHover" src="fotky/edit.png" width="40"></a>';
 			    echo '</div>';

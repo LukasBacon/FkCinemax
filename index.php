@@ -75,9 +75,6 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
           </div>
           <div>
             <strong style="font-size: 20px;">Nájdete nás aj na </strong>
-            <a href="https://www.facebook.com/groups/100495186674652/?ref=bookmarks">
-              <img src="fotky/facebook.jpg" height="30px">
-            </a>
             <a href="http://tj-dolany.futbalnet.sk/tim/26389">
               <img style="padding-top: 1px; margin-left: 5px;"  src="fotky/futbalnet.png" height="30px">
             </a>
@@ -127,15 +124,23 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
           <ul class="pagination justify-content-center">
           </ul>
         <!-- /.Aktuality -->
+        </div>
       </div>
       <!-- /.row -->
     </div>
     <!-- /.container -->
-<?php paticka();?>>
+    </div>
+    <!-- /.content -->
+    <?php paticka();?>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="js/aktuality.js"></script>
     <script type="text/javascript" src="js/responsive-paginate.js"></script>
+    <script type="text/javascript">
+      $('#carouselExampleIndicators').carousel({
+          interval: 5000
+      });
+    </script>
   </body>
 
 </html>

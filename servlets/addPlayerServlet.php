@@ -16,7 +16,6 @@ if (isset($_POST['submit'])){
         $file = $_FILES['file'];
         $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
         $isFile = true;
-        echo $ext;
     }
 
     if($skupina == 'Seniori'){

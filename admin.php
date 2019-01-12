@@ -2,14 +2,11 @@
 session_start();
 include('funkcie.php');
 hlavicka();
-
 ?> 
     <!-- Page Content -->
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.php">Domov</a>
-        </li>
+        <li class="breadcrumb-item"><a href="index.php">Domov</a></li>
         <li class="breadcrumb-item active">Administrátorské rozhranie</li>
       </ol>
 <?php
@@ -19,14 +16,14 @@ if(isset($_POST['odhlas'])){
 if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1){?>
       <div class="row justify-content-center">
         <div class="col-lg-4"></div>
-        <div class="col-lg-4">
-           <form method="post">
-             <button type="submit" class="btn btn-admin" name="odhlas">Odhlás</button>
-          </form>
+          <div class="col-lg-4">
+             <form method="post">
+               <button type="submit" class="btn btn-admin" name="odhlas">Odhlás</button>
+            </form>
           </div>
-        </div>
-        <div class="col-lg-4"></div>
-        </div>
+      </div>
+      <div class="col-lg-4"></div>
+      </div>
 <?php
 }
 else if(isset($_POST['heslo']) && $_POST['heslo'] == $heslo ){
@@ -52,11 +49,13 @@ else{
           </div>
         </div>
         <div class="col-lg-4"></div>
-        </div>
       </div>
     </div>
 
-<?php } paticka();?>
+<?php }?>
+    </div>
+    <!-- /.content -->
+<?php  paticka(); ?>
     
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>

@@ -46,6 +46,9 @@ $dbLoader->overDatumyNasledujucichNZapasov(6, "Pripravka");
     </div>
     <!-- /.container -->
 
+    </div>
+    <!-- /.content -->
+
 <?php paticka();?>
 
     <!-- Bootstrap corev JavaScript -->

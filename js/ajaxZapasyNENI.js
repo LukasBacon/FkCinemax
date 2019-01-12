@@ -19,6 +19,15 @@ $(document).ready(function(){
 				} 
 			}
   	});
+  	$.ajax({
+		url:"servlets/nazovLigyServlet.php",
+		type:"post",
+		data:{"rok":rok, "skupina":skupina},
+		success: function(data){
+			console.log(data);
+			$("#nazovLigy").text(data);
+		}
+	});
   	scrollujNaAktualneKolo();
   });	
 

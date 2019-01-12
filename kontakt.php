@@ -39,7 +39,7 @@ hlavicka();
 						&#9990; <a href="tel:0905 840 180">0905 840 180</a> <br>
 						<strong> Manažér: </strong> Rudolf Vrbinkovič<br>
 						&#9990; <a href="tel:0907 266 400<">0907 266 400</a> <br>
-						<strong>Členovia výboru: </strong> <br>Matúš Ješko, Matej Vandák, Jozef Tomašovič, Pavol Ješko, Jozef Schmidt
+						<strong>Členovia výboru: </strong> <br>Matúš Ješko, Matej Vandák, Jozef Tomašovič, Pavol Ješko, Jozef Schmidt, Marek Vizváry
 					</p>
 
 				</div>
@@ -51,6 +51,9 @@ hlavicka();
 		</div>
 		<!-- /.container -->
 
+		</div>
+		<!-- /.content -->
+		
 <?php paticka();?>
 
 		<!-- Bootstrap core JavaScript -->

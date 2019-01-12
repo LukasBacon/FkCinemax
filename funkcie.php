@@ -1,5 +1,5 @@
 <?php
-$heslo="zelenajetrava"; //heslo admina
+$heslo="Matus18"; //heslo admina
 date_default_timezone_set('UTC');
 include('db.php');
 include('dbLoader.php');
@@ -27,7 +27,8 @@ function hlavicka(){
 
   <body>
     <!-- Navigacia -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="content">
+    <nav class="navbar fixed-top navbar-expand-xl navbar-dark bg-dark fixed-top">
       <div class="container">
         <img src="fotky/logo.png" class="img-logo">
         <a class="navbar-brand" href="index.php">FK CINEMAX DOĽANY </a>
@@ -67,6 +68,9 @@ function hlavicka(){
               <a class="nav-link" href="forum.php">Fórum</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="partneri.php">Partneri</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="kontakt.php">Kontakt</a>
             </li>
           </ul>
@@ -77,11 +81,10 @@ function hlavicka(){
 }
 
 function paticka(){ ?>
-  <p style="margin-bottom: 100px;"></p>
   <footer class="bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">
-       <a href="admin.php" id="footerA">Copyright &copy; Gabriela Slaninková & Lukáš Slaninka 2018</a>
+       <a href="admin.php" id="footerA">Copyright &copy; Gabriela Slaninková & Lukáš Slaninka 2019</a>
       </p>
     </div>
   </footer>

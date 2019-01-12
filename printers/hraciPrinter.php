@@ -77,7 +77,7 @@ function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narod
   		echo '<a class="pr-1" id="vymazBtn-'.$id.'" href="javascript:vymazHraca('.$id.');"><img width="40" class="buttonImg withHover" src="fotky/remove.png" alt="Vymaž hráča"></a>';
   	  echo '<a class="pr-1" id="upravBtn-'.$id.'" href="javascript:upravHraca('.$id.');"><img width="40" class="buttonImg withHover" src="fotky/edit.png" alt="Uprav info o hráčovi"></a>';
       echo '<div class="pr-1" id="zmenBtn-'.$id.'">';
-        echo '<form action="/FkCinemax/servlets/editPhotoServlet.php" method="post" enctype="multipart/form-data"  style="margin:0px; padding:0px;">';
+        echo '<form action="servlets/editPhotoServlet.php" method="post" enctype="multipart/form-data"  style="margin:0px; padding:0px;">';
           $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
           echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
           echo '<input type="hidden" name="id" value="'.$id.'">';
@@ -108,7 +108,7 @@ function vypis_pridaj_noveho($skupina){
     echo '<div class="col-sm-4"></div>';
 		echo '<div class="col-sm-4" id="novaFotkaPanel">';
 			echo '<h4>Pridaj nového hráča</h4>';
-			echo '<form class="justify-content-center" action="/FkCinemax/servlets/addPlayerServlet.php" method="post" enctype="multipart/form-data">';
+			echo '<form class="justify-content-center" action="servlets/addPlayerServlet.php" method="post" enctype="multipart/form-data">';
 			echo '<label for="meno">Meno: </label><br>';
 			echo '<input id="meno" name="meno" type="text" class="form-control" required>';
 			echo '<label for="priezvisko">Priezvisko: </label><br>';

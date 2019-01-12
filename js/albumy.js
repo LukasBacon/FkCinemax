@@ -32,6 +32,7 @@ function upravAlbum(id){
 	var upravAlbumBtn = $('#upravAlbumBtn'+id);
 	albumNazov.prop('hidden',true);
 	albumInput.removeAttr('hidden'); 
+	albumInput.val(albumNazov.text());
 	upravAlbumBtn.replaceWith('<a id="potvrdNazovBtn'+id+'" class="d-inline float-right" href="javascript:potvrdNazov('+id+');"><img class="buttonImg withHover" src="fotky/ok.png" width="40"></a>');		
 }
 

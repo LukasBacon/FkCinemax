@@ -1,3 +1,28 @@
+html {
+	height: 100%;
+}
+body{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+footer{
+	flex-shrink: 0;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	position: relative !important;
+}
+@media (max-width: 991.98px) {
+	footer{
+		padding-top: 0.7rem !important;
+		padding-bottom: 0.7rem !important;
+		font-size: 0.7rem;
+	}
+}
+.content{
+	margin-bottom: 30px;
+	flex: 1 0 auto;
+}
 #aWithoutTextHover:hover{
 	text-decoration:none;
 }
@@ -149,22 +174,14 @@ label{
 	width:100%;
 	margin-top: 0;
 }
+#footerA{
+	color:#f0c844;
+}
 #footerA:hover{
 	text-decoration: none;
-	color:#6166b5;
+	color:#f0c844;
 }
-footer{
-	z-index: 1;
-	padding-top: 1rem;
-	padding-bottom: 1rem;
-}
-@media (max-width: 991.98px) {
-	footer{
-		padding-top: 0.7rem !important;
-		padding-bottom: 0.7rem !important;
-		font-size: 0.7rem;
-	}
-}
+
 .border-card{
 	border: solid 1px #28a745;
 	border-radius: 0.25rem;
@@ -191,4 +208,7 @@ footer{
 
 .upravAlbumInput{
 	overflow: hidden;
+}
+.spacer{
+	flex: 1 1 auto;
 }
