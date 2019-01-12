@@ -53,10 +53,10 @@ function upravHraca(id){
 			var oldKluby = data['kluby'];
 			
 
-			celeMeno.replaceWith('<input class="" id="newCeleMeno-'+id+'" type="text" value="'+oldCeleMeno+'">');		
-			post.replaceWith('<input class="" id="newPost-'+id+'" type="text" value="'+oldPost+'">');	
-			rocnik.replaceWith('<input class="" id="newRocnik-'+id+'" type="text" value="'+oldRocnik+'">');	
-			kluby.replaceWith('<textarea rows="4" cols="100" class="form-control" id="newKluby-'+id+'" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none">'+oldKluby+'</textarea>');
+			celeMeno.replaceWith('<input class="" id="newCeleMeno-'+id+'" type="text" placeholder="Meno a priezvisko" value="'+oldCeleMeno+'">');		
+			post.replaceWith('<input class="" id="newPost-'+id+'" type="text" placeholder="Post" value="'+oldPost+'">');	
+			rocnik.replaceWith('<input class="" id="newRocnik-'+id+'" type="text" placeholder="Ročník" value="'+oldRocnik+'">');	
+			kluby.replaceWith('<textarea rows="4" cols="100" class="form-control" placeholder="Kluby" id="newKluby-'+id+'" required data-validation-required-message="Zadaj text" maxlength="999" style="resize:none">'+oldKluby+'</textarea>');
 
 			vymazBtn.prop('hidden',true);
 			zmenBtn.prop('hidden',true);
