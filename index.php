@@ -76,7 +76,7 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
           <div>
             <strong style="font-size: 20px;">Nájdete nás aj na </strong>
             <a href="http://tj-dolany.futbalnet.sk/tim/26389">
-              <img style="padding-top: 1px; margin-left: 5px;"  src="fotky/futbalnet.png" height="30px">
+              <img style="padding-bottom: 5px; margin-left: 5px;"  src="fotky/futbalnet.png" height="30px">
             </a>
           </div>
           <br>

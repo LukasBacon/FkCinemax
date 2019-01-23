@@ -18,7 +18,7 @@ function hlavicka(){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>FK CINEMAX</title>
+    <title>FK CINEMAX Doľany</title>
 
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="css/modern-business.css" rel="stylesheet">
@@ -31,7 +31,8 @@ function hlavicka(){
     <nav class="navbar fixed-top navbar-expand-xl navbar-dark bg-dark fixed-top">
       <div class="container">
         <img src="fotky/logo.png" class="img-logo">
-        <a class="navbar-brand" href="index.php">FK CINEMAX DOĽANY </a>
+        <a class="navbar-brand" href="index.php"><h1 style="font-size: 1.25rem; font-weight: bold; margin-top: 0.5rem;">FK CINEMAX DOĽANY</h1></a>
+        <!--<a class="navbar-brand" href="index.php">FK CINEMAX DOĽANY</a>-->
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

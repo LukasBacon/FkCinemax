@@ -27,7 +27,7 @@ function printPhotos($fotky){
 		}
 		echo '<div class="col-sm-3">';
 			echo '<a class="fotoA" href="'.$url.'">';
-				echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
+				echo '<img id="fotoImg" src="'.$url.'" alt="fk-cinemax-dolany-'.$url.'" class="img-thumbnail"/>';
 			echo '</a>';
     echo '</div>';
 		if($pocet % 4 == 3){
@@ -52,7 +52,7 @@ function printPhotosWithFormular($idAlbumu, $fotky){
 					echo '<img id="cancelImgPhoto" src="fotky/remove.png">';
 				echo '</a>';
 				echo '<a class="fotoA" href="'.$url.'">';
-					echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
+					echo '<img id="fotoImg" src="'.$url.'" alt="fk-cinemax-dolany-'.$url.'" class="img-thumbnail"/>';
 				echo '</a>';
 			echo '</div>';
     echo '</div>';

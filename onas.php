@@ -20,7 +20,7 @@ hlavicka();
         <div class="col-lg-1"></div>
         <div class="col-lg-10" style="text-align: center;">
           <h2>Hymna</h2>
-          <iframe width="100%" height="500px" src="https://www.youtube.com/embed/X_Yf7TVU9Ts"></iframe>
+          <iframe width="100%" height="500px" alt="hymna-fk-cinemax-dolany" src="https://www.youtube.com/embed/X_Yf7TVU9Ts"></iframe>
         </div>
         <div class="col-lg-1"></div>
       </div>

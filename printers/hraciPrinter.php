@@ -59,7 +59,7 @@ EOF;
 function vypis_hraca($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, $kluby, $skupina){
   echo '<div class="col-md-3">';
  	  echo '<div class="hracFotoPanel" style="margin-bottom:1rem;">';
-      echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'">';
+      echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'" alt="fk-cinemax-dolany-'.$url.'">';
     echo '</div>';
   echo '</div>';
   echo '<div  class="col-md-3 pb-3" style="position:relative; border-bottom: solid 8px #e9ecef;">';
@@ -71,7 +71,7 @@ function vypis_hraca($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, 
 function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, $kluby, $skupina){
   echo '<div class="col-md-3">';
   	echo '<div class="hracFotoPanel">';
-  		echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'">';
+  		echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'" alt="fk-cinemax-dolany-'.$url.'">';
   	echo '</div>';
   	echo '<div class="form-inline d-flex justify-content-center hraciForm">';
   		echo '<a class="pr-1" id="vymazBtn-'.$id.'" href="javascript:vymazHraca('.$id.');"><img width="40" class="buttonImg withHover" src="fotky/remove.png" alt="Vymaž hráča"></a>';
