@@ -52,8 +52,8 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
         <!-- Zapasy -->
         <div class="col-lg-5">
           <div class="card">
-            <h5 class="card-header-match">Posledné zápasy</h5>
-            <div class="card-body">
+            <h5 class="card-header card-header-match">Posledné zápasy</h5>
+            <div class="card-body card-body-zapasy">
               <ul class="list-group list-group-flush">
                 <?php vypisPosledneZapasy(array('Seniori')); ?>
                 <li class="list-group-item">
@@ -63,8 +63,8 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
             </div>
           </div>
           <div class="card">
-            <h5 class="card-header-match">Nasledujúce zápasy</h5>
-            <div class="card-body">
+            <h5 class="card-header card-header-match">Nasledujúce zápasy</h5>
+            <div class="card-body card-body-zapasy">
               <ul class="list-group list-group-flush">
                 <?php vypisNasledujuceZapasy(array('Seniori')); ?>
                 <li class="list-group-item">
@@ -73,7 +73,7 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
               </ul>
             </div>
           </div>
-          <div>
+          <div id="odkaz-futbalnet">
             <strong style="font-size: 20px;">Nájdete nás aj na </strong>
             <a href="http://tj-dolany.futbalnet.sk/tim/26389">
               <img style="padding-bottom: 5px; margin-left: 5px;"  src="fotky/futbalnet.png" height="30px">
@@ -85,6 +85,7 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
 
         <!-- Aktuality -->
         <div class="col-lg-7" id="aktuality-section">
+          <h3 id="aktuality-title">AKTUALITY</h3>
           <!-- admin - pridaj aktualitu a vypis-->
           <?php
           if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1 ){ ?>
