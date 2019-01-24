@@ -1,4 +1,4 @@
-var POCET_POLOZIEK_NA_STRANU = 3;
+var POCET_POLOZIEK_NA_STRANU = 8;
 var aktualnaStrana = 1;
 var pocetStran = 10000000;
 
@@ -210,15 +210,15 @@ function vypisKomentare(data, admin){
 	var komentareText = "";
 	$.each(JSON.parse(data), function(index, komentar){
 		komentareText += '<div class="card mx-2 my-2">';
-        komentareText += 	'<div class="card-body">';
+        komentareText += 	'<div class="card-body pr-3 pt-2 pb-2">';
         komentareText += 		'<h5 class="mt-0">'+komentar["meno"]+'</h5>';
         komentareText += 		reformatTextToHtml(komentar["text"]);
         komentareText += 	'</div>';
         komentareText +=	'<div class="card-footer text-left pt-1 pb-1">';
         komentareText +=		vypisVymazKomentarBtn(komentar["id"], admin);
         komentareText += 		'<div class="float-right'+ margin_top +'">';
-        komentareText += 			komentar["datum"] + " ";
-        komentareText += 			komentar["cas"];
+        komentareText += 			komentar["cas"] + " ";
+        komentareText += 			komentar["datum"];
         komentareText += 		'</div>'
         komentareText +=	'</div>';
         komentareText += '</div>';
