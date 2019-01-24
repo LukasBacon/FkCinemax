@@ -57,19 +57,21 @@ EOF;
 }
 
 function vypis_hraca($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, $kluby, $skupina){
-  echo '<div class="col-md-3">';
- 	  echo '<div class="hracFotoPanel" style="margin-bottom:1rem;">';
+  echo '<div class="col-lg-3">';
+ 	  echo '<div class="hracFotoPanel">';
       echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'" alt="fk-cinemax-dolany-'.$url.'">';
     echo '</div>';
   echo '</div>';
-  echo '<div  class="col-md-3 pb-3" style="position:relative; border-bottom: solid 8px #e9ecef;">';
+  echo '<div class="col-lg-3 hraci-border-line">';
   	echo '<h3>'.$meno.' '.$priezvisko.'</h3>';
-  	echo $typ_hraca.'<br>'.$rok_narodenia.'<br>'.nl2br($kluby);
+  	echo $typ_hraca.'<br>';
+    echo '<h6 class="mb-0 mt-2">Ročník:</h6>'.$rok_narodenia.'<br>';
+    echo '<h6 class="mb-0 mt-2">Kluby:</h6>'.nl2br($kluby);
   echo '</div>';
 }
 
 function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narodenia, $kluby, $skupina){
-  echo '<div class="col-md-3">';
+  echo '<div class="col-lg-3">';
   	echo '<div class="hracFotoPanel">';
   		echo '<img class="img-fluid rounded mb-3 mb-md-0 img-thumbnail hracFoto" src="'.$url.'" alt="fk-cinemax-dolany-'.$url.'">';
   	echo '</div>';
@@ -93,7 +95,7 @@ function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narod
       echo '</div>';
   	echo '</div>';
   echo '</div>';
-  echo '<div class="col-md-3 pb-3" style="position:relative; border-bottom: solid 8px #e9ecef;">';
+  echo '<div class="col-lg-3 pb-3 hraci-border-line">';
   	echo '<h3 id="celeMeno-'.$id.'">'.$meno.' '.$priezvisko.'</h3>';
   	echo '<div id="post-'.$id.'">'.$typ_hraca.'</div>';
     echo '<div id="rocnik-'.$id.'">'.$rok_narodenia.'</div>';
