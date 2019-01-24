@@ -15,7 +15,7 @@ function hlavicka(){
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
+    <meta name="description" content="Oficiálna stránka FK CINEMAX Doľany | Aktuality | Zápasy | Tabuľky | Hráči | Fotogaléria | Fórum | Kontakt">
     <meta name="author" content="">
 
     <title>FK CINEMAX Doľany</title>
