@@ -55,10 +55,7 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
             <h5 class="card-header card-header-match">Posledné zápasy</h5>
             <div class="card-body card-body-zapasy">
               <ul class="list-group list-group-flush">
-                <?php vypisPosledneZapasy(array('Seniori')); ?>
-                <li class="list-group-item">
-                  <a class="btn btn-primary" href="z_pripravka.php">Zápasy prípravky</a>
-                </li>
+                <?php vypisPosledneZapasy(array('Seniori','Pripravka')); ?>
               </ul>
             </div>
           </div>
@@ -66,10 +63,7 @@ $dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
             <h5 class="card-header card-header-match">Nasledujúce zápasy</h5>
             <div class="card-body card-body-zapasy">
               <ul class="list-group list-group-flush">
-                <?php vypisNasledujuceZapasy(array('Seniori')); ?>
-                <li class="list-group-item">
-                  <a class="btn btn-primary" href="z_pripravka.php">Zápasy prípravky</a>
-                </li>
+                <?php vypisNasledujuceZapasy(array('Seniori','Pripravka')); ?>
               </ul>
             </div>
           </div>

@@ -39,12 +39,13 @@ function vypisNasledujuceZapasy(array $skupiny){
 			return;
 		}
 		/*kvoli tomu ze 3 kola v pripravke sa hraju v jeden den - kolo 1,2,3 = kolo 1*/
-		/*if($skupina === 'Pripravka'){
+		if($skupina === 'Pripravka'){
 			$kolo = floor(($zapas['kolo'] -1) / 3) + 1;
 		}
 		else{
 			$kolo = $zapas['kolo'];
-		}*/
+		}
+    /*end*/
     $kolo = $zapas['kolo'];
 		echo '<li class="list-group-item">';
 	  echo '<p class="card-text"><strong>'.$zapas["nazov"].' '.$zapas["rok"].'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' : '.$zapas["hostia"].'<br><small>'.$zapas['poznamka'].'</small></p>';
@@ -59,12 +60,13 @@ function vypisPosledneZapasy(array $skupiny){
 			return;
 		}
 		/*kvoli tomu ze 3 kola v pripravke sa hraju v jeden den - kolo 1,2,3 = kolo 1*/
-		/*if($skupina === 'Pripravka'){
+		if($skupina === 'Pripravka'){
 			$kolo = floor(($zapas['kolo'] -1) / 3) + 1;
 		}
 		else{
 			$kolo = $zapas['kolo'];
-		}*/
+		}
+    /*end*/
     $kolo = $zapas['kolo'];
 		echo '<li class="list-group-item">';
 	  echo '<p class="card-text"><strong>'.$zapas["nazov"].' '.$zapas["rok"].'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' <strong>'.$zapas["skoreD"].':'.$zapas["skoreH"].' </strong>'.$zapas["hostia"].'<br><small>'.$zapas['poznamka'].'</small></p>';
