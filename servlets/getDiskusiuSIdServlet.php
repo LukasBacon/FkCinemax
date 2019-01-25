@@ -12,7 +12,7 @@ $idDiskusie = $_POST['idDiskusie'];
 
 $db = napoj_db();
 $sql =<<<EOF
-SELECT * FROM Diskusie WHERE id="$idDiskusie";
+SELECT *, (SELECT count(*) FROM Komentare WHERE id_diskusie = "$idDiskusie") as pocet FROM Diskusie WHERE id="$idDiskusie"
 EOF;
 $pole = array();
 $ret = $db->query($sql);

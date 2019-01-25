@@ -14,7 +14,7 @@ $pocetPoloziekNaStranu = $_POST['pocetPoloziekNaStranu'];
 $offset = $pocetPoloziekNaStranu * ($cisloStrany - 1);
 $db = napoj_db();
 $sql =<<<EOF
-SELECT * FROM Diskusie ORDER BY datum_disk DESC LIMIT "$pocetPoloziekNaStranu" OFFSET "$offset";
+SELECT d.*, (SELECT count(*) FROM Komentare WHERE Komentare.id_diskusie = d.id) as pocet FROM Diskusie as d ORDER BY datum_disk DESC LIMIT "$pocetPoloziekNaStranu" OFFSET "$offset";
 EOF;
 $ret = $db->query($sql);
 $pole = array();
