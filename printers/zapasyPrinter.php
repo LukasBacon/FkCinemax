@@ -112,7 +112,7 @@ function vypisKolo($kolo, $skupina, $rok){
 function vratZapasyKola($skupina, $rok, $kolo){
   $db = napoj_db();
   $sql =<<<EOF
-    SELECT * FROM Zapasy WHERE rok="$rok" AND skupina="$skupina" AND kolo="$kolo";
+    SELECT * FROM Zapasy WHERE rok="$rok" AND skupina="$skupina" AND kolo="$kolo" order by domaci='FK CINEMAX Doľany' or hostia='FK CINEMAX Doľany' desc;
 EOF;
   $ret = $db->query($sql);
   $Zapasy = array();
