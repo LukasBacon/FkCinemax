@@ -13,8 +13,8 @@ if (isset($_POST['submit'])){
 	    $ext=pathinfo($file_name,PATHINFO_EXTENSION);
 	    if(in_array($ext,$extension)){
 	        $filename=replaceSpecialChars(basename($file_name,$ext));
-	        $destination = dirname(getcwd()) . "/fotky/".$album."/fk-cinemax-dolany-".$filename."-".time().".".$ext;
-	        $fileURL = "fotky/".$album."/fk-cinemax-dolany-".$filename."-".time().".".$ext;
+		$fileURL = "fotky/".$album."/fk-cinemax-dolany-".$filename."-".time().".".$ext;
+	        $destination = dirname(getcwd()) . "/" . $fileURL;
 	        if(!file_exists($destination)){
 	            move_uploaded_file($file_tmp,$destination);
                 $cas = date('Y-m-d G:i:s', filectime($destination));
