@@ -27,7 +27,7 @@ function printPhotos($fotky){
 		}
 		echo '<div class="col-sm-3">';
 			echo '<a class="fotoA" href="'.$url.'">';
-				echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
+				echo '<img id="fotoImg" src="'.$url.'" alt="'.$url.'" name="'.$url.'" class="img-thumbnail"/>';
 			echo '</a>';
     echo '</div>';
 		if($pocet % 4 == 3){
@@ -52,7 +52,7 @@ function printPhotosWithFormular($idAlbumu, $fotky){
 					echo '<img id="cancelImgPhoto" src="fotky/remove.png">';
 				echo '</a>';
 				echo '<a class="fotoA" href="'.$url.'">';
-					echo '<img id="fotoImg" src="'.$url.'" class="img-thumbnail"/>';
+					echo '<img id="fotoImg" src="'.$url.'" alt="'.$url.'" name="'.$url.'" class="img-thumbnail"/>';
 				echo '</a>';
 			echo '</div>';
     echo '</div>';
@@ -70,7 +70,7 @@ function vypis_pridaj_novu($idAlbumu){
 			echo 'Povolené formáty: png a jpg <br>';
 			echo '<form class="form-inline d-flex justify-content-center" action="servlets/addPhotosServlet.php" method="post" enctype="multipart/form-data">';
 				echo '<label class="btn-file withHover" style="width:60px;">';
-					echo '<input type="file" class="custom-file-input" style="width:0%;" name="files[]" id="files" accept=".jpg, .jpeg, .png" multiple/> ';
+					echo '<input type="file" class="custom-file-input" style="width:0%;" name="files[]" id="files" accept=".jpg, .jpeg, .png, image/jpeg, image/png, image/pjpeg" multiple/> ';
 					echo '<span class="custom-file-control"><img src="fotky/foto.png" id="fileLabel" class="buttonImg withHover" width="40"></span>';
 				echo '</label>';
 				echo '<input type="text" name="idAlbumu" value="'.$idAlbumu.'" hidden>';
