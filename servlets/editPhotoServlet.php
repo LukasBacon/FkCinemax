@@ -38,6 +38,7 @@ if (isset($_POST['submit'])){
 function pridajFotkuNaServer($file, $targetFileURL){
     $destination = dirname(getcwd()) . "/".$targetFileURL;
     move_uploaded_file($file["tmp_name"], $destination);
+    compressImage($destination);
 }
 
 function vymazFotkuZoServera($url){

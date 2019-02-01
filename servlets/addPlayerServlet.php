@@ -48,6 +48,7 @@ if (isset($_POST['submit'])){
 function pridajFotkuNaServer($file, $targetFileURL){
     $destination = dirname(getcwd()) . "/".$targetFileURL;
     move_uploaded_file($file["tmp_name"], $destination);
+    compressImage($destination);
 }
 
 function pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupina){
@@ -58,5 +59,6 @@ EOF;
   	$ret = $db->query($sql);
   	$db->close();	
 }
+
 
 ?>
