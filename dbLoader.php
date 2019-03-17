@@ -278,7 +278,7 @@ EOF;
 		$db = napoj_db();
 	    $sql =<<<EOF
 	    SELECT * FROM Zapasy WHERE datum < datetime('now') 
-	    					   AND ((skoreD is null AND skoreH is null) OR (skoreD=0 AND skoreH=0))
+	    					   AND ((skoreD is null AND skoreH is null) OR (skoreD=0 AND skoreH=0 AND julianday('now') - julianday(datum) < 100 ))
 	    					   AND rok = "$rok" AND skupina = "$skupina";
 EOF;
 	    $ret = $db->query($sql);
