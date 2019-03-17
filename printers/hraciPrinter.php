@@ -122,7 +122,7 @@ function vypis_pridaj_noveho($skupina){
 			echo '<label for="timy">Tímy: </label><br>';
 			echo '<textarea id="timy" name="timy" class="form-control"></textarea>';
 			echo '<label for="foto">Fotka: </label><br>';
-			echo '<input type="file" name="file" id="foto" accept=".jpg, .jpeg, .png"/> ';
+			echo '<input type="file" name="file" id="foto" accept=".jpg, .jpeg, .png, image/jpeg, image/png, image/pjpeg"/> ';
 			echo '<input type="hidden" name="skupina" value="'.$skupina.'">';
       $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
       echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
