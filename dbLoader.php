@@ -251,10 +251,19 @@ EOF;
 		restore_error_handler();
 		return array('zapas' => null, 'inversed' =>  false);
 	}
+
 	public function najdiLigySNaposledyOdohranymiZapasmiBezSkore(){
 		$db = napoj_db();
+		$aktualnyRocnik = date("Y");
 	    $sql =<<<EOF
-	    SELECT DISTINCT skupina, rok FROM Zapasy WHERE datum < datetime('now') AND skoreD is null AND skoreH is null;
+	    SELECT DISTINCT skupina, rok FROM Zapasy WHERE 
+	    						datum < datetime('now') 
+	    							AND 
+	    						(	
+	    							(skoreD is null AND skoreH is null) 
+	    									OR 
+	    							(skoreD=0 AND skoreH=0 AND julianday('now') - julianday(datum) < 100 )
+	    						);
 EOF;
 	    $ret = $db->query($sql);
 	    $pole = array();
@@ -264,10 +273,13 @@ EOF;
 	    $db->close();
 	    return $pole;
 	}
+
 	public function vratOdohraneZapasyLigyBezSkore($skupina, $rok){
 		$db = napoj_db();
 	    $sql =<<<EOF
-	    SELECT * FROM Zapasy WHERE datum < datetime('now') AND skoreD is null AND skoreH is null AND rok = "$rok" AND skupina = "$skupina";
+	    SELECT * FROM Zapasy WHERE datum < datetime('now') 
+	    					   AND ((skoreD is null AND skoreH is null) OR (skoreD=0 AND skoreH=0 AND julianday('now') - julianday(datum) < 100 ))
+	    					   AND rok = "$rok" AND skupina = "$skupina";
 EOF;
 	    $ret = $db->query($sql);
 	    $pole = array();
@@ -277,6 +289,7 @@ EOF;
 	    $db->close();
 	    return $pole;
 	}
+
 	public function vratSkupinyARokyBezZapasov(){
 		$db = napoj_db();
 	    $sql =<<<EOF
@@ -293,6 +306,7 @@ EOF;
 	    $db->close();
 	    return $pole;
 	}
+
 	public function updatniDatumZapasuSId($id, $datum){
 		$db = napoj_db();
 	    $sql =<<<EOF
