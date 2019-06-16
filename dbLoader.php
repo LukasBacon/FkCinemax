@@ -2,7 +2,9 @@
 include('parser/Parser.php');
 /*nacita zapasy a tabulku z futbalnetu a naplni databazu*/
 class dbLoader{
+
 	public  $parsery = array();
+
 	/*overi ci treba aktualizovat tabulku zapasov a tabulku tabuliek*/
 	public function over(){
 		$start = microtime(true);
@@ -15,7 +17,10 @@ class dbLoader{
 			$skupina = $dvojica['skupina'];
 			$rok = $dvojica['rok'];
 			$url = $this->ziskajUrlPodlaSkupinyARoku($skupina, $rok);
-			$this->aktualizujLigu($url, $skupina, $rok);
+			$status = $this->aktualizujLigu($url, $skupina, $rok);
+			if ($status == false) {
+				return;
+			}
 		}
 		foreach ($poleInsert as $dvojica) {
 			$skupina = $dvojica['skupina'];
@@ -25,6 +30,7 @@ class dbLoader{
 		}
 		echo "<script>console.log('DBLoader:over() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
+
 	public function overDatumyNasledujucichNZapasov($n, $skupina){
 		$start = microtime(true);
 		$db = napoj_db();
@@ -51,6 +57,9 @@ EOF;
 	    	}
 	    	else{
 	    		$parser = $this->preparsujFutbalnet($url);
+	    		if ($parser == null) {
+	    			return;
+	    		}
 	    	}
 	    	$parserZapas = $this->najdiRovnakyZapasVParserZapasoch($zapas, $parser->zapasy)["zapas"];
 	    	//echo "<script>console.log('overenie = ". $zapas["datum"] . ", ". $parserZapas->datum ."');</script>";
@@ -61,31 +70,44 @@ EOF;
 	    }
 	    echo "<script>console.log('DBLoader:overDatumyNasledujucichNZapasov(".$n.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
+
 	public function vlozNoveUdajeDoDatabazy($url, $skupina, $rok){
-		// testovane na https://obfz-bratislava-vidiek.futbalnet.sk/sutaz/2440/print?part=3850
 		$start = microtime(true);
 		$parsovac = $this->preparsujFutbalnet($url);
+		if ($parsovac == null) {
+			return;
+		}
 		$this->vlozAktualneZapasy($skupina, $rok, $parsovac->zapasy);
 		$this->vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
 		echo "<script>console.log('DBLoader:vlozNoveUdajeDoDatabazy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
+
 	public function aktualizujLigu($url, $skupina, $rok){
 		$start = microtime(true);
-		$parsovac = dbLoader::preparsujFutbalnet($url);
+		$parsovac = $this->preparsujFutbalnet($url);
+		if ($parsovac == null) {
+			return false;
+		}
 		$this->aktualizujZapasy($parsovac, $skupina, $rok);
 		$this->aktualizujTabulky($parsovac, $skupina, $rok);
 		echo "<script>console.log('DBLoader:aktualizujLigu(". $skupina.", ".$rok.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		return true;
 	}
+
 	public function preparsujFutbalnet($url){
 		$start = microtime(true);
 		$parsovac = new Parser;
-		$parsovac->parsuj($url);
+		$status = $parsovac->parsuj($url);
+		if ($status == false) {
+			return null;
+		}
 		echo "<script>console.log('DBLoader:preparsuj() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 		if (!isset($this->parsery[$url])){
 			$this->parsery[$url] = $parsovac;
 		}
 		return $parsovac;
 	}
+
 	public function aktualizujZapasy($parsovac, $skupina, $rok){
 		$start = microtime(true);
 		$zapasy = $this->vratOdohraneZapasyLigyBezSkore($skupina, $rok);
@@ -95,12 +117,14 @@ EOF;
 		}
 		echo "<script>console.log('DBLoader:aktualizujZapasy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
+
 	public function aktualizujTabulky($parsovac, $skupina, $rok){
 		$start = microtime(true);
 		$this->vymazUdajeZTabuliek($skupina, $rok);
 		$this->vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
 		echo "<script>console.log('DBLoader:aktualizujTabulky() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
+
 	public function ziskajUrlPodlaSkupinyARoku($skupina, $rok){
 		$db = napoj_db();
 	    $sql =<<<EOF
@@ -111,6 +135,7 @@ EOF;
 	    $db->close();
 	    return $row['url'];
 	}
+
 	public function vymazUdajeZTabuliek($skupina, $rok){
 	    $db = napoj_db();
 	    $sql =<<<EOF
@@ -147,6 +172,7 @@ EOF;
 		$db->exec('COMMIT;');
 		$db->close();
 	}
+
 	public function vlozAktualneDataTabulky($skupina, $rok, $tabulka){
 		$db = napoj_db();
 		$db->exec('BEGIN;');
@@ -163,6 +189,7 @@ EOF;
 		$db->exec('COMMIT;');
 		$db->close();
 	}
+
 	public function aktualizujDetailyZapasu($zapas, $parserZapasy){
 		// v $parserZapasy najde zapas $parserZapas, ktory je rovny zapasu $zapas (domaci, hostia, kolo)
 		// v databaze atualizuje zapas $zapas udajmi zo $parserZapas (skoreDomaci, skoreHostia, datum)

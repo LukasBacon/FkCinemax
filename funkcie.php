@@ -6,6 +6,8 @@ include('dbLoader.php');
 
 function hlavicka(){
   $dbLoader = new dbLoader;
+
+  // TODO zavolat asynchronne (mozno exec(subor))
   $dbLoader->over();
   ?>
   <!DOCTYPE html>
