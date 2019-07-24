@@ -37,7 +37,7 @@ else{
         <div class="col-lg-4">
           <div class="card">
             <h5 class="card-header-admin">Heslo</h5>
-            <form method="post">
+            <form method="post" class="mb-0">
               <div class="card-body">
                 <input type="password" class="form-control" id="heslo" name="heslo">
                 <?php if(isset($_POST['heslo'])) { echo '<strong>Zadali ste zlé heslo!</strong>';} ?>

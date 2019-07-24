@@ -1,4 +1,4 @@
-var POCET_POLOZIEK_NA_STRANU = 3;
+var POCET_POLOZIEK_NA_STRANU = 8;
 var aktualnaStrana = 1;
 var pocetStran = 10000000;
 
@@ -103,7 +103,7 @@ function vypisDiskusiu(diskusia, admin){
 	}
 	var diskusiaText = "";
 	diskusiaText += '<div class="card my-4" id="diskusia-'+diskusia["id"]+'">';
-    diskusiaText += 	vypisShowHeader(diskusia["id"], diskusia["nazov"]);
+    diskusiaText += 	vypisShowHeader(diskusia["id"], diskusia["nazov"], diskusia["pocet"]);
     diskusiaText += 	'<div class="card-body">';
     diskusiaText += 		'<h5 class="mt-0">'+diskusia["autor"]+'</h5>';
     diskusiaText += 		reformatTextToHtml(diskusia["popis"]);
@@ -145,7 +145,8 @@ function vymazDiskusiu(idDiskusie){
 }
 
 // vylistovanie komentarov pod diskusiu
-function ukazKomentare(id, nazov){
+function ukazKomentare(id, nazov, pocet_kom){
+	console.log('som tu');
 	var admin = false;
 	$.ajax({
 		url:"servlets/getSessionServlet.php",
@@ -166,7 +167,7 @@ function ukazKomentare(id, nazov){
 					komentareHtml += vypisPridajKomentarForm(id);
 					komentare.html(komentareHtml);
 					var header = $("#header-"+id);
-					header.replaceWith(vypisHideHeader(id, nazov));
+					header.replaceWith(vypisHideHeader(id, nazov, pocet_kom));
 				}
 			});
 		}
@@ -174,29 +175,32 @@ function ukazKomentare(id, nazov){
 }
 
 // skytie komentarov
-function skryKomentare(id, nazov){
+function skryKomentare(id, nazov, pocet_kom){
 	var komentare = $("#komentare-"+id);
 	komentare.html("");
 	var header = $("#header-"+id);
-	header.replaceWith(vypisShowHeader(id, nazov));
+	header.replaceWith(vypisShowHeader(id, nazov, pocet_kom));
 }
 
 // vypise header diskusie, ktorym sa da vylistovat komentare
-function vypisShowHeader(id, nazov){
+function vypisShowHeader(id, nazov, pocet_kom){
+	console.log('('+id+',\''+nazov+',\''+pocet_kom+'\')');
 	var result = "";
-	result += 	'<a class="card-header diskusie-header" id="header-'+id+'" href="javascript:ukazKomentare('+id+',\''+nazov+'\');">';
+	result += 	'<a class="card-header diskusie-header" id="header-'+id+'" href="javascript:ukazKomentare('+id+',\''+nazov+'\','+pocet_kom+');">';
     result += 		'<strong style="font-size: 1.25rem; color:black;">'+nazov+'</strong>';
     result += 		'<strong style="float:right; color:black">&#9660;</strong>';
+    result += 		'<p class="m-0" style="float:right; color:black;">Komentáre: '+pocet_kom+'&nbsp;&nbsp;</p>';
     result += 	'</a>';
     return result;
 }
 
 // vypise header diskusie, ktorym sa daju skyt komentare
-function vypisHideHeader(id, nazov){
+function vypisHideHeader(id, nazov, pocet_kom){
 	var result = "";
-	result += 	'<a class="card-header diskusie-header" id="header-'+id+'" href="javascript:skryKomentare('+id+',\''+nazov+'\');">';
+	result += 	'<a class="card-header diskusie-header" id="header-'+id+'" href="javascript:skryKomentare('+id+',\''+nazov+'\','+pocet_kom+');">';
     result += 		'<strong style="font-size: 1.25rem; color:black;">'+nazov+'</strong>';
     result += 		'<strong style="float:right; color:black;">&#9650;</strong>';
+    result += 		'<p class="m-0" style="float:right; color:black;">Komentáre: '+pocet_kom+'&nbsp;&nbsp;</p>';
     result += 	'</a>';
     return result;
 }
@@ -210,15 +214,15 @@ function vypisKomentare(data, admin){
 	var komentareText = "";
 	$.each(JSON.parse(data), function(index, komentar){
 		komentareText += '<div class="card mx-2 my-2">';
-        komentareText += 	'<div class="card-body">';
+        komentareText += 	'<div class="card-body pr-3 pt-2 pb-2">';
         komentareText += 		'<h5 class="mt-0">'+komentar["meno"]+'</h5>';
         komentareText += 		reformatTextToHtml(komentar["text"]);
         komentareText += 	'</div>';
         komentareText +=	'<div class="card-footer text-left pt-1 pb-1">';
         komentareText +=		vypisVymazKomentarBtn(komentar["id"], admin);
         komentareText += 		'<div class="float-right'+ margin_top +'">';
-        komentareText += 			komentar["datum"] + " ";
-        komentareText += 			komentar["cas"];
+        komentareText += 			komentar["cas"] + " ";
+        komentareText += 			komentar["datum"];
         komentareText += 		'</div>'
         komentareText +=	'</div>';
         komentareText += '</div>';
@@ -324,7 +328,7 @@ function refreshniDiskusiuSId(idDiskusie){
 						}
 						menoDiskusie = diskusia["nazov"];
 						diskusiaDiv.replaceWith(newDiskusiaDiv);
-						ukazKomentare(idDiskusie, menoDiskusie);
+						ukazKomentare(idDiskusie, menoDiskusie, diskusia["pocet"]);
 					}
 				});
 			});

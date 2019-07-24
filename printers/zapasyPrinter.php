@@ -39,15 +39,17 @@ function vypisNasledujuceZapasy(array $skupiny){
 			return;
 		}
 		/*kvoli tomu ze 3 kola v pripravke sa hraju v jeden den - kolo 1,2,3 = kolo 1*/
-		/*if($skupina === 'Pripravka'){
+		if($skupina === 'Pripravka'){
 			$kolo = floor(($zapas['kolo'] -1) / 3) + 1;
+      $skupina = 'Prípravka';
 		}
 		else{
 			$kolo = $zapas['kolo'];
-		}*/
+		}
+    /*end*/
     $kolo = $zapas['kolo'];
 		echo '<li class="list-group-item">';
-	  echo '<p class="card-text"><strong>'.$zapas["nazov"].' '.$zapas["rok"].'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' : '.$zapas["hostia"].'<br><small>'.$zapas['poznamka'].'</small></p>';
+	  echo '<p class="card-text"><strong>'.$skupina.'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' : '.$zapas["hostia"].'<br><small>'.$zapas['poznamka'].'</small></p>';
 	  echo '</li>';
 	}
 }
@@ -59,15 +61,17 @@ function vypisPosledneZapasy(array $skupiny){
 			return;
 		}
 		/*kvoli tomu ze 3 kola v pripravke sa hraju v jeden den - kolo 1,2,3 = kolo 1*/
-		/*if($skupina === 'Pripravka'){
+		if($skupina === 'Pripravka'){
 			$kolo = floor(($zapas['kolo'] -1) / 3) + 1;
+      $skupina = 'Prípravka';
 		}
 		else{
 			$kolo = $zapas['kolo'];
-		}*/
+		}
+    /*end*/
     $kolo = $zapas['kolo'];
 		echo '<li class="list-group-item">';
-	  echo '<p class="card-text"><strong>'.$zapas["nazov"].' '.$zapas["rok"].'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' <strong>'.$zapas["skoreD"].':'.$zapas["skoreH"].' </strong>'.$zapas["hostia"].'<br><small>'.$zapas['poznamka'].'</small></p>';
+	  echo '<p class="card-text"><strong>'.$skupina.'</strong><br> Kolo '.$kolo.' - '.vypisDatumACas($zapas["datum"]).'<br>'.$zapas["domaci"].' <strong>'.$zapas["skoreD"].':'.$zapas["skoreH"].' </strong>'.$zapas["hostia"].'<br><small>'.$zapas['poznamka'].'</small></p>';
 	  echo '</li>';
 	}
 }
@@ -110,7 +114,7 @@ function vypisKolo($kolo, $skupina, $rok){
 function vratZapasyKola($skupina, $rok, $kolo){
   $db = napoj_db();
   $sql =<<<EOF
-    SELECT * FROM Zapasy WHERE rok="$rok" AND skupina="$skupina" AND kolo="$kolo";
+    SELECT * FROM Zapasy WHERE rok="$rok" AND skupina="$skupina" AND kolo="$kolo" order by domaci='FK CINEMAX Doľany' or hostia='FK CINEMAX Doľany' desc;
 EOF;
   $ret = $db->query($sql);
   $Zapasy = array();

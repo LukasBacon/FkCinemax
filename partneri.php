@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('funkcie.php');
+include('printers/tabulkyPrinter.php');
 hlavicka();
 ?>
     <!-- Page Content -->

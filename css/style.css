@@ -12,13 +12,7 @@ footer{
 	padding-bottom: 1rem;
 	position: relative !important;
 }
-@media (max-width: 991.98px) {
-	footer{
-		padding-top: 0.7rem !important;
-		padding-bottom: 0.7rem !important;
-		font-size: 0.7rem;
-	}
-}
+
 .content{
 	margin-bottom: 30px;
 	flex: 1 0 auto;
@@ -211,4 +205,55 @@ label{
 }
 .spacer{
 	flex: 1 1 auto;
+}
+.hraci-border-line{
+	position:relative; 
+	border-bottom: solid 8px #e9ecef;
+	margin-bottom: 5px;
+}
+.hracFotoPanel{
+	margin-bottom: 1rem;	
+}
+#aktuality-title{
+	text-align: center;
+	visibility: hidden;
+	font-size: 0;
+	margin-bottom: 0;
+}
+@media (max-width: 991.98px) {
+	footer{
+		padding-top: 0.7rem !important;
+		padding-bottom: 0.7rem !important;
+		font-size: 0.7rem;
+	}
+	.hracFoto{
+		height: 130vw;
+	}
+	.hracFotoPanel{
+		margin-bottom: 0;
+	}
+	.hraci-border-line{
+		text-align: center;
+		padding-bottom: 10px;
+		border-bottom: solid 10px black;
+	}
+	.breadcrumb {
+		margin-top: 2rem;
+	}
+	#odkaz-futbalnet{
+		text-align: center;
+	}
+	.card-text{
+		margin-bottom: 0px;
+	}
+	.card-body-zapasy{
+		padding: 0;
+	}
+	#aktuality-title{
+		visibility: visible;
+		font-size: 1.75rem;
+		margin-bottom: 0.5rem;
+		background-color: black;
+		color: white;
+
 }

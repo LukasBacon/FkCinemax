@@ -19,8 +19,8 @@ hlavicka();
       <div class="row">
         <div class="col-lg-1"></div>
         <div class="col-lg-10" style="text-align: center;">
-          <h2>Hymna</h2>
-          <iframe width="100%" height="500px" src="https://www.youtube.com/embed/X_Yf7TVU9Ts"></iframe>
+          <h1 style="font-size: 2rem;">Hymna FK CINEMAX Doľany</h1>
+          <iframe width="100%" height="500px" alt="hymna-fk-cinemax-dolany" src="https://www.youtube.com/embed/X_Yf7TVU9Ts"></iframe>
         </div>
         <div class="col-lg-1"></div>
       </div>
@@ -30,7 +30,7 @@ hlavicka();
       <div class="row">
         <div class="col-lg-1"></div>
         <div class="col-lg-10" style="text-align: center;">
-          <h3>Text</h3>
+          <h3 class="mt-3">Text</h3>
           Nad Roštúnom sa blýska,<br>
           ked chlapci z Dolán hrat začnú.<br>
           Tam hore hromy bijú,<br>

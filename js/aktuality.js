@@ -1,4 +1,4 @@
-var POCET_POLOZIEK_NA_STRANU = 3;
+var POCET_POLOZIEK_NA_STRANU = 8;
 var aktualnaStrana = 1;
 var pocetStran = 10000000;
 
@@ -149,10 +149,10 @@ function vypisAktualityAdmin(data){
 		aktualityText +=  	'<div class="card" id="aktualita-'+aktualita['id']+'">';
 	    aktualityText +=  		'<h5 class="card-header" id="aktualita-nadpis-'+aktualita['id']+'">'+aktualita['nadpis']+'</h5>';
 	    aktualityText +=  		'<div class="card-body">';
-	    aktualityText +=  			'<p class="card-text" id="aktualita-text-'+aktualita['id']+'">'+reformatTextToHtml(aktualita['text'])+'</p>';
+	    aktualityText +=  			'<p class="card-text mb-0" id="aktualita-text-'+aktualita['id']+'">'+reformatTextToHtml(aktualita['text'])+'</p>';
 	    aktualityText +=  			'<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
 	    aktualityText +=  		'</div>';
-	    aktualityText +=  		'<div class="card-footer" style="text-align: left;">';
+	    aktualityText +=  		'<div class="card-footer pt-1 pb-1" style="text-align: left;">';
 	    aktualityText +=  			vypisUpravAktualituBtn(aktualita['id']);
 	    aktualityText +=  			vypisVymazAktualituBtn(aktualita['id']);
 	    aktualityText +=  			'<div class="float-right mt-2">' + aktualita['datum'] + "</div>";
@@ -168,10 +168,10 @@ function vypisAktualityUser(data){
 		aktualityText +=  	'<div class="card">';
 	    aktualityText +=  		'<h5 class="card-header">'+aktualita['nadpis']+'</h5>';
 	    aktualityText +=  		'<div class="card-body">';
-	    aktualityText +=  			'<p class="card-text">'+reformatTextToHtml(aktualita['text'])+'</p>';
+	    aktualityText +=  			'<p class="card-text mb-0">'+reformatTextToHtml(aktualita['text'])+'</p>';
 	    aktualityText +=  			'<input type="hidden" name="akt_id" value="'+aktualita['id']+'">';
 	    aktualityText +=  		'</div>';
-	    aktualityText +=  		'<div class="card-footer">';
+	    aktualityText +=  		'<div class="card-footer pt-1 pb-1">';
 	    aktualityText +=  			aktualita['datum'];
 	    aktualityText +=  		'</div>';
 	    aktualityText +=  	'</div>';

@@ -19,9 +19,14 @@ class Parser
 	public function parsuj($url)
  	{
     if ($url == '' | $url == null){
-      return null;
+      return false;
     }
-    $this->body = file_get_html($url)->find('body', 0);
+    @$html = file_get_html($url);
+    if ($html == false) {
+       echo "<script>console.log('error');</script>";
+       return false;
+    }
+    $this->body = $html->find('body', 0);
     $this->nacitajNazovLigyARocnik();
     echo "<script>console.log('nacitajNazovLigyARocnik OK');</script>"; 
     $this->nacitajZapasy();
