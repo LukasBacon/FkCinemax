@@ -74,7 +74,7 @@ class Parser
   private function nacitajAkrualneKolo($tr){
     $th = $tr->plaintext;
     $index = TextUtils::preskocSlovo($th, 0);
-    $this->aktualneKolo = (int)TextUtils::nacitajSlovoPoKoniec($th, $index);   
+    $this->aktualneKolo = (int)TextUtils::nacitajSlovoPoZnak($th, ".");   
   }
 
   private function nacitajZapas($tr){
