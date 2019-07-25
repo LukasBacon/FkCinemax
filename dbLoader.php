@@ -1,6 +1,7 @@
 <?php
 include('parser/Parser.php');
 
+date_default_timezone_set('Europe/Bratislava');
 error_reporting(E_ALL ^ E_DEPRECATED);
 
 /*nacita zapasy a tabulku z futbalnetu a naplni databazu*/
@@ -11,11 +12,11 @@ class dbLoader{
 	/*overi ci treba aktualizovat tabulku zapasov a tabulku tabuliek*/
 	public function over(){
 		$start = microtime(true);
-		echo "<script>console.log('over() started');</script>";
+		//echo "<script>console.log('over() started');</script>";
 		$poleUpdata = $this->najdiLigySNaposledyOdohranymiZapasmiBezSkore();
 		$poleInsert = $this->vratSkupinyARokyBezZapasov();
-		echo "<script>console.log('toUpdate = " . json_encode($poleUpdata) .  "');</script>";
-		echo "<script>console.log('toInsert = " . json_encode($poleInsert) .  "');</script>";
+		//echo "<script>console.log('toUpdate = " . json_encode($poleUpdata) .  "');</script>";
+		//echo "<script>console.log('toInsert = " . json_encode($poleInsert) .  "');</script>";
 		foreach ($poleUpdata as $dvojica) {
 			$skupina = $dvojica['skupina'];
 			$rok = $dvojica['rok'];
@@ -31,7 +32,7 @@ class dbLoader{
 			$url = $this->ziskajUrlPodlaSkupinyARoku($skupina, $rok);
 			$this->vlozNoveUdajeDoDatabazy($url, $skupina, $rok);
 		}
-		echo "<script>console.log('DBLoader:over() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		//echo "<script>console.log('DBLoader:over() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
 
 	public function overDatumyNasledujucichNZapasov($n, $skupina){
@@ -67,11 +68,11 @@ EOF;
 	    	$parserZapas = $this->najdiRovnakyZapasVParserZapasoch($zapas, $parser->zapasy)["zapas"];
 	    	//echo "<script>console.log('overenie = ". $zapas["datum"] . ", ". $parserZapas->datum ."');</script>";
 	    	if ($zapas["datum"] != $parserZapas->datum){
-	    		echo "<script>console.log('zle ".$zapas["id"] . ", ". $parserZapas->datum . "');</script>";
+	    		//echo "<script>console.log('zle ".$zapas["id"] . ", ". $parserZapas->datum . "');</script>";
 	    		$this->updatniDatumZapasuSId($zapas["id"], $parserZapas->datum);
 	    	}
 	    }
-	    echo "<script>console.log('DBLoader:overDatumyNasledujucichNZapasov(".$n.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
+	    //echo "<script>console.log('DBLoader:overDatumyNasledujucichNZapasov(".$n.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
 
 	public function vlozNoveUdajeDoDatabazy($url, $skupina, $rok){
@@ -82,7 +83,7 @@ EOF;
 		}
 		$this->vlozAktualneZapasy($skupina, $rok, $parsovac->zapasy);
 		$this->vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
-		echo "<script>console.log('DBLoader:vlozNoveUdajeDoDatabazy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		//echo "<script>console.log('DBLoader:vlozNoveUdajeDoDatabazy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
 
 	public function aktualizujLigu($url, $skupina, $rok){
@@ -93,7 +94,7 @@ EOF;
 		}
 		$this->aktualizujZapasy($parsovac, $skupina, $rok);
 		$this->aktualizujTabulky($parsovac, $skupina, $rok);
-		echo "<script>console.log('DBLoader:aktualizujLigu(". $skupina.", ".$rok.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		//echo "<script>console.log('DBLoader:aktualizujLigu(". $skupina.", ".$rok.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
 		return true;
 	}
 
@@ -104,7 +105,7 @@ EOF;
 		if ($status == false) {
 			return null;
 		}
-		echo "<script>console.log('DBLoader:preparsuj() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		//echo "<script>console.log('DBLoader:preparsuj() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 		if (!isset($this->parsery[$url])){
 			$this->parsery[$url] = $parsovac;
 		}
@@ -114,18 +115,18 @@ EOF;
 	public function aktualizujZapasy($parsovac, $skupina, $rok){
 		$start = microtime(true);
 		$zapasy = $this->vratOdohraneZapasyLigyBezSkore($skupina, $rok);
-		echo "<script>console.log('zapasyToUpdate (". $rok . ", " . $skupina . ") = " . json_encode($zapasy) . "');</script>";
+		//echo "<script>console.log('zapasyToUpdate (". $rok . ", " . $skupina . ") = " . json_encode($zapasy) . "');</script>";
 		foreach ($zapasy as $zapas) {
 			$this->aktualizujDetailyZapasu($zapas, $parsovac->zapasy);
 		}
-		echo "<script>console.log('DBLoader:aktualizujZapasy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		//echo "<script>console.log('DBLoader:aktualizujZapasy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
 
 	public function aktualizujTabulky($parsovac, $skupina, $rok){
 		$start = microtime(true);
 		$this->vymazUdajeZTabuliek($skupina, $rok);
 		$this->vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
-		echo "<script>console.log('DBLoader:aktualizujTabulky() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		//echo "<script>console.log('DBLoader:aktualizujTabulky() exetution time = ". (microtime(true) - $start) ." sec');</script>";
 	}
 
 	public function ziskajUrlPodlaSkupinyARoku($skupina, $rok){
@@ -262,7 +263,7 @@ EOF;
 		$to      = 'lukasslaninka19@gmail.com';
 		$subject = 'FK Cinemax Parser error';
 		$message = '' .json_encode($zapas).' was not found in $parserZapasy.';
-		echo "<script>console.log('mail message = ". $message ."');</script>";
+		//echo "<script>console.log('mail message = ". $message ."');</script>";
 		$headers = 'From: fkcinemaxparser@parser.com' . "\r\n" .
 		    'Reply-To: fkcinemaxparser@parser.com' . "\r\n" .
 		    'X-Mailer: PHP/' . phpversion();
@@ -276,7 +277,7 @@ EOF;
 		    mail($to, $subject, $message, $headers);
 		}
 		catch (Exception $e) {
-		    echo "<script>console.log('Mail was not sent.');</script>";
+		    //echo "<script>console.log('Mail was not sent.');</script>";
 		}
 		restore_error_handler();
 		return array('zapas' => null, 'inversed' =>  false);

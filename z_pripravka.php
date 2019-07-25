@@ -4,8 +4,8 @@ include('funkcie.php');
 include('printers/tabulkyPrinter.php');
 include('printers/zapasyPrinter.php');
 hlavicka();
-$dbLoader = new dbLoader;
-$dbLoader->overDatumyNasledujucichNZapasov(6, "Pripravka");
+//$dbLoader = new dbLoader;
+//$dbLoader->overDatumyNasledujucichNZapasov(6, "Pripravka");
 ?>
 
     <!-- Page Content -->
@@ -54,7 +54,8 @@ $dbLoader->overDatumyNasledujucichNZapasov(6, "Pripravka");
     <!-- Bootstrap corev JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/ajaxZapasyNENI.js"></script>
+    <script type="text/javascript" src="js/services/overService.js"></script>
+    <script src="js/ajaxZapasy.js"></script>
 
   </body>
 

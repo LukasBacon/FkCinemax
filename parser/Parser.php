@@ -23,16 +23,13 @@ class Parser
     }
     @$html = file_get_html($url);
     if ($html == false) {
-       echo "<script>console.log('error');</script>";
+       //echo "<script>console.log('error');</script>";
        return false;
     }
     $this->body = $html->find('body', 0);
     $this->nacitajNazovLigyARocnik();
-    echo "<script>console.log('nacitajNazovLigyARocnik OK');</script>"; 
     $this->nacitajZapasy();
-    echo "<script>console.log('nacitajZapasy OK');</script>"; 
     $this->nacitajTabulku();
-    echo "<script>console.log('nacitajTabulku OK');</script>"; 
     return True;
   }
 

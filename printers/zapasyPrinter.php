@@ -7,8 +7,7 @@ function vratnasledujuciZapas($skupina){
     FROM Zapasy as z JOIN Ligy as l ON z.rok = l.rok AND z.skupina = l. skupina
 		WHERE datetime(z.datum) > datetime('now') AND z.skupina = "$skupina" AND 
 			(hostia LIKE '%FK CINEMAX Doľany%' OR domaci LIKE '%FK CINEMAX Doľany%')
-		ORDER BY z.datum asc
-		LIMIT 1;
+		ORDER BY z.datum asc LIMIT 1;
 EOF;
   $ret = $db->query($sql);
   $row = $ret->fetchArray(SQLITE3_ASSOC);
@@ -23,8 +22,7 @@ function vratPoslednyZapas($skupina){
     FROM Zapasy as z JOIN Ligy as l ON z.rok = l.rok AND z.skupina = l. skupina
 		WHERE datetime(z.datum) < datetime('now') AND z.skupina = "$skupina" AND 
 			(hostia LIKE '%FK CINEMAX Doľany%' OR domaci LIKE '%FK CINEMAX Doľany%')
-		ORDER BY z.datum desc
-		LIMIT 1;
+		ORDER BY z.datum desc LIMIT 1;
 EOF;
   $ret = $db->query($sql);
   $row = $ret->fetchArray(SQLITE3_ASSOC);
