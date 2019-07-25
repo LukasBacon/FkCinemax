@@ -65,7 +65,8 @@ hlavicka();
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/ajaxTabulky.js"></script>
+    <script src="js/services/overService.js"></script>
+    <script src="js/tabulky.js"></script>
   </body>
 
 </html>

@@ -55,7 +55,7 @@ hlavicka();
     <script src="vendor/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="js/services/overService.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/ajaxZapasy.js"></script>
+    <script src="js/zapasy.js"></script>
 
   </body>
 
