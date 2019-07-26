@@ -1,0 +1,111 @@
+#aWithoutTextHover:hover{
+	text-decoration:none;
+}
+#cardAlbum:hover{
+	transform: scale(1.02);
+	border:solid silver 1px;
+}
+#cardAlbum{
+	height: 350px;
+}
+#albumImg{
+	object-fit:cover; height:281px; width:100%;
+}
+#fotoImg{
+	object-fit:cover; height:200px; width:100%;
+}
+#fotoImg:hover{
+	transform: scale(1.02);	
+}
+.bg-lightGreen{
+	background-color: #b2f7c4;
+}
+.bg-black{
+	background-color: black;
+}
+#cancelImg{
+	position:absolute;
+	top:0;
+	right:0;
+	width: 40px;
+	height:auto;
+}
+#cancelImg:hover{
+	transform: scale(1.1);
+}
+#upravAlbumBtn:hover{
+	transform: scale(1.05);
+}
+#upravAlbumInput{
+	width:60%;
+}
+#novaFotkaPanel{
+	text-align: center;
+	border-bottom: solid #e9ecef 25px;
+	padding-bottom: 10px;
+	border-radius: 0.25rem;
+}
+#inputNewAlbum{
+	width: 90%;
+}
+#cancelImgPhoto{
+	position:absolute;
+	top:0;
+	right:0;
+	width: 20px;
+	height:auto;
+}
+#cancelImgPhoto:hover{
+	transform: scale(1.1);
+<<<<<<< HEAD
+}
+#scrollArrow{
+	position:fixed;
+	top:83%;
+	right:5%;
+}
+#scrollArrow:hover{
+	transform: scale(1.2);	
+}
+.myTooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.myTooltip .myTooltipText {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.myTooltip:hover .myTooltipText {
+    visibility: visible;
+}
+.buttonImg:hover{
+	transform: scale(1.1);		
+}
+#novyAlbumBtn{
+	background: url('../fotky/add.png') no-repeat;
+    cursor:pointer;
+    border: none;
+||||||| merged common ancestors
+=======
+}
+
+.diskusie-header:hover{
+	text-decoration: none;
+	color: #6166b5;
+>>>>>>> 7388e372f2148f5bc4cca104321d373496f230bf
+}

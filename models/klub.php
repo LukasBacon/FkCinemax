@@ -42,7 +42,7 @@ EOF;
     if(!$ret){
       echo $db->lastErrorMsg();
     }
-   $db->close();
+    $db->close();
   }
 
   public function vrat(){
@@ -52,6 +52,7 @@ EOF;
 EOF;    
     $ret = $db->query($sql);
     $row = $ret->fetchArray(SQLITE3_ASSOC);
+    $db->close();
     return $row;
   }
 }

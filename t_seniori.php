@@ -10,7 +10,7 @@ hlavicka();
       <!-- Page Heading/Breadcrumbs -->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="index.html">Domov</a>
+          <a href="index.php">Domov</a>
         </li>
         <li class="breadcrumb-item active">Tabuľka</li>
         <li class="breadcrumb-item active" id="nazovSkupiny">Seniori</li>
@@ -20,10 +20,10 @@ hlavicka();
         <div class="col-lg-9">
           <?php vypisNazovLigy('Seniori'); ?>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
           <form class="form-inline">
             <div class="form-group">
-              <label class="control-label" for="selectRok">Vyber rok:</label>
+              <label class="control-label ml-2" for="selectRok">Vyber rok:&nbsp;</label>
               <select class="form-control" id="selectRok">
                 <?php vratPrisluchajuceRokyKSkupine('Seniori'); ?>
               </select>
@@ -31,6 +31,7 @@ hlavicka();
           </form>
         </div>
       </div>
+      <br>
        <!-- /. row -->
 
       <div class="row">
@@ -55,13 +56,17 @@ hlavicka();
     </div>
     <!-- /.container -->
 
+    </div>
+    <!-- /.content -->
+
 
 <?php paticka();?>
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/ajaxTabulky.js"></script>
+    <script src="js/services/overService.js"></script>
+    <script src="js/tabulky.js"></script>
   </body>
 
 </html>

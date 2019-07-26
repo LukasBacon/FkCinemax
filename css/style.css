@@ -1,0 +1,259 @@
+html {
+	height: 100%;
+}
+body{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+footer{
+	flex-shrink: 0;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	position: relative !important;
+}
+
+.content{
+	margin-bottom: 30px;
+	flex: 1 0 auto;
+}
+#aWithoutTextHover:hover{
+	text-decoration:none;
+}
+#cardAlbum:hover{
+	transform: scale(1.02);
+	border:solid silver 1px;
+}
+#cardAlbum{
+	height: 350px;
+}
+#albumImg{
+	object-fit:cover; height:281px; width:100%;
+}
+#fotoImg{
+	object-fit:cover; height:200px; width:100%;
+}
+#fotoImg:hover{
+	transform: scale(1.02);	
+}
+.bg-lightGreen{
+	background-color: #b2f7c4;
+}
+.bg-black{
+	background-color: black;
+}
+#cancelImg{
+	position:absolute;
+	top:0;
+	right:0;
+	width: 40px;
+	height:auto;
+}
+#cancelImg:hover{
+	transform: scale(1.1);
+}
+#upravAlbumBtn:hover{
+	transform: scale(1.05);
+}
+#upravAlbumInput{
+	width:60%;
+}
+#novaFotkaPanel{
+	text-align: center;
+}
+#inputNewAlbum{
+	width: 90%;
+}
+#cancelImgPhoto{
+	position:absolute;
+	top:0;
+	right:0;
+	width: 30px;
+	height:auto;
+}
+#cancelImgPhoto:hover{
+	transform: scale(1.1)
+}
+#scrollArrow{
+	position:fixed;
+	top:83%;
+	right:5%;
+}
+#scrollArrow:hover{
+	transform: scale(1.2);	
+}
+.myTooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.myTooltip .myTooltipText {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.myTooltip:hover .myTooltipText {
+    visibility: visible;
+}
+.buttonImg{
+	cursor: pointer;
+}
+#novyAlbumBtn{
+	background: url('../fotky/add.png') no-repeat;
+    cursor:pointer;
+    border: none;
+}
+.diskusie-header:hover{
+	text-decoration: none;
+	/*color: black;*/
+}
+.diskusia-header a{
+	color:black;
+
+}
+.diskusia-header a:hover{
+	color:black;
+}
+#submitFoto{
+    background: url(../fotky/add.png) no-repeat center;
+    border: 0;
+    display: block;
+    width: 40px;
+    color: transparent;
+    cursor:pointer;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.rowHraci{
+}
+.hraciForm{
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+.hracFotoPanel{
+
+}
+.hracFoto{
+	object-fit:cover;
+	width:100%;
+	height:350px;
+}
+label{
+	margin-top:10px;
+	margin-bottom:2px;
+	font-weight: bold;
+}
+.withHover:hover{
+	transform: scale(1.1);	
+}
+.diskusie-header:hover {
+  background-color: #ffd95e;
+}
+#panel{
+	width:100%;
+	margin-top: 0;
+}
+#footerA{
+	color:#f0c844;
+}
+#footerA:hover{
+	text-decoration: none;
+	color:#f0c844;
+}
+
+.border-card{
+	border: solid 1px #28a745;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 0 0.2rem #98e6ab;
+}
+#pridaj-button-akt{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+}
+
+.nazovAlbumu{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.admin-card-footer{
+	display: inline-flex;
+}
+
+.upravAlbumInput{
+	overflow: hidden;
+}
+.spacer{
+	flex: 1 1 auto;
+}
+.hraci-border-line{
+	position:relative; 
+	border-bottom: solid 8px #e9ecef;
+	margin-bottom: 5px;
+}
+.hracFotoPanel{
+	margin-bottom: 1rem;	
+}
+#aktuality-title{
+	text-align: center;
+	visibility: hidden;
+	font-size: 0;
+	margin-bottom: 0;
+}
+@media (max-width: 991.98px) {
+	footer{
+		padding-top: 0.7rem !important;
+		padding-bottom: 0.7rem !important;
+		font-size: 0.7rem;
+	}
+	.hracFoto{
+		height: 130vw;
+	}
+	.hracFotoPanel{
+		margin-bottom: 0;
+	}
+	.hraci-border-line{
+		text-align: center;
+		padding-bottom: 10px;
+		border-bottom: solid 10px black;
+	}
+	.breadcrumb {
+		margin-top: 2rem;
+	}
+	#odkaz-futbalnet{
+		text-align: center;
+	}
+	.card-text{
+		margin-bottom: 0px;
+	}
+	.card-body-zapasy{
+		padding: 0;
+	}
+	#aktuality-title{
+		visibility: visible;
+		font-size: 1.75rem;
+		margin-bottom: 0.5rem;
+		background-color: black;
+		color: white;
+
+}

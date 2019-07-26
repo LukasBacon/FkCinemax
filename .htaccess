@@ -1,0 +1,8 @@
+AddDefaultCharset utf-8
+php_value upload_max_filesize 1000M
+php_value post_max_size 1001M
+php_value max_file_uploads 200
+<Files fkcinemax.db>
+Order Allow,Deny
+Deny from all
+</Files>

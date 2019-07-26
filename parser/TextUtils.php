@@ -13,6 +13,16 @@ class TextUtils{
     	}
     	return $resultString;
   	}
+
+    public static function nacitajSlovoPoZnak($text, $znak){
+      $i = 0;
+      $resultString = "";
+      while (TextUtils::retazecAt($text, $i) != $znak && $i < strlen($text)) {
+          $resultString .= TextUtils::retazecAt($text, $i);
+          $i++;
+      }
+      return $resultString;
+    }
 	
 	public static function preskocSlovo($text, $i){
   		while (TextUtils::retazecAt($text, $i) != " ") {

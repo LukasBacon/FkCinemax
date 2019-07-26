@@ -1,12 +1,18 @@
-PRIPRAVKA - teraz funguje tak, ze 3 kola sa hraju v jeden den. V subore zapasyPrinter.php vo funkciach 
-			vypisPosledneZapasy($skupiny) a vypisNasledujuceZapasy($skupiny) je podmienka, ktora zabezpeci,
-			aby sa kolo 1,2,3 = kolo 1, kolo 4,5,6 = 2
+PRIPRAVKA - teraz funguje tak, ze 3 kola sa hraju v jeden den. 
 
 /*TODO*/
 CO TREBA SPRAVIT KED SA PRIDA NOVA SKUPINA (Seniori, Pripravka...)
+Funkcie.php -> hlavicka() -> Zapasy, Tabulky, Hraci - pridat novy dropdown item.
+Vytvorit nove priecinky - {skupina}.php, t_{skupina}.php, z_{skupina}.php
+index.php -> vypisPosledneZapasy(), vypisNastedujuceZapasy(), pridaj do pola novu skupinu
+addPlayerServlet.php, editPhotoServlet.php -> url Fotky podla nazvu skupiny
+v priecinku fotky vytvorit priecinok s nazvom skupiny a pridat tam face.png
+v tabulke ligy vytvorit novy riadok
+do databazy treba vlozit hracov
 
-CO TREBA SPRAVIT KED PRESTUPIME DO INEJ LILGY
+CO TREBA SPRAVIT PO ROKU
+pridame novu ligu do tabulky Ligy
 
-CO TREBA SPRAVIT PO SEZONE??
-
-CO TREBA SPRAVIT PO ROKU 
+PARSER ZAPASOV NERIESI
+-ak sa zapas v kole prelozi na iny datum - updatne ho až v datum ktory mal povodne
+-ak sa zmeni nazov nejakeho klubu pocas sezony

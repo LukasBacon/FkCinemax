@@ -19,9 +19,14 @@ class Parser
 	public function parsuj($url)
  	{
     if ($url == '' | $url == null){
-      return null;
+      return false;
     }
-    $this->body = file_get_html($url)->find('body', 0);
+    @$html = file_get_html($url);
+    if ($html == false) {
+       //echo "<script>console.log('error');</script>";
+       return false;
+    }
+    $this->body = $html->find('body', 0);
     $this->nacitajNazovLigyARocnik();
     $this->nacitajZapasy();
     $this->nacitajTabulku();
@@ -66,7 +71,7 @@ class Parser
   private function nacitajAkrualneKolo($tr){
     $th = $tr->plaintext;
     $index = TextUtils::preskocSlovo($th, 0);
-    $this->aktualneKolo = (int)TextUtils::nacitajSlovoPoKoniec($th, $index);   
+    $this->aktualneKolo = (int)TextUtils::nacitajSlovoPoZnak($th, ".");   
   }
 
   private function nacitajZapas($tr){

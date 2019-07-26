@@ -1,13 +1,15 @@
 <?php
-$heslo="zelenajetrava"; //heslo admina
+$heslo="Matus18"; //heslo admina
 date_default_timezone_set('UTC');
 include('db.php');
 
-function hlavicka(){  ?>
+function hlavicka(){
+  ?>
   <!DOCTYPE html>
   <html lang="en">
 
   <head>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -17,11 +19,13 @@ function hlavicka(){  ?>
 
     <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="css/modern-business.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
   </head>
 
   <body>
     <!-- Navigacia -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="content">
+    <nav class="navbar fixed-top navbar-expand-xl navbar-dark bg-dark fixed-top">
       <div class="container">
         <img src="fotky/logo.png" class="img-logo">
         <a class="navbar-brand" href="index.php">FK CINEMAX DOĽANY </a>
@@ -55,10 +59,13 @@ function hlavicka(){  ?>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="foto.php">Fotogaléria</a>
+              <a class="nav-link" href="fotogaleria.php">Fotogaléria</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="forum.php">Fórum</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="partneri.php">Partneri</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="kontakt.php">Kontakt</a>
@@ -71,14 +78,13 @@ function hlavicka(){  ?>
 }
 
 function paticka(){ ?>
-  <p style="margin-bottom: 100px;"></p>
-  <footer class="py-3 bg-dark">
+  <footer class="bg-dark">
     <div class="container">
       <p class="m-0 text-center text-white">
-       <a href="admin.php">Copyright &copy; Gabriela Slaninková 2018</a>
+       <a href="admin.php" id="footerA">Copyright &copy; Gabriela Slaninková & Lukáš Slaninka 2019</a>
       </p>
     </div>
-  </footer> 
+  </footer>
 <?php
 }
 
@@ -95,158 +101,107 @@ function vypisDatumACas($datetime){
   return $datum . ' ' . $cas;
 }
 
-function vypis_hracov($skupina){
+function vytvorDiskusiu($meno, $nazov, $popis){
   $db = napoj_db();
   $sql =<<<EOF
-    SELECT * FROM Hraci WHERE skupina = "$skupina" ORDER BY priezvisko;
+    SELECT count() as count FROM Diskusie WHERE nazov="$nazov" AND autor="$meno";
 EOF;
   $ret = $db->query($sql);
-  $poc = 0;
-  while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
-    //nalavo
-    if($poc % 2 == 0){
-      echo '<div class="row">';
-      echo '<div class="col-md-3">';
-      echo '<img class="img-fluid rounded mb-3 mb-md-0" src="'.$row['url'].'">';
-      echo '</div>';
-      echo '<div class="col-md-3">';
-      echo '<h3>'.$row['meno'].' '.$row['priezvisko'].'</h3>';
-      echo $row['typ_hraca'].'<br>'.$row['rok_narodenia'].'<br>'.$row['kluby'];
-      echo '</div>';
-      $poc++;
-    }
-    //napravo
-    else{
-      echo '<div class="col-md-3">';
-      echo '<img class="img-fluid rounded mb-3 mb-md-0" src="'.$row['url'].'">';
-      echo '</div>';
-      echo '<div class="col-md-3">';
-      echo '<h3>'.$row['meno'].' '.$row['priezvisko'].'</h3>';
-      echo $row['typ_hraca'].'<br>'.$row['rok_narodenia'].'<br>'.$row['kluby'];
-      echo '</div></div><hr>';
-      $poc++;
-    }
+  $row = $ret->fetchArray(SQLITE3_ASSOC);
+  $pocet = $row["count"];
+  if ($pocet != 0){
+    $db->close();
+    return;
   }
-  //ak je posledny nalavo
-  if(($poc % 2) > 0){
-    echo '<div class="col-md-6"></div></div><hr>';
-  }
+
+  $sql =<<<EOF
+    INSERT INTO Diskusie (nazov, datum_disk, popis, autor) VALUES ("$nazov", date('now'), "$popis", "$meno");
+EOF;
+  $db->query($sql);
   $db->close();
 }
 
-function vypis_hracov_admin($skupina){
+function vytvorAktualitu($nadpis, $text){
+  $datum = date('Y-m-d');
+  $cas = date('H:i:s');
   $db = napoj_db();
+
   $sql =<<<EOF
-    SELECT * FROM Hraci WHERE skupina = "$skupina" ORDER BY priezvisko;
+    SELECT count() as count FROM Aktuality WHERE nadpis="$nadpis";
 EOF;
   $ret = $db->query($sql);
-  $poc = 0;
-  while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
-    //nalavo
-    if($poc % 2 == 0){
-      echo '<div class="row">';
-      echo '<div class="col-md-3">';
-      echo '<img class="img-fluid rounded mb-3 mb-md-0" src="'.$row['url'].'">';
-      echo '</div>';
-      echo '<div class="col-md-3">';
-      echo '<h3>'.$row['meno'].' '.$row['priezvisko'].'</h3>';
-      echo $row['typ_hraca'].'<br>'.$row['rok_narodenia'].'<br>'.$row['kluby'].'<br>';
-      echo '<form method="post">';
-      echo '<input type="submit" value="Vymaž hráča" name="vymaz'.$row['id'].'" class="btn btn-admin"><br>';
-      echo '<input type="submit" value="Uprav hráča" name="uprav'.$row['id'].'" class="btn btn-admin"><br>';
-      echo '</form>';
-      echo '<input type="submit" value="Nahraj fotku" name="foto'.$row['id'].'" class="btn btn-admin"><br>';
-      echo '</div>';
-      $poc++;
-    }
-    //napravo
-    else{
-      echo '<div class="col-md-3">';
-      echo '<img class="img-fluid rounded mb-3 mb-md-0" src="'.$row['url'].'">';
-      echo '</div>';
-      echo '<div class="col-md-3">';
-      echo '<h3>'.$row['meno'].' '.$row['priezvisko'].'</h3>';
-      echo $row['typ_hraca'].'<br>'.$row['rok_narodenia'].'<br>'.$row['kluby'].'<br>';
-      echo '<form method="post">';
-      echo '<input type="submit" value="Vymaž hráča" name="vymaz'.$row['id'].'" class="btn btn-admin"><br>';
-      echo '<input type="submit" value="Uprav hráča" name="uprav'.$row['id'].'" class="btn btn-admin"><br>';
-      echo '</form>';
-      echo '<input type="submit" value="Nahraj fotku" name="foto'.$row['id'].'" class="btn btn-admin"><br>';
-      echo '</div></div><hr>';
-      $poc++;
-    }
+  $row = $ret->fetchArray(SQLITE3_ASSOC);
+  $pocet = $row["count"];
+  if ($pocet != 0){
+    $db->close();
+    return;
   }
-  //posledny je nalavo
-  if(($poc % 2) > 0){
-    echo '<div class="col-md-6"></div></div><hr>';
-  }
+  $sql =<<<EOF
+  INSERT INTO Aktuality (nadpis, text, datum, cas) VALUES ("$nadpis", "$text", "$datum", "$cas");
+EOF;
+  $db->query($sql);
   $db->close();
 }
 
-function vypis_diskusie(){
-  $db = napoj_db();
-  $sql =<<<EOF
-    SELECT * FROM Diskusie ORDER BY datum_disk DESC;
-EOF;
-  $ret = $db->query($sql);
-  while($row = $ret->fetchArray(SQLITE3_ASSOC) ){?>
-    <div class="card my-4">
-      <div class="card-header">
-        <strong style="font-size: 1.25rem;"><?php echo $row['nazov']; ?></strong>
-        <strong style="float:right;">&#9660;</strong> <!-- opacna je 9650-->
-      </div>
-        <div class="card-body">
-          <h5 class="mt-0"><?php echo $row['autor']; ?></h5>
-                <?php echo $row['popis']; ?>
-                <!--
-                  KOMENTARE
-                <div class="card my-4">
-                  <div class="card-body">
-                    <h5 class="mt-0">Anonym</h5>
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                  </div>
-                  <div class="card-footer">27.02.2018</div>
-                </div>
+function replaceSpecialChars($string){
+  $map1 = array('Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E',
+                            'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U',
+                            'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c',
+                            'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o',
+                            'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', ' ' => '_');
+  $map2 = array('á'=>'a', 'ä'=>'a', 'č'=>'c', 'é'=>'e', 'í'=>'i','ľ'=>'l', 'ň'=>'n', 'ó'=>'o', 'ô'=>'o', 'ŕ'=>'r', 'š'=>'s', 'ś'=>'s', 'ť'=>'t', 'ú'=>'u', 'ý'=>'             y', 'ž'=>'z',
+                'Á'=>'A', 'Ä'=>'A', 'Č'=>'C', 'É'=>'E', 'Í'=>'I','Ľ'=>'L', 'Ň'=>'N', 'Ó'=>'O', 'Ô'=>'O', 'Ŕ'=>'R', 'Š'=>'S', 'Ś'=>'S', 'Ť'=>'T', 'Ú'=>'U', 'Ý'=>'Y', 'Ž'=>'Z', '/'=>'_', '\\' => '_', ':' => '_', '*' => '_', '?' => '_', '<' => '_', '>' => '_', '"' => '_', '|' => '_');
+  $map = $map1 + $map2;
+  return strtr($string, $map);
+}
 
-                <div class="card my-4">
-                  <div class="card-body">
-                    <h5 class="mt-0">Stefan</h5>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                  </div>
-                  <div class="card-footer">27.02.2018</div>
-                </div>
-  
-                <div class="card my-4">
-                  <h5 class="card-header-match">Pridaj komentár</h5>
-                  <div class="card-body">
-                    <form novalidate>
-                      <div class="control-group form-group">
-                        <div class="controls">
-                          <label>Meno:</label>
-                          <input type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
-                          <p class="help-block"></p>
-                        </div>
-                      </div>
-                      <div class="control-group form-group">
-                        <div class="controls">
-                          <label>Komentár:</label>
-                          <textarea rows="4" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
-                        </div>
-                      </div>
-                      <div id="success"></div>
-                      <button type="submit" class="btn btn-primary" id="sendMessageButton">Pridaj</button>
-                    </form>
-                  </div>
-                </div>
-                --> 
+function replaceApostrophes($string){
+  $map = array('\''=> '\'\'', '"'=>'""');
+  return strtr($string, $map);
+}
 
-
-              </div>
-              <div class="card-footer"><?php echo vypisDatum($row['datum_disk']); ?></div>
-            </div>
-      <?php
+function compressImage($pathToImage){
+  list($width, $height) = getimagesize($pathToImage);
+  if ($width > $height){
+    resizeImage($pathToImage, $pathToImage, 1000, 0, 100);
   }
+  else{
+    resizeImage($pathToImage, $pathToImage, 0, 1000, 100);
+  }
+}
 
-  $db->close();  
+function resizeImage($sourceImage, $targetImage, $maxWidth, $maxHeight, $quality = 80){
+    // Obtain image from given source file.
+    if (!$image = @imagecreatefromjpeg($sourceImage))
+    {
+        return false;
+    }
+    // Get dimensions of source image.
+    list($origWidth, $origHeight) = getimagesize($sourceImage);
+    if ($maxWidth == 0)
+    {
+        $maxWidth  = $origWidth;
+    }
+
+    if ($maxHeight == 0)
+    {
+        $maxHeight = $origHeight;
+    }
+    // Calculate ratio of desired maximum sizes and original sizes.
+    $widthRatio = $maxWidth / $origWidth;
+    $heightRatio = $maxHeight / $origHeight;
+    // Ratio used for calculating new image dimensions.
+    $ratio = min($widthRatio, $heightRatio);
+    // Calculate new image dimensions.
+    $newWidth  = (int)$origWidth  * $ratio;
+    $newHeight = (int)$origHeight * $ratio;
+    // Create final image with new dimensions.
+    $newImage = imagecreatetruecolor($newWidth, $newHeight);
+    imagecopyresampled($newImage, $image, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+    imagejpeg($newImage, $targetImage, $quality);
+    // Free up the memory.
+    imagedestroy($image);
+    imagedestroy($newImage);
+    return true;
 }
 ?>
