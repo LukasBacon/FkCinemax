@@ -5,6 +5,9 @@ $(document).ready(function(){
 	$("#selectRokZapasy").change(function() {
 		var rok = $("#selectRokZapasy").val();
 		var skupina = $("#nazovSkupiny").text();
+		if(skupina === 'Prípravka'){
+			skupina = 'Pripravka';
+		}
 		var divZapasy = $("#zapasy");
   	$.ajax({	
 			url:"servlets/getSessionServlet.php",
@@ -88,6 +91,7 @@ $(document).ready(function(){
 	}
 
 	function vypis(rok,skupina, divZapasy){
+		console.log()
 		$.ajax({
 			url:"servlets/zapasyServlet.php",
 			type:"post",

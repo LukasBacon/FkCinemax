@@ -3,6 +3,10 @@ $(document).ready(function(){
 		var table = $("#tabulkaBody");
 		var rok = $("#selectRok").val();
 		var skupina = $("#nazovSkupiny").text();
+		if(skupina === 'Prípravka'){
+			skupina = 'Pripravka';
+		}
+		console.log(table, rok, skupina);
 		$.ajax({
 			url:"servlets/tabulkaServlet.php",
 			type:"post",
