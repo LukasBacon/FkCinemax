@@ -41,28 +41,43 @@ function aktualizujPosledneANaslujuceZapasy() {
 
     function printMatchesForGroup(skupina, data, type){
         const info = data[type];
-        console.log(info);
-        const skoreD = info["skoreD"] === null ? '' : info["skoreD"];
-        const skoreH = info["skoreH"] === null ? '' : info["skoreH"];
         const poznamka = info["poznamka"] === null ? '' : info["poznamka"];
         let text = '';
         text += '<li class="list-group-item">';
         text += '<p class="card-text"><strong>' + skupina + '</strong><br>';
         text += 'Kolo ' + info["kolo"] + ' - ' + vypisDatumACas(info["datum"]) + '<br>';
-        text += info["domaci"] + ' '  + '<strong>' + skoreD + ':' + skoreH + '</strong>' + ' ' + info["hostia"] + '<br>';
+        text += info["domaci"] + ' ';
+        text += vypisSkore(info);
+        text += ' ' + info["hostia"] + '<br>';
         text += '<small>' + poznamka + '</small></p>';
         text += '</li>';
         return text;
     }
 
+    function vypisSkore(data){
+        const skoreD = data["skoreD"] === null ? '' : data["skoreD"];
+        const skoreH = data["skoreH"] === null ? '' : data["skoreH"];
+        let score = data["skoreD"] === null ? '' : '<strong>';
+        score += skoreD;
+        score += ':';
+        score += skoreH;
+        score += (data["skoreD"] === null ? '' : '</strong>');
+
+        return score;
+    }
+
     function vypisDatumACas(datetime){
         const date = new Date(datetime);
         const year = date.getFullYear();
-        const month = date.getMonth();
+        const month = date.getMonth() + 1;
         const day = date.getDate();
-        const hours = (date.getHours() < 10 ? '0' : '') + date.getHours();
-        const minutes = (date.getMinutes() < 10 ?'0':'') + date.getMinutes();
-        return day + '.' + month + '.' + year + ' ' + hours + ':' + minutes;
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        return setTwoDigits(day) + '.' + setTwoDigits(month) + '.' + year + ' ' + setTwoDigits(hours) + ':' + setTwoDigits(minutes);
+    }
+
+    function setTwoDigits(num){
+        return ((num) < 10 ? '0' : '') + num;
     }
 }
 
