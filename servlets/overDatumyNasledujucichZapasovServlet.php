@@ -4,6 +4,6 @@ include('../dbLoader.php');
 
 $dbLoader = new dbLoader;
 
-echo json_encode($dbLoader->over());
+echo json_encode($dbLoader->overDatumyNasledujucichNZapasov(10, "Seniori"));
 
 ?>

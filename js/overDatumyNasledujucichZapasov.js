@@ -1,13 +1,13 @@
 /**
- * Jednoduchy over sa da do suborov, kde nie je treba po overeni aktualizovat udaje.
+ * Nalinkuje sa na subory, v ktorych pri inicializacii zbehne overenie nasledujucich zapasov
  */
 $(document).ready(function(){
-    jednoduchyOver();
+    overDatumyNasledujucichZapasov();
 });
 
-function jednoduchyOver(){
+function overDatumyNasledujucichZapasov(){
     $.ajax({
-        url:"servlets/overServlet.php",
+        url:"servlets/overDatumyNasledujucichZapasovServlet.php",
         type:"get",
         success: function(data){
             const response = JSON.parse(data);

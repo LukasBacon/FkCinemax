@@ -10,6 +10,7 @@ $(document).ready(function () {
     scrollujNaAktualneKolo();
 
     $("#selectRokZapasy").change(function () {
+        rok = $("#selectRokZapasy").val();
         vypisZapasov(rok, skupina);
         $.ajax({
             url: "servlets/nazovLigyServlet.php",

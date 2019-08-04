@@ -7,6 +7,10 @@ function over(functionOnSuccess){
         url:"servlets/overServlet.php",
         type:"get",
         success: function(data){
+            const response = JSON.parse(data);
+            if (response.enableConsoleLog) {
+                console.log(response);
+            }
             functionOnSuccess();
         }
     });

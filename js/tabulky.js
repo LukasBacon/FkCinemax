@@ -8,6 +8,7 @@ $(document).ready(function(){
 	over(() => vypisTabulku(rok, skupina));
 
 	$("#selectRok").change(function() {
+		rok = $("#selectRok").val();
 		vypisTabulku(rok, skupina);
 	});
 

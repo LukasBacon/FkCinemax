@@ -3,8 +3,6 @@ include('funkcie.php');
 include('printers/zapasyPrinter.php');
 session_start();
 hlavicka();
-//$dbLoader = new dbLoader;
-//$dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
 ?>
     <!-- hlavicka - pohyblive obrazky -->
     <header>
@@ -136,6 +134,7 @@ hlavicka();
     <script src="vendor/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="js/aktuality.js"></script>
     <script type="text/javascript" src="js/services/overService.js"></script>
+    <script type="text/javascript" src="js/overDatumyNasledujucichZapasov.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/responsive-paginate.js"></script>
     <script type="text/javascript">

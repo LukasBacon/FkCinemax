@@ -7,16 +7,20 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 /*nacita zapasy a tabulku z futbalnetu a naplni databazu*/
 class dbLoader{
 
-	public  $parsery = array();
+	public $parsery = array();
+	private $response;
 
 	/*overi ci treba aktualizovat tabulku zapasov a tabulku tabuliek*/
 	public function over(){
+		$this->response = new OverResponse;
+		$properties = parse_ini_file("properties.ini");
+		$this->response->setEnableConsoleLog($properties["enableConsoleLog"]);
 		$start = microtime(true);
-		//echo "<script>console.log('over() started');</script>";
+		$this->response->addMessage("over() started");
 		$poleUpdata = $this->najdiLigySNaposledyOdohranymiZapasmiBezSkore();
 		$poleInsert = $this->vratSkupinyARokyBezZapasov();
-		//echo "<script>console.log('toUpdate = " . json_encode($poleUpdata) .  "');</script>";
-		//echo "<script>console.log('toInsert = " . json_encode($poleInsert) .  "');</script>";
+		$this->response->addMessage("toUpdate = " . json_encode($poleUpdata));
+		$this->response->addMessage("toInsert = " . json_encode($poleInsert));
 		foreach ($poleUpdata as $dvojica) {
 			$skupina = $dvojica['skupina'];
 			$rok = $dvojica['rok'];
@@ -32,10 +36,14 @@ class dbLoader{
 			$url = $this->ziskajUrlPodlaSkupinyARoku($skupina, $rok);
 			$this->vlozNoveUdajeDoDatabazy($url, $skupina, $rok);
 		}
-		//echo "<script>console.log('DBLoader:over() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		$this->response->addMessage("over() exetution time = ". (microtime(true) - $start) . " sec");
+		return $this->response;
 	}
 
 	public function overDatumyNasledujucichNZapasov($n, $skupina){
+		$response = new OverResponse;
+		$properties = parse_ini_file("properties.ini");
+		$response->setEnableConsoleLog($properties["enableConsoleLog"]);
 		$start = microtime(true);
 		$db = napoj_db();
 	    $sql1 =<<<EOF
@@ -60,52 +68,53 @@ EOF;
 	    		$parser = $this->parsery[$url];
 	    	}
 	    	else{
-	    		$parser = $this->preparsujFutbalnet($url);
+	    		$parser = $this->preparsujFutbalnet($url, $response);
 	    		if ($parser == null) {
 	    			return;
 	    		}
 	    	}
 	    	$parserZapas = $this->najdiRovnakyZapasVParserZapasoch($zapas, $parser->zapasy)["zapas"];
-	    	//echo "<script>console.log('overenie = ". $zapas["datum"] . ", ". $parserZapas->datum ."');</script>";
+			$response->addMessage("overenie = ". $zapas["datum"] . ", ". $parserZapas->datum);
 	    	if ($zapas["datum"] != $parserZapas->datum){
-	    		//echo "<script>console.log('zle ".$zapas["id"] . ", ". $parserZapas->datum . "');</script>";
+	    		$response->addMessage("zle ".$zapas["id"] . ", ". $parserZapas->datum);
 	    		$this->updatniDatumZapasuSId($zapas["id"], $parserZapas->datum);
 	    	}
 	    }
-	    //echo "<script>console.log('DBLoader:overDatumyNasledujucichNZapasov(".$n.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		$response->addMessage("overDatumyNasledujucichNZapasov(".$n.") exetution time = ". (microtime(true) - $start) ." sec");
+	    return $response;
 	}
 
 	public function vlozNoveUdajeDoDatabazy($url, $skupina, $rok){
 		$start = microtime(true);
-		$parsovac = $this->preparsujFutbalnet($url);
+		$parsovac = $this->preparsujFutbalnet($url, $this->response);
 		if ($parsovac == null) {
 			return;
 		}
 		$this->vlozAktualneZapasy($skupina, $rok, $parsovac->zapasy);
 		$this->vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
-		//echo "<script>console.log('DBLoader:vlozNoveUdajeDoDatabazy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		$this->response->addMessage("vlozNoveUdajeDoDatabazy() exetution time = ". (microtime(true) - $start) ." sec");
 	}
 
 	public function aktualizujLigu($url, $skupina, $rok){
 		$start = microtime(true);
-		$parsovac = $this->preparsujFutbalnet($url);
+		$parsovac = $this->preparsujFutbalnet($url, $this->response);
 		if ($parsovac == null) {
 			return false;
 		}
 		$this->aktualizujZapasy($parsovac, $skupina, $rok);
 		$this->aktualizujTabulky($parsovac, $skupina, $rok);
-		//echo "<script>console.log('DBLoader:aktualizujLigu(". $skupina.", ".$rok.") exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		$this->response->addMessage("aktualizujLigu(". $skupina.", ".$rok.") exetution time = ". (microtime(true) - $start) ." sec");
 		return true;
 	}
 
-	public function preparsujFutbalnet($url){
+	public function preparsujFutbalnet($url, $response){
 		$start = microtime(true);
 		$parsovac = new Parser;
 		$status = $parsovac->parsuj($url);
 		if ($status == false) {
 			return null;
 		}
-		//echo "<script>console.log('DBLoader:preparsuj() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		$response->addMessage("preparsuj() exetution time = ". (microtime(true) - $start) ." sec");
 		if (!isset($this->parsery[$url])){
 			$this->parsery[$url] = $parsovac;
 		}
@@ -115,18 +124,18 @@ EOF;
 	public function aktualizujZapasy($parsovac, $skupina, $rok){
 		$start = microtime(true);
 		$zapasy = $this->vratOdohraneZapasyLigyBezSkore($skupina, $rok);
-		//echo "<script>console.log('zapasyToUpdate (". $rok . ", " . $skupina . ") = " . json_encode($zapasy) . "');</script>";
+		$this->response->addMessage("zapasyToUpdate (". $rok . ", " . $skupina . ") = " . json_encode($zapasy));
 		foreach ($zapasy as $zapas) {
 			$this->aktualizujDetailyZapasu($zapas, $parsovac->zapasy);
 		}
-		//echo "<script>console.log('DBLoader:aktualizujZapasy() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		$this->response->addMessage("aktualizujZapasy() exetution time = ". (microtime(true) - $start) ." sec");
 	}
 
 	public function aktualizujTabulky($parsovac, $skupina, $rok){
 		$start = microtime(true);
 		$this->vymazUdajeZTabuliek($skupina, $rok);
 		$this->vlozAktualneDataTabulky($skupina, $rok, $parsovac->tabulka);
-		//echo "<script>console.log('DBLoader:aktualizujTabulky() exetution time = ". (microtime(true) - $start) ." sec');</script>";
+		$this->response->addMessage("aktualizujTabulky() exetution time = ". (microtime(true) - $start) ." sec");
 	}
 
 	public function ziskajUrlPodlaSkupinyARoku($skupina, $rok){
@@ -285,7 +294,6 @@ EOF;
 
 	public function najdiLigySNaposledyOdohranymiZapasmiBezSkore(){
 		$db = napoj_db();
-		$aktualnyRocnik = date("Y");
 	    $sql =<<<EOF
 	    SELECT DISTINCT skupina, rok FROM Zapasy WHERE 
 	    						datum < datetime('now') 
@@ -347,4 +355,21 @@ EOF;
 		$db->close();
 	}
 }
+
+class OverResponse{
+
+	public $messages = array();
+	public $enableConsoleLog;
+
+	public function addMessage($message) {
+		$this->messages[] = $message;
+	}
+
+	public function setEnableConsoleLog($enableConsoleLog) {
+		$this->enableConsoleLog = $enableConsoleLog;
+	}
+
+}
+
+
 ?>

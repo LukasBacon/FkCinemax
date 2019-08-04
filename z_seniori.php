@@ -4,8 +4,6 @@ include('funkcie.php');
 include('printers/tabulkyPrinter.php');
 include('printers/zapasyPrinter.php');
 hlavicka();
-//$dbLoader = new dbLoader;
-//$dbLoader->overDatumyNasledujucichNZapasov(2, "Seniori");
 ?>
 
     <!-- Page Content -->
@@ -54,6 +52,7 @@ hlavicka();
     <!-- Bootstrap corev JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="js/services/overService.js"></script>
+    <script type="text/javascript" src="js/overDatumyNasledujucichZapasov.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="js/zapasy.js"></script>
 
