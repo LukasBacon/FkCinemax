@@ -4,6 +4,7 @@ date_default_timezone_set('UTC');
 include('db.php');
 
 function hlavicka(){
+  $skupiny = dajSkupiny();
   ?>
   <!DOCTYPE html>
   <html lang="en">
@@ -38,24 +39,33 @@ function hlavicka(){
               <a class="nav-link" href="onas.php">O nás</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Zápasy </a>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Zápasy</a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="z_seniori.php">Seniori</a>
-                <a class="dropdown-item" href="z_pripravka.php">Prípravka</a>
+                <?php
+                foreach ($skupiny as $skupina){
+                    echo '<a class="dropdown-item" href="zapasy.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                }
+                ?>
               </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tabuľky</a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="t_seniori.php">Seniori</a>
-                <a class="dropdown-item" href="t_pripravka.php">Prípravka</a>
+                <?php
+                foreach ($skupiny as $skupina){
+                    echo '<a class="dropdown-item" href="tabulky.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                }
+                ?>
               </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hráči</a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="seniori.php">Seniori</a>
-                <a class="dropdown-item" href="pripravka.php">Prípravka</a>
+                <?php
+                foreach ($skupiny as $skupina){
+                  echo '<a class="dropdown-item" href="hraci.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                }
+                ?>
               </div>
             </li>
             <li class="nav-item">
@@ -119,6 +129,41 @@ EOF;
 EOF;
   $db->query($sql);
   $db->close();
+}
+
+function dajSkupiny() {
+    $db = napoj_db();
+    $sql =<<<EOF
+        SELECT * FROM Skupiny;
+EOF;
+    $ret = $db->query($sql);
+    $pole = array();
+    while ($row = $ret->fetchArray(SQLITE3_ASSOC)){
+        $pole[] = $row;
+    }
+    $db->close();
+    return $pole;
+}
+
+function dajDefaultnuSkupinu() {
+    $db = napoj_db();
+    $sql =<<<EOF
+        SELECT * FROM Skupiny ORDER BY id ASC LIMIT 1;
+EOF;
+    $ret = $db->query($sql);
+    $db->close();
+    return $ret->fetchArray(SQLITE3_ASSOC);
+}
+
+function dajSkupinuPodlaKodu($kod) {
+    $db = napoj_db();
+    $sql =<<<EOF
+        SELECT * FROM Skupiny WHERE kod="$kod";
+EOF;
+    $ret = $db->query($sql);
+    $res = $ret->fetchArray(SQLITE3_ASSOC);
+    $db->close();
+    return $res;
 }
 
 function vytvorAktualitu($nadpis, $text){

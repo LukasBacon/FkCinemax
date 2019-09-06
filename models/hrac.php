@@ -15,7 +15,7 @@ class HRAC{
 
   public function nacitaj($ID,$MENO,$PRIEZVISKO,$ROK_NARODENIA,$SKUPINA,$TYP_HRACA,$URL,$KLUBY){
     $this->ID = $ID;
-    $this->MENO = $MENO
+    $this->MENO = $MENO;
     $this->PRIEZVISKO = $PRIEZVISKO;
     $this->ROK_NARODENIA = $ROK_NARODENIA;
     $this->SKUPINA = $SKUPINA;
@@ -27,7 +27,7 @@ class HRAC{
     public function vytvor($meno, $priezvisko, $rok_narodenia, $skupina, $typ_hraca, $url, $kluby){
     $db = napoj_db();
     $sql =<<<EOF
-      INSERT INTO Hraci (meno, priezvisko, rok_narodenia, skupina, typ_hraca, url, kluby)
+      INSERT INTO Hraci (meno, priezvisko, rok_narodenia, id_skupiny, typ_hraca, url, kluby)
       VALUES ("$meno", "$priezvisko", "$rok_narodenia", "$skupina", "$typ_hraca", "$url", "$kluby");
 EOF;
     $ret = $db->exec($sql);

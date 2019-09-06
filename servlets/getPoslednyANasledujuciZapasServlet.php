@@ -9,9 +9,11 @@ $db = napoj_db();
 
 foreach ($skupiny as $skupina) {
     $sql = <<<EOF
-    SELECT z.datum, z.rok, z.domaci, z.hostia, z.skoreD, z.skoreH, z.kolo, z.skupina, l.nazov, z.poznamka 
-    FROM Zapasy as z JOIN Ligy as l ON z.rok = l.rok AND z.skupina = l. skupina
-		WHERE datetime(z.datum) < datetime('now') AND z.skupina = 'Seniori' AND 
+    SELECT z.datum, z.rok, z.domaci, z.hostia, z.skoreD, z.skoreH, z.kolo, s.kod, l.nazov, z.poznamka 
+    FROM Zapasy as z 
+    JOIN Skupiny as s ON s.id = z.id_skupiny 
+    JOIN Ligy as l ON z.rok = l.rok AND z.id_skupiny = l.id_skupiny
+		WHERE datetime(z.datum) < datetime('now') AND s.kod = '$skupina' AND 
 			(hostia LIKE '%FK CINEMAX Doľany%' OR domaci LIKE '%FK CINEMAX Doľany%')
 		ORDER BY z.datum desc LIMIT 1;
 EOF;
@@ -19,9 +21,11 @@ EOF;
     $posledny = $ret->fetchArray(SQLITE3_ASSOC);
 
     $sql = <<<EOF
-    SELECT z.datum, z.rok, z.domaci, z.hostia, z.skoreD, z.skoreH, z.kolo, z.skupina, l.nazov, z.poznamka 
-    FROM Zapasy as z JOIN Ligy as l ON z.rok = l.rok AND z.skupina = l. skupina
-		WHERE datetime(z.datum) > datetime('now') AND z.skupina = 'Seniori' AND 
+    SELECT z.datum, z.rok, z.domaci, z.hostia, z.skoreD, z.skoreH, z.kolo, s.kod, l.nazov, z.poznamka 
+    FROM Zapasy as z 
+    JOIN Skupiny as s ON s.id = z.id_skupiny
+    JOIN Ligy as l ON z.rok = l.rok AND z.id_skupiny = l.id_skupiny
+		WHERE datetime(z.datum) > datetime('now') AND s.kod = '$skupina' AND 
 			(hostia LIKE '%FK CINEMAX Doľany%' OR domaci LIKE '%FK CINEMAX Doľany%')
 		ORDER BY z.datum asc LIMIT 1
 EOF;

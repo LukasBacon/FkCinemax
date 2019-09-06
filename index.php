@@ -3,6 +3,7 @@ include('funkcie.php');
 include('printers/zapasyPrinter.php');
 session_start();
 hlavicka();
+$skupiny = dajSkupiny();
 ?>
     <!-- hlavicka - pohyblive obrazky -->
     <header>
@@ -53,10 +54,11 @@ hlavicka();
             <h5 class="card-header-match">Posledné zápasy</h5>
             <div class="card-body">
               <ul class="list-group list-group-flush">
-                <?php vypisPosledneZapasy(array('Seniori')); ?>
-                <li class="list-group-item">
-                  <a class="btn btn-primary" href="z_pripravka.php">Zápasy prípravky</a>
-                </li>
+                  <?php
+                  foreach ($skupiny as $skupina) {
+                      vypisPosledneZapasy($skupina);
+                  }
+                  ?>
               </ul>
             </div>
           </div>
@@ -64,10 +66,11 @@ hlavicka();
             <h5 class="card-header-match">Nasledujúce zápasy</h5>
             <div class="card-body">
               <ul class="list-group list-group-flush">
-                <?php vypisNasledujuceZapasy(array('Seniori')); ?>
-                <li class="list-group-item">
-                  <a class="btn btn-primary" href="z_pripravka.php">Zápasy prípravky</a>
-                </li>
+                  <?php
+                  foreach ($skupiny as $skupina) {
+                      vypisNasledujuceZapasy($skupina);
+                  }
+                  ?>
               </ul>
             </div>
           </div>

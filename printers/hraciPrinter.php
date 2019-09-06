@@ -3,7 +3,9 @@
 function vypis_hracov($skupina){
   $db = napoj_db();
   $sql =<<<EOF
-    SELECT * FROM Hraci WHERE skupina = "$skupina" ORDER BY priezvisko;
+    SELECT h.*, s.nazov as skupina FROM Hraci as h 
+    JOIN Skupiny as s ON h.id_skupiny=s.id
+    WHERE s.kod = "$skupina" ORDER BY h.priezvisko;
 EOF;
   $ret = $db->query($sql);
   $poc = 0;
@@ -31,7 +33,9 @@ EOF;
 function vypis_hracov_admin($skupina){
   $db = napoj_db();
   $sql =<<<EOF
-    SELECT * FROM Hraci WHERE skupina = "$skupina" ORDER BY priezvisko;
+    SELECT h.*, s.nazov as skupina FROM Hraci as h 
+    JOIN Skupiny as s ON h.id_skupiny=s.id
+    WHERE s.kod = "$skupina" ORDER BY h.priezvisko;
 EOF;
   $ret = $db->query($sql);
   $poc = 0;
@@ -103,7 +107,7 @@ function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narod
 }
 
 function vypis_pridaj_noveho($skupina){
-  echo '<input type="hidden" name="skupina" id="skupinaHidden" value="'.$skupina.'">';
+  echo '<input type="hidden" name="skupina" id="skupinaHidden" value="'.$skupina["kod"].'">';
 	echo '<div class="row m-0">';
     echo '<div class="col-sm-4"></div>';
 		echo '<div class="col-sm-4" id="novaFotkaPanel">';
@@ -121,7 +125,8 @@ function vypis_pridaj_noveho($skupina){
 			echo '<textarea id="timy" name="timy" class="form-control"></textarea>';
 			echo '<label for="foto">Fotka: </label><br>';
 			echo '<input type="file" name="file" id="foto" accept=".jpg, .jpeg, .png, image/jpeg, image/png, image/pjpeg"/> ';
-			echo '<input type="hidden" name="skupina" value="'.$skupina.'">';
+			echo '<input type="hidden" name="skupinaId" value="'.$skupina["id"].'">';
+			echo '<input type="hidden" name="skupinaKod" value="'.$skupina["kod"].'">';
       $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
       echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
 			echo '<br><br>';

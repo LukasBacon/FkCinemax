@@ -4,10 +4,10 @@ function vypisTabulku($skupina){
 	$rok = najdiNajvacsiRok($skupina);
 	$db = napoj_db();
   $sql =<<<EOF
-    SELECT * FROM Tabulky WHERE skupina="$skupina" AND rok="$rok";
+    SELECT * FROM Tabulky as t JOIN Skupiny as s ON t.id_skupiny=s.id
+    WHERE s.kod="$skupina" AND rok="$rok";
 EOF;
   $ret = $db->query($sql);
-  $pole = array();
   while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
   	if(strpos($row['klub'], "FK CINEMAX Doľany") !== false){
   		echo "<tr class='table-warning'>";
@@ -32,7 +32,8 @@ EOF;
 function nacitajKonkretnyRokTabulku($skupina, $rok){
 		$db = napoj_db();
     $sql =<<<EOF
-    SELECT * FROM Tabulky WHERE skupina="$skupina" AND rok="$rok";
+    SELECT * FROM Tabulky as t JOIN Skupiny as s ON t.id_skupiny = s.id
+    WHERE s.kod="$skupina" AND rok="$rok";
 EOF;
     $ret = $db->query($sql);
     $pole = array();
@@ -43,23 +44,11 @@ EOF;
     return $pole;
 }
 
-function vypisNazovLigy($skupina){
-	$rok = najdiNajvacsiRok($skupina);
-	$db = napoj_db();
-  $sql =<<<EOF
-    SELECT nazov FROM Ligy WHERE skupina = "$skupina" AND rok = "$rok";
-EOF;
-  $ret = $db->query($sql);
-  $row = $ret->fetchArray(SQLITE3_ASSOC);
-  $db->close();	
-  echo "<h5 id='nazovLigy' class='float-left ml-2 mt-1 font-weight-bold' style='color: #6166b5;'>".$row['nazov']."</h5>";
-
-}
-
 function vratKonkretnyRokNazovLigy($skupina, $rok){
 	$db = napoj_db();
   $sql =<<<EOF
-    SELECT nazov FROM Ligy WHERE skupina = "$skupina" AND rok = "$rok";
+    SELECT l.nazov FROM Ligy as l JOIN Skupiny as s ON l.id_skupiny = s.id
+     WHERE s.kod = "skupina" AND l.rok = "$rok";
 EOF;
   $ret = $db->query($sql);
   $row = $ret->fetchArray(SQLITE3_ASSOC);
@@ -70,7 +59,8 @@ EOF;
 function vratPrisluchajuceRokyKSkupine($skupina){
 		$db = napoj_db();
     $sql =<<<EOF
-    SELECT rok FROM Ligy WHERE skupina="$skupina" ORDER BY rok DESC;
+    SELECT l.rok FROM Ligy as l JOIN Skupiny as s ON l.id_skupiny = s.id
+    WHERE s.kod="$skupina" ORDER BY rok DESC;
 EOF;
     $ret = $db->query($sql);
     $pole = array();
@@ -83,7 +73,8 @@ EOF;
 function najdiNajvacsiRok($skupina){
 		$db = napoj_db();
     $sql =<<<EOF
-    SELECT rok FROM Ligy WHERE skupina = "$skupina" ORDER BY rok DESC LIMIT 1;
+    SELECT l.rok FROM Ligy as l JOIN Skupiny as s ON l.id_skupiny = s.id
+    WHERE s.kod = "skupina" ORDER BY rok DESC LIMIT 1;
 EOF;
     $ret = $db->query($sql);
     $row = $ret->fetchArray(SQLITE3_ASSOC);

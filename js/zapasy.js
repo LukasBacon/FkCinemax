@@ -1,15 +1,16 @@
 $(document).ready(function () {
     var rok = $("#selectRokZapasy").val();
-    var skupina = $("#nazovSkupiny").text();
-    if (skupina === 'Prípravka') {
-        skupina = 'Pripravka';
-    }
+    var skupina = location.search.split('skupina=')[1] ? location.search.split('skupina=')[1] : 'Seniori';
 
     over(() => vypisZapasov(rok, skupina));
 
-    scrollujNaAktualneKolo();
+    refresh(rok, skupina);
 
     $("#selectRokZapasy").change(function () {
+        refresh(rok, skupina);
+    });
+
+    function refresh(rok, skupina) {
         rok = $("#selectRokZapasy").val();
         vypisZapasov(rok, skupina);
         $.ajax({
@@ -21,7 +22,7 @@ $(document).ready(function () {
             }
         });
         scrollujNaAktualneKolo();
-    });
+    }
 
     function vypisZapasov(rok, skupina) {
         var divZapasy = $("#zapasy");

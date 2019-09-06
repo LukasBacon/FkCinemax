@@ -8,7 +8,8 @@ if (isset($_POST['submit'])){
     $rocnik = $_POST['rocnik'];
     $post = $_POST['post'];
     $timy = $_POST['timy'];
-    $skupina = $_POST['skupina'];
+    $skupinaId = $_POST['skupinaId'];
+    $skupinaKod = $_POST['skupinaKod'];
     $fileURL = "";
 
     $isFile = false;
@@ -18,27 +19,16 @@ if (isset($_POST['submit'])){
         $isFile = true;
     }
 
-    if($skupina == 'Seniori'){
-        if(!$isFile){
-            $fileURL = 'fotky/seniori/face.png';
-        }
-        else{
-            $fileURL = 'fotky/seniori/'.replaceSpecialChars($meno).replaceSpecialChars($priezvisko).".".$ext;
-            pridajFotkuNaServer($file, $fileURL);
-
-        }
+    if(!$isFile){
+        $fileURL = 'fotky/' . strtolower($skupinaKod)  . '/face.png';
     }
     else{
-        if(!$isFile){
-            $fileURL = 'fotky/pripravka/face.png';
-        }
-        else{
-            $fileURL = 'fotky/pripravka/'.replaceSpecialChars($meno).replaceSpecialChars($priezvisko).".".$ext;
-            pridajFotkuNaServer($file, $fileURL);
-        }  
+        $fileURL = 'fotky/' . strtolower($skupinaKod)  . '/'.replaceSpecialChars($meno).replaceSpecialChars($priezvisko).".".$ext;
+        pridajFotkuNaServer($file, $fileURL);
+
     }
 
-    pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupina);
+    pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupinaId);
 
 
     unset($_FILES['file']);
@@ -51,12 +41,18 @@ function pridajFotkuNaServer($file, $targetFileURL){
     compressImage($destination);
 }
 
-function pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupina){
+function pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupinaId){
 	$db = napoj_db();
+
   	$sql =<<<EOF
-		INSERT INTO Hraci (meno, priezvisko, rok_narodenia, skupina, typ_hraca, url, kluby) VALUES ("$meno", "$priezvisko", "$rocnik", "$skupina", "$post", "$fileURL", "$timy");
+		INSERT INTO Hraci 
+		(meno, priezvisko, rok_narodenia, typ_hraca, url, kluby, id_skupiny) 
+		VALUES 
+		("$meno", "$priezvisko", "$rocnik", "$post", "$fileURL", "$timy", "$skupinaId");
 EOF;
   	$ret = $db->query($sql);
+    $ret->fetchArray(SQLITE3_ASSOC);
+
   	$db->close();	
 }
 

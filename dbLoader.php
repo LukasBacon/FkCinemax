@@ -47,12 +47,13 @@ class dbLoader{
 		$start = microtime(true);
 		$db = napoj_db();
 	    $sql1 =<<<EOF
-	    SELECT z.*, l.url  FROM Zapasy as z JOIN Ligy as l ON l.skupina = z.skupina AND l.rok = z.rok
+	    SELECT z.*, l.url  FROM Zapasy as z JOIN Ligy as l ON l.id_skupiny = z.id_skupiny AND l.rok = z.rok
 		WHERE z.datum > datetime('now') AND (z.hostia LIKE 'FK CINEMAX Doľany%' OR z.domaci LIKE 'FK CINEMAX Doľany%') ORDER BY z.datum ASC LIMIT "$n";
 EOF;
 	    $sql2 =<<<EOF
-	    SELECT z.*, l.url  FROM Zapasy as z JOIN Ligy as l ON l.skupina = z.skupina AND l.rok = z.rok
-		WHERE z.datum > datetime('now') AND z.skupina = "$skupina" AND (z.hostia LIKE 'FK CINEMAX Doľany%' OR z.domaci LIKE 'FK CINEMAX Doľany%') ORDER BY z.datum ASC LIMIT "$n";
+	    SELECT z.*, l.url  FROM Zapasy as z JOIN Ligy as l ON l.id_skupiny = z.id_skupiny AND l.rok = z.rok
+	    JOIN Skupiny as s ON l.id_skupiny = s.id
+		WHERE z.datum > datetime('now') AND s.kod = "$skupina" AND (z.hostia LIKE 'FK CINEMAX Doľany%' OR z.domaci LIKE 'FK CINEMAX Doľany%') ORDER BY z.datum ASC LIMIT "$n";
 EOF;
 		if ($skupina == null) $ret = $db->query($sql1);
 		else {$ret = $db->query($sql2);}
@@ -141,7 +142,9 @@ EOF;
 	public function ziskajUrlPodlaSkupinyARoku($skupina, $rok){
 		$db = napoj_db();
 	    $sql =<<<EOF
-	    SELECT url FROM Ligy WHERE skupina = "$skupina" AND rok = "$rok";
+	    SELECT url FROM Ligy as l
+	    JOIN Skupiny as s ON l.id_skupiny = s.id
+	    WHERE s.kod = "$skupina" AND rok = "$rok";
 EOF;
 	    $ret = $db->query($sql);
 	    $row = $ret->fetchArray(SQLITE3_ASSOC);
@@ -152,7 +155,8 @@ EOF;
 	public function vymazUdajeZTabuliek($skupina, $rok){
 	    $db = napoj_db();
 	    $sql =<<<EOF
-	       DELETE FROM Tabulky WHERE skupina = "$skupina" AND rok = "$rok";
+	       DELETE FROM Tabulky WHERE rok = "$rok" AND
+	       id_skupiny IN (SELECT id FROM skupiny WHERE kod="$skupina");
 EOF;
 	    $ret = $db->exec($sql);
 	    if(!$ret){
@@ -160,17 +164,19 @@ EOF;
 	    }
 	    $db->close();
 	}
-	public function vlozAktualneZapasy($skupina, $rok, $zapasy){
+
+	public function vlozAktualneZapasy($skupinaKod, $rok, $zapasy){
+		$skupinaId = $this->dajSkupinuPodlaKodu($skupinaKod)["id"];
 		$db = napoj_db();
 		$db->exec('BEGIN;');
 		foreach ($zapasy as $zapas) {
 		  $sql =<<<EOF
-    		INSERT INTO Zapasy (datum, rok, domaci, hostia, skoreD, skoreH, kolo, skupina)
-    		VALUES ("$zapas->datum", "$rok", "$zapas->domaci", "$zapas->hostia", "$zapas->skoreDomaci", "$zapas->skoreHostia", "$zapas->kolo", "$skupina");
+    		INSERT INTO Zapasy (datum, rok, domaci, hostia, skoreD, skoreH, kolo, id_skupiny)
+    		VALUES ("$zapas->datum", "$rok", "$zapas->domaci", "$zapas->hostia", "$zapas->skoreDomaci", "$zapas->skoreHostia", "$zapas->kolo", "$skupinaId");
 EOF;
 		  $sql1 =<<<EOF
-    		INSERT INTO Zapasy (datum, rok, domaci, hostia, kolo, skupina)
-    		VALUES ("$zapas->datum", "$rok", "$zapas->domaci", "$zapas->hostia", "$zapas->kolo", "$skupina");
+    		INSERT INTO Zapasy (datum, rok, domaci, hostia, kolo, id_skupiny)
+    		VALUES ("$zapas->datum", "$rok", "$zapas->domaci", "$zapas->hostia", "$zapas->kolo", "$skupinaId");
 EOF;
 			if($zapas->skoreDomaci === null && $zapas->skoreHostia === null){
 		  		$ret = $db->exec($sql1);
@@ -186,13 +192,14 @@ EOF;
 		$db->close();
 	}
 
-	public function vlozAktualneDataTabulky($skupina, $rok, $tabulka){
+	public function vlozAktualneDataTabulky($skupinaKod, $rok, $tabulka){
+		$skupinaId = $this->dajSkupinuPodlaKodu($skupinaKod)["id"];
 		$db = napoj_db();
 		$db->exec('BEGIN;');
 		foreach ($tabulka as $riadok) {
 		  $sql =<<<EOF
-    		INSERT INTO Tabulky (skupina, rok, klub, p_zapasov, p_vyhier, p_remiz, p_prehier, skore, body, poradie, fp)
-    		VALUES ("$skupina", "$rok", "$riadok->klub", "$riadok->z", "$riadok->v", "$riadok->r", "$riadok->p", "$riadok->skore", "$riadok->b", "$riadok->poradie", "$riadok->fp");
+    		INSERT INTO Tabulky (id_skupiny, rok, klub, p_zapasov, p_vyhier, p_remiz, p_prehier, skore, body, poradie, fp)
+    		VALUES ("$skupinaId", "$rok", "$riadok->klub", "$riadok->z", "$riadok->v", "$riadok->r", "$riadok->p", "$riadok->skore", "$riadok->b", "$riadok->poradie", "$riadok->fp");
 EOF;
 		  $ret = $db->exec($sql);
 		  if(!$ret){
@@ -295,14 +302,16 @@ EOF;
 	public function najdiLigySNaposledyOdohranymiZapasmiBezSkore(){
 		$db = napoj_db();
 	    $sql =<<<EOF
-	    SELECT DISTINCT skupina, rok FROM Zapasy WHERE 
-	    						datum < datetime('now') 
-	    							AND 
-	    						(	
-	    							(skoreD is null AND skoreH is null) 
-	    									OR 
-	    							(skoreD=0 AND skoreH=0 AND julianday('now') - julianday(datum) < 100 )
-	    						);
+	    SELECT DISTINCT s.kod as skupina, z.rok FROM Zapasy as z
+	    JOIN Skupiny as s ON s.id = z.id_skupiny
+	    WHERE 
+				datum < datetime('now') 
+					AND 
+				(	
+					(skoreD is null AND skoreH is null) 
+							OR 
+					(skoreD=0 AND skoreH=0 AND julianday('now') - julianday(datum) < 100 )
+				);
 EOF;
 	    $ret = $db->query($sql);
 	    $pole = array();
@@ -316,9 +325,11 @@ EOF;
 	public function vratOdohraneZapasyLigyBezSkore($skupina, $rok){
 		$db = napoj_db();
 	    $sql =<<<EOF
-	    SELECT * FROM Zapasy WHERE datum < datetime('now') 
-	    					   AND ((skoreD is null AND skoreH is null) OR (skoreD=0 AND skoreH=0 AND julianday('now') - julianday(datum) < 100 ))
-	    					   AND rok = "$rok" AND skupina = "$skupina";
+	    SELECT z.* FROM Zapasy as z 
+	    JOIN Skupiny as s ON s.id = z.id_skupiny
+	    WHERE datum < datetime('now') 
+		   AND ((skoreD is null AND skoreH is null) OR (skoreD=0 AND skoreH=0 AND julianday('now') - julianday(datum) < 100 ))
+		   AND rok = "$rok" AND s.kod = "$skupina";
 EOF;
 	    $ret = $db->query($sql);
 	    $pole = array();
@@ -332,10 +343,11 @@ EOF;
 	public function vratSkupinyARokyBezZapasov(){
 		$db = napoj_db();
 	    $sql =<<<EOF
-				SELECT skupina, rok
+				SELECT s.kod, l.rok
 				FROM Ligy as l
+				JOIN Skupiny as s ON l.id_skupiny = s.id
 				WHERE not exists
-					(SELECT * FROM Zapasy as z where l.skupina = z.skupina AND l.rok = z.rok);
+					(SELECT * FROM Zapasy as z where l.id_skupiny = z.id_skupiny AND l.rok = z.rok);
 EOF;
 	    $ret = $db->query($sql);
 	    $pole = array();
@@ -353,6 +365,17 @@ EOF;
 EOF;
 		$ret = $db->exec($sql);
 		$db->close();
+	}
+
+	private function dajSkupinuPodlaKodu($kod) {
+		$db = napoj_db();
+		$sql =<<<EOF
+        SELECT * FROM Skupiny WHERE kod="$kod";
+EOF;
+		$ret = $db->query($sql);
+		$res = $ret->fetchArray(SQLITE3_ASSOC);
+		$db->close();
+		return $res;
 	}
 }
 

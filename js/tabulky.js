@@ -1,16 +1,19 @@
 $(document).ready(function(){
 	var rok = $("#selectRok").val();
-	var skupina = $("#nazovSkupiny").text();
-	if(skupina === 'Prípravka'){
-		skupina = 'Pripravka';
-	}
+	var skupina = location.search.split('skupina=')[1] ? location.search.split('skupina=')[1] : 'Seniori';
 
 	over(() => vypisTabulku(rok, skupina));
 
+	refresh(rok, skupina);
+
 	$("#selectRok").change(function() {
+		refresh(rok, skupina);
+	});
+
+	function refresh(rok, skupina) {
 		rok = $("#selectRok").val();
 		vypisTabulku(rok, skupina);
-	});
+	}
 
 	function vypisTabulku(rok, skupina) {
 		var table = $("#tabulkaBody");
