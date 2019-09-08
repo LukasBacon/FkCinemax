@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	var skupina = $("#skupinaHidden").val();
+	var skupina = location.search.split('skupina=')[1] ? location.search.split('skupina=')[1] : 'Seniori';
 	$.ajax({
 		url:"servlets/getPlayersIdsServlet.php",
 		type:"post",
@@ -106,7 +106,6 @@ function vypisPotvrdBtn(id){
 }
 
 function vypisUpravBtn(id){
-	console.log("som tu");
 	return '<a class="pr-1" id="upravBtn-'+id+'" href="javascript:upravHraca('+id+');"><img width="40" class="buttonImg withHover" src="fotky/edit.png" alt="Uprav info o hráčovi"></a>';
 }
 

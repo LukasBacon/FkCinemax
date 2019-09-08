@@ -54,6 +54,7 @@ $(document).ready(function () {
                     zapasy += '<div class="col-sm-12 bg-dark text-center text-white">';
                     zapasy += '<h6 class="mb-1 mt-1"><strong>Kolo ' + kolo + '</strong></h6></div></div>';
                     $.each(zapasyKola, function (kluc, zapas) {
+                        console.log(zapas);
                         if (zapas['skoreD'] === null) {
                             skoreD = "";
                         } else {

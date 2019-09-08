@@ -9,31 +9,44 @@ $(document).ready(function(){
 
 function aktualizujPosledneANaslujuceZapasy() {
     $.ajax({
-        url: "servlets/getPoslednyANasledujuciZapasServlet.php",
-        type: "post",
-        data: {"skupiny":["Seniori"]},
-        success: function (data) {
-            let lastMatches = $("#posledne-zapasy");
-            let lastMatchesText = printMatches(data, "posledny");
-            lastMatches.html(lastMatchesText);
-            let nextMatches = $("#nasledujuce-zapasy");
-            let nextMatchesText = printMatches(data, "nasledujuci");
-            nextMatches.html(nextMatchesText)
+        url: "servlets/getSkupiny.php",
+        type: "get",
+        success: function (skupiny) {
+            skupiny = JSON.parse(skupiny);
+            skupinyCodes = skupiny.map(s => s["kod"]);
+            $.ajax({
+                url: "servlets/getPoslednyANasledujuciZapasServlet.php",
+                type: "post",
+                data: {"skupiny":skupinyCodes},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    let lastMatches = $("#posledne-zapasy");
+                    let lastMatchesText = printMatches(data, "posledny", skupiny);
+                    lastMatches.html(lastMatchesText);
+                    let nextMatches = $("#nasledujuce-zapasy");
+                    let nextMatchesText = printMatches(data, "nasledujuci", skupiny);
+                    nextMatches.html(nextMatchesText)
+                }
+            });
         }
     });
 
-    function printMatches(zapasyData, type){
+    function printMatches(zapasyData, type, skupiny){
         let text = '';
         let title = type === 'posledny' ? 'Posledné zápasy' : 'Nasledujúce zápasy';
         text += '<h5 class="card-header-match">' + title + '</h5>';
         text += '<div class="card-body">';
         text += '<ul class="list-group list-group-flush">';
-        $.each(JSON.parse(zapasyData), function(index, skupinaZapasy){
-            text += printMatchesForGroup(index, skupinaZapasy, type)
-        });
-        text += '<li class="list-group-item">';
-        text += '<a class="btn btn-primary" href="z_pripravka.php">Zápasy prípravky</a>';
-        text += '</li>';
+        for (var skupinaKod in zapasyData) {
+            skupina = getSupinaWithCode(skupiny, skupinaKod);
+            if (skupina["zobrazenie_nasl_a_predch_zapasov"] === 1) {
+                text += printMatchesForGroup(skupina, zapasyData[skupina["kod"]], type)
+            } else {
+                text += '<li class="list-group-item">';
+                text += '<a class="btn btn-primary" href="zapasy.php?skupina=' + skupinaKod + '">Zápasy ' + skupina["nazov_genitiv"] + '</a>';
+                text += '</li>';
+            }
+        }
         text += '</ul>';
         text += '</div>';
         return text;
@@ -44,7 +57,7 @@ function aktualizujPosledneANaslujuceZapasy() {
         const poznamka = info["poznamka"] === null ? '' : info["poznamka"];
         let text = '';
         text += '<li class="list-group-item">';
-        text += '<p class="card-text"><strong>' + skupina + '</strong><br>';
+        text += '<p class="card-text"><strong>' + skupina["nazov"] + '</strong><br>';
         text += 'Kolo ' + info["kolo"] + ' - ' + vypisDatumACas(info["datum"]) + '<br>';
         text += info["domaci"] + ' ';
         text += vypisSkore(info);
@@ -78,6 +91,15 @@ function aktualizujPosledneANaslujuceZapasy() {
 
     function setTwoDigits(num){
         return ((num) < 10 ? '0' : '') + num;
+    }
+
+    function getSupinaWithCode(skupiny, code) {
+        for (let skupina of skupiny) {
+            if (skupina["kod"] === code) {
+                return skupina;
+            }
+        }
+        return null;
     }
 }
 

@@ -151,8 +151,9 @@ function dajDefaultnuSkupinu() {
         SELECT * FROM Skupiny ORDER BY id ASC LIMIT 1;
 EOF;
     $ret = $db->query($sql);
+    $res = $ret->fetchArray(SQLITE3_ASSOC);
     $db->close();
-    return $ret->fetchArray(SQLITE3_ASSOC);
+    return $res;
 }
 
 function dajSkupinuPodlaKodu($kod) {

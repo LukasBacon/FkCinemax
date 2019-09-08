@@ -146,7 +146,6 @@ function vymazDiskusiu(idDiskusie){
 
 // vylistovanie komentarov pod diskusiu
 function ukazKomentare(id, nazov, pocet_kom){
-	console.log('som tu');
 	var admin = false;
 	$.ajax({
 		url:"servlets/getSessionServlet.php",

@@ -91,7 +91,7 @@ function vypis_hraca_admin($id, $url, $meno, $priezvisko, $typ_hraca, $rok_narod
           echo '<input type="submit" name="submit" id="submitFile-'.$id.'" value="Edit" hidden>';
           echo '<label class="btn-file" style="width:40px; margin:0px; display: flex !important;">';
             echo '<input type="file" class="custom-file-input" style="width:0%;" name="file" id="editFile-'.$id.'" accept=".jpg, .jpeg, .png"/> ';
-            echo '<span class="custom-file-control"><img src="fotky/foto.png" alt="Uprav fotku hráčova" id="fileLabel" class="buttonImg withHover" width="40"></span>';
+            echo '<span class="custom-file-control"><img src="fotky/foto.png" alt="Uprav fotku hráča" id="fileLabel" class="buttonImg withHover" width="40"></span>';
           echo '</label>';
         echo '</form>';
       echo '</div>';
@@ -124,7 +124,7 @@ function vypis_pridaj_noveho($skupina){
 			echo '<label for="timy">Tímy: </label><br>';
 			echo '<textarea id="timy" name="timy" class="form-control"></textarea>';
 			echo '<label for="foto">Fotka: </label><br>';
-			echo '<input type="file" name="file" id="foto" accept=".jpg, .jpeg, .png, image/jpeg, image/png, image/pjpeg"/> ';
+			echo '<input type="file" name="file" id="foto" accept=".jpg, .jpeg, .png, image/jpeg, image/png, image/pjpeg"/>';
 			echo '<input type="hidden" name="skupinaId" value="'.$skupina["id"].'">';
 			echo '<input type="hidden" name="skupinaKod" value="'.$skupina["kod"].'">';
       $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";

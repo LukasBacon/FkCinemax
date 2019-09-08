@@ -30,8 +30,8 @@ if (isset($_POST['submit'])){
 
     pridajDoDatabazy($meno, $priezvisko, $rocnik, $post, $timy, $fileURL, $skupinaId);
 
-
     unset($_FILES['file']);
+    unset($_POST);
     header('Location: ' . $pageUrl);
 }
 

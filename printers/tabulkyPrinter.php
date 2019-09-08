@@ -48,7 +48,7 @@ function vratKonkretnyRokNazovLigy($skupina, $rok){
 	$db = napoj_db();
   $sql =<<<EOF
     SELECT l.nazov FROM Ligy as l JOIN Skupiny as s ON l.id_skupiny = s.id
-     WHERE s.kod = "skupina" AND l.rok = "$rok";
+     WHERE s.kod = "$skupina" AND l.rok = "$rok";
 EOF;
   $ret = $db->query($sql);
   $row = $ret->fetchArray(SQLITE3_ASSOC);
