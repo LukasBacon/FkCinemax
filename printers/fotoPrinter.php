@@ -76,7 +76,7 @@ function vypis_pridaj_novu($idAlbumu){
 				echo '<input type="text" name="idAlbumu" value="'.$idAlbumu.'" hidden>';
 				$actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 				echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
-				echo '<input type="submit" id="submitFoto" name="submit" value="Pridaj" class="btn btn-success withHover" hidden/>';
+				echo '<input type="submit" id="submitPhoto" name="submit" value="Pridaj" class="btn btn-success withHover" hidden/>';
 			echo '</form>';
 		echo '</div>';
 	echo '</div><br>';

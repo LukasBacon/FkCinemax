@@ -61,9 +61,9 @@ EOF;
 
   public function vrat(){
     $db = napoj_db();
-    $sel = <<<EOF
-        SELECT * FROM Hraci WHERE id = "$this->ID";
-EOF;    
+    $sql =<<<EOF
+      SELECT * FROM Hraci WHERE id = "$this->ID";
+EOF;
     $ret = $db->query($sql);
     $row = $ret->fetchArray(SQLITE3_ASSOC);
     $db->close();

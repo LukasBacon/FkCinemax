@@ -17,16 +17,12 @@ if (isset($_POST['submit'])){
     }
 
     $url = ziskajUrlFotktHraca($id);
-    if ($url != "fotky/seniori/face.png" && $url != "fotky/pripravka/face.png"){
+    if ($url != "fotky/hraci/face.png"){
         vymazFotkuZoServera($url);
     }
 
-    if($skupina == 'Seniori'){
-        $newUrl = 'fotky/seniori/'.replaceSpecialChars($meno).replaceSpecialChars($priezvisko).".".$ext;
-    }
-    else{
-        $newUrl = 'fotky/pripravka/'.replaceSpecialChars($meno).replaceSpecialChars($priezvisko).".".$ext;
-    }
+    $newUrl = 'fotky/hraci/'.replaceSpecialChars($meno).replaceSpecialChars($priezvisko).replaceSpecialChars($skupina).".".$ext;
+
 
     pridajFotkuNaServer($file, $newUrl);
     updateUrlVDb($id, $newUrl);

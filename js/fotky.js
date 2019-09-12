@@ -20,7 +20,7 @@ $(document).ready(function(){
     }); 
 
     $('#files').change(function() {
-        $('#submitFoto').click();
+        $('#submitPhoto').click();
     });
 });
 

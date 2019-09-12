@@ -343,7 +343,7 @@ EOF;
 	public function vratSkupinyARokyBezZapasov(){
 		$db = napoj_db();
 	    $sql =<<<EOF
-				SELECT s.kod, l.rok
+				SELECT s.kod as skupina, l.rok
 				FROM Ligy as l
 				JOIN Skupiny as s ON l.id_skupiny = s.id
 				WHERE not exists

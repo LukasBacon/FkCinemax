@@ -3,7 +3,7 @@
 function vypis_hracov($skupina){
   $db = napoj_db();
   $sql =<<<EOF
-    SELECT h.*, s.nazov as skupina FROM Hraci as h 
+    SELECT h.*, s.kod as skupina FROM Hraci as h 
     JOIN Skupiny as s ON h.id_skupiny=s.id
     WHERE s.kod = "$skupina" ORDER BY h.priezvisko;
 EOF;
@@ -112,7 +112,7 @@ function vypis_pridaj_noveho($skupina){
     echo '<div class="col-sm-4"></div>';
 		echo '<div class="col-sm-4" id="novaFotkaPanel">';
 			echo '<h4>Pridaj nového hráča</h4>';
-			echo '<form class="justify-content-center" action="servlets/addPlayerServlet.php" method="post" enctype="multipart/form-data">';
+			echo '<form id="addNewPlayerForm" class="justify-content-center" action="" method="post" enctype="multipart/form-data">';
 			echo '<label for="meno">Meno: </label><br>';
 			echo '<input id="meno" name="meno" type="text" class="form-control" required>';
 			echo '<label for="priezvisko">Priezvisko: </label><br>';
@@ -125,13 +125,13 @@ function vypis_pridaj_noveho($skupina){
 			echo '<textarea id="timy" name="timy" class="form-control"></textarea>';
 			echo '<label for="foto">Fotka: </label><br>';
 			echo '<input type="file" name="file" id="foto" accept=".jpg, .jpeg, .png, image/jpeg, image/png, image/pjpeg"/>';
-			echo '<input type="hidden" name="skupinaId" value="'.$skupina["id"].'">';
-			echo '<input type="hidden" name="skupinaKod" value="'.$skupina["kod"].'">';
+			echo '<input type="hidden" name="skupinaId" id="skupinaId" value="'.$skupina["id"].'">';
+			echo '<input type="hidden" name="skupinaKod" id="skupinaKod" value="'.$skupina["kod"].'">';
       $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-      echo '<input type="text" name="url" value="'.$actual_link.'" hidden>';
+      echo '<input type="text" name="url" id="url" value="'.$actual_link.'" hidden>';
 			echo '<br><br>';
 			echo '<div align="center">';
-			echo '<input type="submit" name="submit" id="submitFoto" value="+" class="btn btn-success withHover">';
+			echo '<input name="submit" id="submitFoto" onClick="pridajHraca()" value="+" class="btn btn-success withHover">';
 			echo '</div>';
 			echo '</form>';
 		echo '</div>';
