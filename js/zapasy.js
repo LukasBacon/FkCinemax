@@ -21,7 +21,6 @@ $(document).ready(function () {
                 $("#nazovLigy").text(data);
             }
         });
-        scrollujNaAktualneKolo();
     }
 
     function vypisZapasov(rok, skupina) {
@@ -96,6 +95,7 @@ $(document).ready(function () {
                     zapasy += '<br>';
                 });
                 divZapasy.html(zapasy);
+                scrollujNaAktualneKolo();
             }
         });
     }
@@ -153,20 +153,19 @@ $(document).ready(function () {
                     zapasy += '<br>';
                 });
                 divZapasy.html(zapasy);
+                scrollujNaAktualneKolo();
             }
         });
     }
 
     /*Podla skupiny, roku a dnesneho datumu ziskam zo servletu aktualne kolo. Odscrollujem  na toto kolo.*/
     function scrollujNaAktualneKolo() {
-        var skupina = $("#nazovSkupiny").text();
-        var rok = $("#selectRokZapasy").val();
         $.ajax({
             url: "servlets/scrollerServlet.php",
             type: "post",
             data: {"rok": rok, "skupina": skupina},
             success: function (data) {
-                if (data != 0) {
+                if (data !== 0) {
                     var id = '#k' + data;
                     console.log('scrollujem na aktualne kolo:' + id);
                     $('html, body').animate({

@@ -45,7 +45,12 @@ function vypisNasledujuceZapasy($skupina)
         }
         $kolo = $zapas['kolo'];
         echo '<li class="list-group-item">';
-        echo '<p class="card-text"><strong>' . $skupina["nazov"] . '</strong><br> Kolo ' . $kolo . ' - ' . vypisDatumACas($zapas["datum"]) . '<br>' . $zapas["domaci"] . ' : ' . $zapas["hostia"] . '<br><small>' . $zapas['poznamka'] . '</small></p>';
+        if ($zapas["domaci"] === "" || $zapas["hostia"] === "") {
+            echo '<p class="card-text"><strong>' . $skupina["nazov"] . '</strong><br> Kolo ' . $kolo . ' - ' . vypisDatumACas($zapas["datum"]) . '<br>VOĽNO<br></p>';
+
+        } else {
+            echo '<p class="card-text"><strong>' . $skupina["nazov"] . '</strong><br> Kolo ' . $kolo . ' - ' . vypisDatumACas($zapas["datum"]) . '<br>' . $zapas["domaci"] . ' : ' . $zapas["hostia"] . '<br><small>' . $zapas['poznamka'] . '</small></p>';
+        }
         echo '</li>';
     } else {
         echo '<li class="list-group-item">';
@@ -105,11 +110,12 @@ EOF;
     return $zapasy;
 }
 
-function vratPosledneKolo($idSkupiny, $rok)
+function vratPosledneKolo($skupina, $rok)
 {
     $db = napoj_db();
     $sql = <<<EOF
-    SELECT kolo FROM Zapasy WHERE datetime(datum) < datetime('now') AND id_skupiny = "$idSkupiny" AND rok = "$rok"
+    SELECT kolo FROM Zapasy as z JOIN Skupiny as s ON s.id = z.id_skupiny
+    WHERE datetime(datum) < datetime('now') AND s.kod = "$skupina" AND rok = "$rok"
 		ORDER BY datum desc LIMIT 1;
 EOF;
     $ret = $db->query($sql);

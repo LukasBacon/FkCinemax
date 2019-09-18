@@ -36,7 +36,7 @@ function aktualizujPosledneANaslujuceZapasy() {
         let title = type === 'posledny' ? 'Posledné zápasy' : 'Nasledujúce zápasy';
         text += '<h5 class="card-header-match">' + title + '</h5>';
         text += '<div class="card-body">';
-        text += '<ul class="list-group list-group-flush">';
+        text += '<ul class="list-group list-group-flush index-zapasy-card">';
         for (var skupinaKod in zapasyData) {
             skupina = getSupinaWithCode(skupiny, skupinaKod);
             if (skupina["zobrazenie_nasl_a_predch_zapasov"] === 1) {
@@ -59,12 +59,22 @@ function aktualizujPosledneANaslujuceZapasy() {
         text += '<li class="list-group-item">';
         text += '<p class="card-text"><strong>' + skupina["nazov"] + '</strong><br>';
         text += 'Kolo ' + info["kolo"] + ' - ' + vypisDatumACas(info["datum"]) + '<br>';
+        text += (info["domaci"] === "" || info["hostia"] === "") ? vypisVolno() : vypisZapasInfo(info);
+        text += '</p></li>';
+        return text;
+    }
+
+    function vypisZapasInfo(info) {
+        let text = '';
         text += info["domaci"] + ' ';
         text += vypisSkore(info);
         text += ' ' + info["hostia"] + '<br>';
-        text += '<small>' + poznamka + '</small></p>';
-        text += '</li>';
+        text += '<small>' + poznamka + '</small>';
         return text;
+    }
+
+    function vypisVolno() {
+        return 'VOĽNO';
     }
 
     function vypisSkore(data){

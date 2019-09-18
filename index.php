@@ -53,7 +53,7 @@ $skupiny = dajSkupiny();
           <div class="card" id="posledne-zapasy">
             <h5 class="card-header-match">Posledné zápasy</h5>
             <div class="card-body">
-              <ul class="list-group list-group-flush">
+              <ul class="list-group list-group-flush index-zapasy-card">
                   <?php
                   foreach ($skupiny as $skupina) {
                       vypisPosledneZapasy($skupina);
@@ -65,7 +65,7 @@ $skupiny = dajSkupiny();
           <div class="card" id="nasledujuce-zapasy">
             <h5 class="card-header-match">Nasledujúce zápasy</h5>
             <div class="card-body">
-              <ul class="list-group list-group-flush">
+              <ul class="list-group list-group-flush index-zapasy-card">
                   <?php
                   foreach ($skupiny as $skupina) {
                       vypisNasledujuceZapasy($skupina);
