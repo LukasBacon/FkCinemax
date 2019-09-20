@@ -69,7 +69,7 @@ function aktualizujPosledneANaslujuceZapasy() {
         text += info["domaci"] + ' ';
         text += vypisSkore(info);
         text += ' ' + info["hostia"] + '<br>';
-        text += '<small>' + poznamka + '</small>';
+        text += '<small>' + info["poznamka"] + '</small>';
         return text;
     }
 
