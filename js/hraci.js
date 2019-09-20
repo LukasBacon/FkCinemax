@@ -8,7 +8,6 @@ $(document).ready(function () {
             $.each(JSON.parse(data), function (index, row) {
                 var id = row['id'];
                 $("#editFile-" + id).change(function () {
-                    console.log("edit" + id);
                     $('#submitFile-' + id).click();
                 });
             });
@@ -18,9 +17,7 @@ $(document).ready(function () {
 
 function pridajHraca() {
     var form = $('#addNewPlayerForm')[0];
-    console.log(form);
     var data = new FormData(form);
-    console.log(data);
     $.ajax({
         url: "servlets/addPlayerServlet.php",
         cache: false,
