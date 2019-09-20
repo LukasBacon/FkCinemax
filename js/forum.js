@@ -183,7 +183,6 @@ function skryKomentare(id, nazov, pocet_kom){
 
 // vypise header diskusie, ktorym sa da vylistovat komentare
 function vypisShowHeader(id, nazov, pocet_kom){
-	console.log('('+id+',\''+nazov+',\''+pocet_kom+'\')');
 	var result = "";
 	result += 	'<a class="card-header diskusie-header" id="header-'+id+'" href="javascript:ukazKomentare('+id+',\''+nazov+'\','+pocet_kom+');">';
     result += 		'<strong style="font-size: 1.25rem; color:black;">'+nazov+'</strong>';

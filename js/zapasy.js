@@ -53,7 +53,6 @@ $(document).ready(function () {
                     zapasy += '<div class="col-sm-12 bg-dark text-center text-white">';
                     zapasy += '<h6 class="mb-1 mt-1"><strong>Kolo ' + kolo + '</strong></h6></div></div>';
                     $.each(zapasyKola, function (kluc, zapas) {
-                        console.log(zapas);
                         if (zapas['skoreD'] === null) {
                             skoreD = "";
                         } else {
@@ -153,13 +152,13 @@ $(document).ready(function () {
                     zapasy += '<br>';
                 });
                 divZapasy.html(zapasy);
-                scrollujNaAktualneKolo();
+                scrollujNaAktualneKolo(rok, skupina);
             }
         });
     }
 
     /*Podla skupiny, roku a dnesneho datumu ziskam zo servletu aktualne kolo. Odscrollujem  na toto kolo.*/
-    function scrollujNaAktualneKolo() {
+    function scrollujNaAktualneKolo(rok, skupina) {
         $.ajax({
             url: "servlets/scrollerServlet.php",
             type: "post",
@@ -167,7 +166,6 @@ $(document).ready(function () {
             success: function (data) {
                 if (data !== 0) {
                     var id = '#k' + data;
-                    console.log('scrollujem na aktualne kolo:' + id);
                     $('html, body').animate({
                         scrollTop: ($(id).offset().top) -= 110
                     }, 500);
@@ -204,7 +202,6 @@ function infoBox(poznamka, id) {
     }
     var txt = prompt("Zadajte text poznámky k zápasu (góly, karty, ...):", poznamka);
     if (txt != null) {
-        console.log("text je neprazdny:" + txt);
         $.ajax({
             url: "servlets/upravPoznamkuServlet.php",
             type: "post",
