@@ -49,7 +49,7 @@ function vypisNasledujuceZapasy($skupina)
             echo '<p class="card-text"><strong>' . $skupina["nazov"] . '</strong><br> Kolo ' . $kolo . ' - ' . vypisDatumACas($zapas["datum"]) . '<br>VOĽNO<br></p>';
 
         } else {
-            echo '<p class="card-text"><strong>' . $skupina["nazov"] . '</strong><br> Kolo ' . $kolo . ' - ' . vypisDatumACas($zapas["datum"]) . '<br>' . $zapas["domaci"] . ' : ' . $zapas["hostia"] . '<br><small>' . $zapas['poznamka'] . '</small></p>';
+            echo '<p class="card-text"><strong>' . $skupina["nazov"] . '</strong><br> Kolo ' . $kolo . ' - ' . vypisDatumACas($zapas["datum"]) . '<br>' . $zapas["domaci"] . ' : ' . $zapas["hostia"] . '<br><small>' . $zapas['poznamka'] === null ? "" : $zapas['poznamka'] . '</small></p>';
         }
         echo '</li>';
     } else {
