@@ -54,12 +54,16 @@ function aktualizujPosledneANaslujuceZapasy() {
 
     function printMatchesForGroup(skupina, data, type){
         const info = data[type];
-        const poznamka = info["poznamka"] === null ? '' : info["poznamka"];
+        const poznamka = info["poznamka"] == null ? '' : info["poznamka"];
         let text = '';
         text += '<li class="list-group-item">';
         text += '<p class="card-text"><strong>' + skupina["nazov"] + '</strong><br>';
-        text += 'Kolo ' + info["kolo"] + ' - ' + vypisDatumACas(info["datum"]) + '<br>';
-        text += (info["domaci"] === "" || info["hostia"] === "") ? vypisVolno() : vypisZapasInfo(info);
+		if (!info) {
+			text += 'VOĽNO';
+		} else {
+			text += 'Kolo ' + info["kolo"] + ' - ' + vypisDatumACas(info["datum"]) + '<br>';
+			text += (info["domaci"] === "" || info["hostia"] === "") ? vypisVolno() : vypisZapasInfo(info);
+		}
         text += '</p></li>';
         return text;
     }
