@@ -48,7 +48,12 @@ $skupiny = dajSkupiny();
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                             <?php
                             foreach ($skupiny as $skupina) {
-                                echo '<a class="dropdown-item" href="zapasy.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                if($skupina['aktiv']) {
+                                    echo '<a class="dropdown-item" href="zapasy.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                }
+                                else{
+                                    echo '<a class="dropdown-item inactive" href="zapasy.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                }
                             }
                             ?>
                         </div>
@@ -59,7 +64,11 @@ $skupiny = dajSkupiny();
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                             <?php
                             foreach ($skupiny as $skupina) {
-                                echo '<a class="dropdown-item" href="tabulky.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                if ($skupina['aktiv']) {
+                                    echo '<a class="dropdown-item" href="tabulky.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                } else {
+                                    echo '<a class="dropdown-item inactive" href="tabulky.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                }
                             }
                             ?>
                         </div>
@@ -70,7 +79,11 @@ $skupiny = dajSkupiny();
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                             <?php
                             foreach ($skupiny as $skupina) {
-                                echo '<a class="dropdown-item" href="hraci.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                if ($skupina['aktiv']) {
+                                    echo '<a class="dropdown-item" href="hraci.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                } else {
+                                    echo '<a class="dropdown-item inactive" href="hraci.php?skupina=' . $skupina["kod"] . '">' . $skupina["nazov"] . '</a>';
+                                }
                             }
                             ?>
                         </div>
@@ -146,7 +159,7 @@ EOF;
     {
         $db = napoj_db();
         $sql = <<<EOF
-        SELECT * FROM Skupiny;
+        SELECT * FROM Skupiny Order By zoradenie;
 EOF;
         $ret = $db->query($sql);
         $pole = array();

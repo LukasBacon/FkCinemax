@@ -23,6 +23,7 @@ $(document).ready(function(){
 			data:{"rok":rok, "skupina":skupina},
 			datatype: 'json',
 			success: function(data){
+				console.log(data);
 				table.empty();
 				loadTable(table,
 					['poradie','klub','p_zapasov','p_vyhier','p_remiz','p_prehier','skore','body','fp'],

@@ -38,7 +38,7 @@ EOF;
 
 function vypisNasledujuceZapasy($skupina)
 {
-    if ($skupina["zobrazenie_nasl_a_predch_zapasov"]) {
+    if ($skupina["zobrazenie_nasl_a_predch_zapasov"] === "text") {
         $zapas = vratnasledujuciZapas($skupina['kod']);
         if ($zapas === FALSE) {
             return;
@@ -52,7 +52,7 @@ function vypisNasledujuceZapasy($skupina)
             echo '<p class="card-text"><strong>' . $skupina["nazov"] . '</strong><br> Kolo ' . $kolo . ' - ' . vypisDatumACas($zapas["datum"]) . '<br>' . $zapas["domaci"] . ' : ' . $zapas["hostia"] . '<br><small>' . $zapas['poznamka'] === null ? "" : $zapas['poznamka'] . '</small></p>';
         }
         echo '</li>';
-    } else {
+    } else if ($skupina["zobrazenie_nasl_a_predch_zapasov"] === "button"){
         echo '<li class="list-group-item">';
         echo '<a class="btn btn-primary" href="zapasy.php?skupina=' . $skupina["kod"] . '">Zápasy '. $skupina["nazov_genitiv"] . '</a>';
         echo '</li>';
@@ -61,7 +61,7 @@ function vypisNasledujuceZapasy($skupina)
 
 function vypisPosledneZapasy($skupina)
 {
-    if ($skupina["zobrazenie_nasl_a_predch_zapasov"]) {
+    if ($skupina["zobrazenie_nasl_a_predch_zapasov"] === "text") {
         $zapas = vratposlednyZapas($skupina['kod']);
         if ($zapas === FALSE) {
             return;
@@ -70,7 +70,7 @@ function vypisPosledneZapasy($skupina)
         echo '<li class="list-group-item">';
         echo '<p class="card-text"><strong>' . $skupina["nazov"] . '</strong><br> Kolo ' . $kolo . ' - ' . vypisDatumACas($zapas["datum"]) . '<br>' . $zapas["domaci"] . ' <strong>' . $zapas["skoreD"] . ':' . $zapas["skoreH"] . ' </strong>' . $zapas["hostia"] . '<br><small>' . $zapas['poznamka'] . '</small></p>';
         echo '</li>';
-    } else {
+    } else if ($skupina["zobrazenie_nasl_a_predch_zapasov"] === "button"){
         echo '<li class="list-group-item">';
         echo '<a class="btn btn-primary" href="zapasy.php?skupina=' . $skupina["kod"] . '">Zápasy ' . $skupina["nazov_genitiv"] . '</a>';
         echo '</li>';

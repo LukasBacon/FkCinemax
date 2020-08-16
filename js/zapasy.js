@@ -175,6 +175,7 @@ $(document).ready(function () {
     }
 
     function vypisDatum(datetime) {
+        if(datetime === '-') return '-';
         var rok = datetime.substring(0, 4);
         var mesiac = datetime.substring(5, 7);
         var den = datetime.substring(8, 10);

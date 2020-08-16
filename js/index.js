@@ -39,9 +39,9 @@ function aktualizujPosledneANaslujuceZapasy() {
         text += '<ul class="list-group list-group-flush index-zapasy-card">';
         for (var skupinaKod in zapasyData) {
             skupina = getSupinaWithCode(skupiny, skupinaKod);
-            if (skupina["zobrazenie_nasl_a_predch_zapasov"] === 1) {
+            if (skupina["zobrazenie_nasl_a_predch_zapasov"] === "text") {
                 text += printMatchesForGroup(skupina, zapasyData[skupina["kod"]], type)
-            } else {
+            } else if (skupina["zobrazenie_nasl_a_predch_zapasov"] === "button") {
                 text += '<li class="list-group-item">';
                 text += '<a class="btn btn-primary" href="zapasy.php?skupina=' + skupinaKod + '">Zápasy ' + skupina["nazov_genitiv"] + '</a>';
                 text += '</li>';

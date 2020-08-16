@@ -262,3 +262,9 @@ label{
 		color: white;
 	}
 }
+.inactive{
+	color: darkgray;
+}
+.inactive:hover{
+	color: lightgray;
+}
