@@ -76,7 +76,7 @@ $skupiny = dajSkupiny();
           </div>
           <div>
             <strong style="font-size: 20px;">Nájdete nás aj na </strong>
-            <a href="http://tj-dolany.futbalnet.sk/tim/26389">
+            <a href="https://sportnet.sme.sk/futbalnet/k/fk-cinemax-dolany/">
               <img style="padding-top: 1px; margin-left: 5px;"  src="fotky/futbalnet.png" height="30px">
             </a>
           </div>
