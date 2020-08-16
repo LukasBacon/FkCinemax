@@ -2,13 +2,15 @@ PRIPRAVKA - teraz funguje tak, ze 3 kola sa hraju v jeden den.
 
 /*TODO*/
 CO TREBA SPRAVIT KED SA PRIDA NOVA SKUPINA (Seniori, Pripravka...)
-Funkcie.php -> hlavicka() -> Zapasy, Tabulky, Hraci - pridat novy dropdown item.
-Vytvorit nove priecinky - {skupina}.php, t_{skupina}.php, z_{skupina}.php
-index.php -> vypisPosledneZapasy(), vypisNastedujuceZapasy(), pridaj do pola novu skupinu
-addPlayerServlet.php, editPhotoServlet.php -> url Fotky podla nazvu skupiny
-v priecinku fotky vytvorit priecinok s nazvom skupiny a pridat tam face.png
-v tabulke ligy vytvorit novy riadok
-do databazy treba vlozit hracov
+Pridať nový riadok do tabulky Skupiny.
+    - upraviť zoradenie skupín v navigácii
+    - zadať flag aktiv, podľa toho či je skupina aktívna v aktuálnom roku alebo nie (ak nie bude sa zobrazovať zasivená v navigácii)
+    - zobrazenie_nasl_a_predch_zapasov môže mať 3 hodnoty ("text", "button", "none").
+        Ak je "text" vypíše sa info o predchádzajúcich a nasledujúcich zápasoch na HOME stránke.
+        Ak je "button" zobrazí sa tlačítko, ktoré odkazuje na zápasy skupiny
+        Ak je "none" nezobrazí sa nič
+
+V tabulke ligy vytvorit novy riadok.
 
 CO TREBA SPRAVIT PO ROKU
 pridame novu ligu do tabulky Ligy
